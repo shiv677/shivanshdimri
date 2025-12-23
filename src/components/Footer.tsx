@@ -49,13 +49,14 @@ const Footer = () => {
           </div>
 
           {/* Right - Resume Download */}
-          <Link
-            to="/contact"
+          <a
+            href="/SHIVANSH_DIMRI_CV.pdf"
+            download
             className="inline-flex items-center gap-2 px-6 py-3 rounded-full glass hover-glow text-sm font-medium text-foreground hover:text-primary transition-all duration-300"
             data-cursor="Download"
           >
             Download Resume
-          </Link>
+          </a>
         </div>
       </div>
     </motion.footer>
