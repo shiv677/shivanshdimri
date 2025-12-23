@@ -187,7 +187,26 @@
   background: hsl(var(--muted-foreground) / 0.5);
 }
 
-/* Hide cursor on custom cursor pages */
-.custom-cursor-active * {
-  cursor: none !important;
+/* Minimal cursor color change for interactive elements */
+a,
+button,
+[role="button"],
+input,
+textarea,
+select,
+[data-cursor],
+.cursor-interactive {
+  cursor: pointer;
+  caret-color: hsl(var(--primary));
+}
+
+a:hover,
+button:hover,
+[role="button"]:hover,
+input:focus,
+textarea:focus,
+select:focus,
+[data-cursor]:hover,
+.cursor-interactive:hover {
+  cursor: pointer;
 }
