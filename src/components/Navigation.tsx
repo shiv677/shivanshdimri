@@ -86,7 +86,7 @@ const Navigation = () => {
               >
                 <Link
                   to={link.href}
-                  className={`relative text-sm font-medium transition-colors duration-300 ${
+                  className={`relative text-sm font-medium transition-colors duration-300 group ${
                     location.pathname === link.href
                       ? 'text-primary'
                       : 'text-muted-foreground hover:text-foreground'
@@ -94,12 +94,14 @@ const Navigation = () => {
                   data-cursor={link.label}
                 >
                   {link.label}
-                  {location.pathname === link.href && (
+                  {location.pathname === link.href ? (
                     <motion.div
                       className="absolute -bottom-1 left-0 right-0 h-px bg-primary"
                       layoutId="activeNav"
                       transition={{ duration: 0.3 }}
                     />
+                  ) : (
+                    <span className="absolute -bottom-1 left-0 right-0 h-px bg-foreground/40 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 ease-out origin-left" />
                   )}
                 </Link>
               </motion.div>
