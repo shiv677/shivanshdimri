@@ -2,6 +2,7 @@ import { motion } from 'framer-motion';
 import { Code2, Zap, Users, Target, Coffee, Lightbulb } from 'lucide-react';
 import Layout from '@/components/Layout';
 import AnimatedSection from '@/components/AnimatedSection';
+import TechPanels from '@/components/TechPanels';
 
 const values = [
   {
@@ -19,13 +20,6 @@ const values = [
     title: 'Ownership',
     description: 'End-to-end responsibility from concept to deployment.',
   },
-];
-
-const tools = [
-  { category: 'Frontend', items: ['React', 'Next.js', 'TypeScript', 'Tailwind CSS'] },
-  { category: 'Backend', items: ['Node.js', 'Express', 'MongoDB', 'MySQL'] },
-  { category: 'CMS', items: ['WordPress', 'Elementor', 'WooCommerce', 'PHP'] },
-  { category: 'Tools', items: ['Git', 'VS Code', 'Figma', 'Vercel'] },
 ];
 
 const About = () => {
@@ -166,38 +160,7 @@ const About = () => {
       </section>
 
       {/* Tools & Tech */}
-      <section className="py-24">
-        <div className="container mx-auto px-6">
-          <AnimatedSection>
-            <h2 className="text-display-sm font-display font-bold text-center mb-16">
-              Tools & <span className="text-gradient">Technologies</span>
-            </h2>
-          </AnimatedSection>
-
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {tools.map((tool, index) => (
-              <AnimatedSection key={tool.category} delay={index * 0.1}>
-                <div className="p-6 rounded-2xl glass">
-                  <h3 className="text-sm font-semibold text-primary uppercase tracking-wider mb-4">
-                    {tool.category}
-                  </h3>
-                  <div className="space-y-3">
-                    {tool.items.map((item) => (
-                      <div
-                        key={item}
-                        className="text-foreground font-medium flex items-center gap-3"
-                      >
-                        <div className="w-1.5 h-1.5 rounded-full bg-primary" />
-                        {item}
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </AnimatedSection>
-            ))}
-          </div>
-        </div>
-      </section>
+      <TechPanels />
     </Layout>
   );
 };
