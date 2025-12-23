@@ -11,6 +11,21 @@ const navLinks = [
   { href: '/contact', label: 'Contact' },
 ];
 
+const logoText = "Shivansh Dimri";
+
+const letterVariants = {
+  hidden: { opacity: 0, y: 8 },
+  visible: (i: number) => ({
+    opacity: 1,
+    y: 0,
+    transition: {
+      delay: 0.8 + i * 0.04,
+      duration: 0.4,
+      ease: [0.23, 1, 0.32, 1],
+    },
+  }),
+};
+
 const Navigation = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -43,10 +58,21 @@ const Navigation = () => {
           {/* Logo */}
           <Link
             to="/"
-            className="text-base font-medium tracking-tight text-muted-foreground hover:text-primary transition-colors duration-300"
+            className="text-base font-medium tracking-tight text-muted-foreground hover:text-primary transition-colors duration-300 flex"
             data-cursor="Home"
           >
-            Shivansh Dimri
+            {logoText.split('').map((letter, index) => (
+              <motion.span
+                key={index}
+                custom={index}
+                variants={letterVariants}
+                initial="hidden"
+                animate="visible"
+                className={letter === ' ' ? 'w-1.5' : ''}
+              >
+                {letter}
+              </motion.span>
+            ))}
           </Link>
 
           {/* Desktop Navigation */}
