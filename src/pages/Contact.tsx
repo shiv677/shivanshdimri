@@ -5,6 +5,14 @@ import Layout from '@/components/Layout';
 import AnimatedSection from '@/components/AnimatedSection';
 import Button from '@/components/Button';
 import { useToast } from '@/hooks/use-toast';
+import { supabase } from '@/integrations/supabase/client';
+import { z } from 'zod';
+
+const contactSchema = z.object({
+  name: z.string().trim().min(1, 'Name is required').max(100, 'Name must be less than 100 characters'),
+  email: z.string().trim().email('Please enter a valid email').max(255, 'Email must be less than 255 characters'),
+  message: z.string().trim().min(1, 'Message is required').max(2000, 'Message must be less than 2000 characters'),
+});
 
 const contactMethods = [
   {
@@ -46,16 +54,47 @@ const Contact = () => {
     e.preventDefault();
     setIsSubmitting(true);
 
-    // Simulate form submission
-    await new Promise((resolve) => setTimeout(resolve, 1500));
+    try {
+      // Validate form data
+      const validatedData = contactSchema.parse(formData);
 
-    toast({
-      title: 'Message sent!',
-      description: "Thanks for reaching out. I'll get back to you soon.",
-    });
+      // Save to database
+      const { error } = await supabase
+        .from('contact_submissions')
+        .insert({
+          name: validatedData.name,
+          email: validatedData.email,
+          message: validatedData.message,
+        });
 
-    setFormData({ name: '', email: '', message: '' });
-    setIsSubmitting(false);
+      if (error) {
+        console.error('Error saving submission:', error);
+        throw new Error('Failed to send message');
+      }
+
+      toast({
+        title: 'Message sent!',
+        description: "Thanks for reaching out. I'll get back to you soon.",
+      });
+
+      setFormData({ name: '', email: '', message: '' });
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        toast({
+          title: 'Validation Error',
+          description: error.errors[0].message,
+          variant: 'destructive',
+        });
+      } else {
+        toast({
+          title: 'Error',
+          description: 'Failed to send message. Please try again.',
+          variant: 'destructive',
+        });
+      }
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
