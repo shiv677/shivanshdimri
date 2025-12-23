@@ -65,7 +65,7 @@ const Home = () => {
                 transition={{ duration: 0.8, delay: 0.4 }}
               >
                 <motion.span
-                  className="inline-block"
+                  className="inline-block text-foreground"
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6, delay: 0.5 }}
@@ -73,12 +73,18 @@ const Home = () => {
                   Shivansh
                 </motion.span>{' '}
                 <motion.span
-                  className="inline-block text-gradient glow-text"
+                  className="inline-block text-foreground relative"
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6, delay: 0.6 }}
                 >
                   Dimri
+                  <motion.span 
+                    className="absolute -bottom-2 left-0 h-0.5 bg-primary"
+                    initial={{ width: 0 }}
+                    animate={{ width: '100%' }}
+                    transition={{ duration: 0.8, delay: 1.2, ease: [0.23, 1, 0.32, 1] }}
+                  />
                 </motion.span>
               </motion.h1>
 
@@ -94,11 +100,12 @@ const Home = () => {
 
               {/* Credibility */}
               <motion.p
-                className="text-primary text-sm font-medium tracking-wide"
+                className="text-muted-foreground text-sm font-medium tracking-wide"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.8 }}
               >
+                <span className="inline-block w-3 h-px bg-primary mr-2 align-middle" />
                 10+ live & demo projects · 6 months professional experience
               </motion.p>
 
@@ -203,7 +210,7 @@ const Home = () => {
           <AnimatedSection>
             <div className="flex items-center justify-between mb-16">
               <h2 className="text-display-md font-display font-bold">
-                Selected <span className="text-gradient">Work</span>
+                Selected Work
               </h2>
               <Link
                 to="/work"
@@ -269,7 +276,7 @@ const Home = () => {
         <div className="container mx-auto px-6 text-center">
           <AnimatedSection>
             <h2 className="text-display-md font-display font-bold mb-6">
-              Let's Build Something <span className="text-gradient">Great</span>
+              Let's Build Something Great
             </h2>
             <p className="text-lg text-muted-foreground max-w-xl mx-auto mb-8">
               Have a project in mind? I'm available for freelance work and full-time positions.
