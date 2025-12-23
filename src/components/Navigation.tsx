@@ -43,10 +43,10 @@ const Navigation = () => {
           {/* Logo */}
           <Link
             to="/"
-            className="font-display text-xl font-bold tracking-tight hover:text-primary transition-colors duration-300"
+            className="text-base font-medium tracking-tight text-muted-foreground hover:text-primary transition-colors duration-300"
             data-cursor="Home"
           >
-            <span className="text-primary">S</span>D
+            Shivansh Dimri
           </Link>
 
           {/* Desktop Navigation */}
