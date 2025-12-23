@@ -21,6 +21,10 @@ const techCategories = [
     title: 'Tools',
     items: ['Git', 'VS Code', 'Figma', 'Vercel'],
   },
+  {
+    title: 'AI Automation',
+    items: ['OpenAI API', 'n8n Workflows', 'Chatbots & Assistants', 'AI Form Handling', 'Content Automation', 'API Integrations'],
+  },
 ];
 
 const TechPanels = () => {
