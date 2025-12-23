@@ -126,10 +126,12 @@ const Home = () => {
                     <ArrowRight size={18} />
                   </Button>
                 </Link>
-                <Button variant="outline" size="lg" data-cursor="Download">
-                  <Download size={18} />
-                  Download Resume
-                </Button>
+                <a href="/SHIVANSH_DIMRI_CV.pdf" download>
+                  <Button variant="outline" size="lg" data-cursor="Download">
+                    <Download size={18} />
+                    Download Resume
+                  </Button>
+                </a>
               </motion.div>
 
               {/* Micro-copy */}
