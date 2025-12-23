@@ -58,7 +58,7 @@ const Navigation = () => {
           {/* Logo */}
           <Link
             to="/"
-            className="text-base font-medium tracking-tight text-muted-foreground hover:text-primary transition-colors duration-300 flex"
+            className="text-base font-medium tracking-tight text-foreground/80 hover:text-primary transition-colors duration-200 ease-out flex"
             data-cursor="Home"
           >
             {logoText.split('').map((letter, index) => (
