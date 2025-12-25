@@ -97,6 +97,30 @@ const projects: Project[] = [
     liveUrl: 'http://darkseagreen-dog-161075.hostingersite.com/',
     githubUrl: null,
   },
+  {
+    id: 8,
+    title: 'Sole Trader',
+    role: 'Live Client Website · Major Contribution',
+    industry: 'Petroleum • Australia',
+    tech: ['WordPress', 'Custom Theme Development', 'Performance Optimization'],
+    problem: 'Client needed a professional website for petroleum trading business representation.',
+    solution: 'Led development, implemented clean corporate UI, optimized structure and performance.',
+    outcome: 'Live production website supporting international business credibility.',
+    liveUrl: 'https://soleetrader.com',
+    githubUrl: null,
+  },
+  {
+    id: 9,
+    title: 'Yali Energy Trading',
+    role: 'Live Client Website · Major Contribution',
+    industry: 'Petroleum • Canada',
+    tech: ['WordPress', 'Custom Theme Configuration', 'Responsive UI'],
+    problem: 'No clear digital presence for petroleum trading operations.',
+    solution: 'Handled major development responsibilities including layout, responsiveness, and deployment.',
+    outcome: 'Live client website successfully launched.',
+    liveUrl: 'https://yalienergytrading.com',
+    githubUrl: null,
+  },
 ];
 
 const Work = () => {
