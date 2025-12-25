@@ -38,13 +38,13 @@ const fullProjects: Project[] = [
   },
   {
     id: 2,
-    title: 'E-Commerce Website (EliteShop)',
+    title: 'EliteShop (E-Commerce Website)',
     role: 'Frontend Developer',
     tech: ['Next.js', 'TypeScript', 'Stripe', 'Tailwind CSS'],
     problem: 'Client needed a modern, high-performance e-commerce platform with seamless checkout experience.',
     solution: 'Developed a responsive storefront with product filtering, cart management, and Stripe payment integration.',
     outcome: 'Achieved 40% faster page loads and improved conversion rates.',
-    liveUrl: '#',
+    liveUrl: 'https://eliteshop-7u97i30.public.builtwithrocket.new',
     githubUrl: '#',
   },
   {
