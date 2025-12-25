@@ -24,14 +24,14 @@ const experiences = [
     title: 'Founder & Lead Developer',
     company: 'Zynex Studio',
     location: 'Kanpur, India',
-    period: '2024 – Present',
+    period: '2025 – Present',
     type: 'Entrepreneurial',
     responsibilities: [
-      'Founded a web development studio focused on modern solutions',
-      'Managing client relationships and project deliverables',
+      'Transitioned from freelance work to formally launching Zynex Studio',
       'Building custom web applications using React and Next.js',
+      'Managing client relationships and end-to-end project delivery',
       'Providing WordPress development and maintenance services',
-      'Establishing processes for efficient project delivery',
+      'Leveraging early experimentation to establish efficient workflows',
     ],
   },
 ];
