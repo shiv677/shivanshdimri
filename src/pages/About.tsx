@@ -3,7 +3,7 @@ import { Zap, Users, Target, Coffee } from 'lucide-react';
 import Layout from '@/components/Layout';
 import AnimatedSection from '@/components/AnimatedSection';
 import TechPanels from '@/components/TechPanels';
-import OrbitalProfile from '@/components/OrbitalProfile';
+import ProfileCard from '@/components/ProfileCard';
 
 const values = [
   {
@@ -99,10 +99,10 @@ const About = () => {
               </div>
             </AnimatedSection>
 
-            {/* Orbital Profile Image */}
+            {/* Profile Card */}
             <AnimatedSection direction="right">
               <div className="flex justify-center lg:justify-end">
-                <OrbitalProfile />
+                <ProfileCard />
               </div>
             </AnimatedSection>
           </div>
