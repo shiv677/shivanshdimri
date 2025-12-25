@@ -5,6 +5,7 @@ import AnimatedSection from '@/components/AnimatedSection';
 import Button from '@/components/Button';
 
 import doctorHealthyLogo from '@/assets/doctor-healthy-logo.png';
+import doctorHealthyScreenshot from '@/assets/doctor-healthy-screenshot.png';
 
 interface Project {
   id: number;
@@ -18,12 +19,13 @@ interface Project {
   liveUrl: string;
   githubUrl: string | null;
   logo?: string;
+  screenshot?: string;
 }
 
 const fullProjects: Project[] = [
   {
     id: 1,
-    title: 'Doctor Appointment Website',
+    title: 'Doctor Healthy You',
     role: 'Full-Stack Developer',
     tech: ['React', 'Node.js', 'MongoDB', 'Express'],
     problem: 'Healthcare providers needed an efficient way to manage patient appointments and reduce no-shows.',
@@ -32,6 +34,7 @@ const fullProjects: Project[] = [
     liveUrl: 'https://doctor-healthy-you-atd4362.public.builtwithrocket.new',
     githubUrl: '#',
     logo: doctorHealthyLogo,
+    screenshot: doctorHealthyScreenshot,
   },
   {
     id: 2,
@@ -183,24 +186,32 @@ const Work = () => {
                   transition={{ duration: 0.4 }}
                 >
                   <div className="aspect-video rounded-2xl glass border-glow overflow-hidden hover-glow">
-                    <div className="w-full h-full bg-gradient-to-br from-primary/10 to-transparent flex items-center justify-center">
-                      {project.logo ? (
-                        <img 
-                          src={project.logo} 
-                          alt={`${project.title} logo`}
-                          className="w-24 h-24 object-contain"
-                        />
-                      ) : (
-                        <div className="text-center">
-                          <div className="text-6xl font-display font-bold text-primary/20 mb-2">
-                            0{project.id}
+                    {project.screenshot ? (
+                      <img 
+                        src={project.screenshot} 
+                        alt={`${project.title} screenshot`}
+                        className="w-full h-full object-cover"
+                      />
+                    ) : (
+                      <div className="w-full h-full bg-gradient-to-br from-primary/10 to-transparent flex items-center justify-center">
+                        {project.logo ? (
+                          <img 
+                            src={project.logo} 
+                            alt={`${project.title} logo`}
+                            className="w-24 h-24 object-contain"
+                          />
+                        ) : (
+                          <div className="text-center">
+                            <div className="text-6xl font-display font-bold text-primary/20 mb-2">
+                              0{project.id}
+                            </div>
+                            <div className="text-muted-foreground text-sm">
+                              {project.role}
+                            </div>
                           </div>
-                          <div className="text-muted-foreground text-sm">
-                            {project.role}
-                          </div>
-                        </div>
-                      )}
-                    </div>
+                        )}
+                      </div>
+                    )}
                   </div>
                   {/* Floating tech badges */}
                   <div className="absolute -bottom-4 left-4 right-4 flex flex-wrap gap-2 justify-center">
