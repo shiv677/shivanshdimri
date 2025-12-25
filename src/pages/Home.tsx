@@ -6,6 +6,11 @@ import AnimatedSection from '@/components/AnimatedSection';
 import TechOrbit from '@/components/TechOrbit';
 import Button from '@/components/Button';
 
+import tcboScreenshot from '@/assets/tcbo-screenshot.png';
+import carbonixScreenshot from '@/assets/carbonix-screenshot.png';
+import soletraderScreenshot from '@/assets/soletrader-screenshot.png';
+import yaliScreenshot from '@/assets/yali-screenshot.png';
+
 const proofPoints = [
   { icon: Rocket, value: '10+', label: 'Projects Delivered' },
   { icon: Briefcase, value: '6 Mo', label: 'Professional Experience' },
@@ -15,22 +20,28 @@ const proofPoints = [
 
 const featuredProjects = [
   {
-    title: 'E-Commerce Platform',
-    description: 'Full-stack shopping experience with cart & checkout',
-    tech: ['Next.js', 'Stripe', 'Tailwind'],
-    image: '/placeholder.svg',
+    title: 'TCBO Marketing LLC',
+    description: 'Corporate website for a petroleum marketing company',
+    image: tcboScreenshot,
+    isLiveClient: true,
   },
   {
-    title: 'Doctor Appointment System',
-    description: 'Healthcare booking and management platform',
-    tech: ['React', 'Node.js', 'MongoDB'],
-    image: '/placeholder.svg',
+    title: 'Carbonix',
+    description: 'Professional business website for petroleum industry',
+    image: carbonixScreenshot,
+    isLiveClient: true,
   },
   {
-    title: 'Hotel Management System',
-    description: 'Complete hotel booking and administration',
-    tech: ['WordPress', 'PHP', 'MySQL'],
-    image: '/placeholder.svg',
+    title: 'Sole Trader',
+    description: 'International petroleum trading company website',
+    image: soletraderScreenshot,
+    isLiveClient: true,
+  },
+  {
+    title: 'Yali Energy Trading',
+    description: 'Energy trading company digital presence',
+    image: yaliScreenshot,
+    isLiveClient: true,
   },
 ];
 
@@ -216,36 +227,38 @@ const Home = () => {
             </div>
           </AnimatedSection>
 
-          <div className="grid md:grid-cols-3 gap-8">
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
             {featuredProjects.map((project, index) => (
-              <AnimatedSection key={project.title} delay={index * 0.15}>
+              <AnimatedSection key={project.title} delay={index * 0.1}>
                 <Link to="/work" className="group block" data-cursor="View">
-                  <div className="relative overflow-hidden rounded-2xl glass border-glow hover-glow">
+                  <div className="relative overflow-hidden rounded-2xl bg-card border border-border/40 shadow-sm hover:shadow-md hover:border-border/60 transition-all duration-300">
                     {/* Image */}
                     <div className="aspect-[4/3] overflow-hidden bg-muted">
-                      <div className="w-full h-full bg-gradient-to-br from-primary/20 to-transparent flex items-center justify-center">
-                        <Code2 size={48} className="text-primary/40" />
-                      </div>
+                      <img 
+                        src={project.image} 
+                        alt={`${project.title} preview`}
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                      />
                     </div>
                     
                     {/* Content */}
-                    <div className="p-6">
-                      <h3 className="text-lg font-display font-semibold mb-2 group-hover:text-primary transition-colors duration-300">
+                    <div className="p-5">
+                      {/* Live Client Badge */}
+                      {project.isLiveClient && (
+                        <span className="inline-block px-2.5 py-1 rounded-full bg-primary/10 text-primary text-xs font-medium mb-3 border border-primary/20">
+                          Live Client Website
+                        </span>
+                      )}
+                      <h3 className="text-base font-display font-semibold mb-1.5 group-hover:text-primary transition-colors duration-300">
                         {project.title}
                       </h3>
-                      <p className="text-sm text-muted-foreground mb-4">
+                      <p className="text-sm text-muted-foreground mb-4 line-clamp-2">
                         {project.description}
                       </p>
-                      <div className="flex flex-wrap gap-2">
-                        {project.tech.map((t) => (
-                          <span
-                            key={t}
-                            className="px-3 py-1 rounded-full bg-muted text-xs text-muted-foreground"
-                          >
-                            {t}
-                          </span>
-                        ))}
-                      </div>
+                      <span className="inline-flex items-center gap-1.5 text-sm text-primary font-medium group-hover:gap-2.5 transition-all duration-300">
+                        View Case Study
+                        <ArrowRight size={14} />
+                      </span>
                     </div>
                   </div>
                 </Link>
