@@ -3,7 +3,7 @@ import { Zap, Users, Target, Coffee } from 'lucide-react';
 import Layout from '@/components/Layout';
 import AnimatedSection from '@/components/AnimatedSection';
 import TechPanels from '@/components/TechPanels';
-import ProfileCard from '@/components/ProfileCard';
+import ImageStack from '@/components/ImageStack';
 
 const values = [
   {
@@ -99,11 +99,11 @@ const About = () => {
               </div>
             </AnimatedSection>
 
-            {/* Profile Card */}
+            {/* Image Stack */}
             <AnimatedSection direction="right" className="w-full lg:w-auto lg:flex-shrink-0">
               <div className="flex justify-center">
                 <div className="w-64 lg:w-72">
-                  <ProfileCard />
+                  <ImageStack />
                 </div>
               </div>
             </AnimatedSection>
