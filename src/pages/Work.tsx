@@ -4,7 +4,20 @@ import Layout from '@/components/Layout';
 import AnimatedSection from '@/components/AnimatedSection';
 import Button from '@/components/Button';
 
-const projects = [
+interface Project {
+  id: number;
+  title: string;
+  role: string;
+  industry?: string;
+  tech: string[];
+  problem: string;
+  solution: string;
+  outcome: string;
+  liveUrl: string;
+  githubUrl: string | null;
+}
+
+const projects: Project[] = [
   {
     id: 1,
     title: 'Doctor Appointment Website',
@@ -59,6 +72,30 @@ const projects = [
     outcome: 'Boosted online visibility and increased table reservations by 150%.',
     liveUrl: '#',
     githubUrl: '#',
+  },
+  {
+    id: 6,
+    title: 'Carbonix',
+    role: 'Live Client Website',
+    industry: 'Petroleum • USA',
+    tech: ['WordPress', 'Custom Theme', 'Hosting Setup'],
+    problem: 'Client required a professional website to establish digital presence.',
+    solution: 'Designed and deployed a clean, business-focused website with reliable hosting.',
+    outcome: 'Live production website delivered for a real client.',
+    liveUrl: 'https://carbonix.org.in',
+    githubUrl: null,
+  },
+  {
+    id: 7,
+    title: 'TCBO Marketing LLC',
+    role: 'Live Client Website',
+    industry: 'Petroleum • USA',
+    tech: ['WordPress', 'Custom Theme', 'Hosting & Domain'],
+    problem: 'No structured online presence for business representation.',
+    solution: 'Built and launched a responsive corporate website.',
+    outcome: 'Live client website supporting credibility and visibility.',
+    liveUrl: 'https://tcbomarketingllc.in',
+    githubUrl: null,
   },
 ];
 
@@ -137,6 +174,11 @@ const Work = () => {
                     <p className="text-primary text-sm font-medium">
                       {project.role}
                     </p>
+                    {project.industry && (
+                      <p className="text-muted-foreground text-xs mt-1">
+                        {project.industry}
+                      </p>
+                    )}
                   </div>
 
                   <div className="space-y-4">
@@ -164,15 +206,17 @@ const Work = () => {
                     <a href={project.liveUrl} target="_blank" rel="noopener noreferrer">
                       <Button variant="primary" size="md" data-cursor="View Live">
                         <ExternalLink size={16} />
-                        Live Preview
+                        {project.liveUrl !== '#' ? 'Visit Website' : 'Live Preview'}
                       </Button>
                     </a>
-                    <a href={project.githubUrl} target="_blank" rel="noopener noreferrer">
-                      <Button variant="outline" size="md" data-cursor="GitHub">
-                        <Github size={16} />
-                        Source Code
-                      </Button>
-                    </a>
+                    {project.githubUrl && (
+                      <a href={project.githubUrl} target="_blank" rel="noopener noreferrer">
+                        <Button variant="outline" size="md" data-cursor="GitHub">
+                          <Github size={16} />
+                          Source Code
+                        </Button>
+                      </a>
+                    )}
                   </div>
                 </div>
               </div>
