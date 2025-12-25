@@ -94,7 +94,7 @@ const projects: Project[] = [
     problem: 'No structured online presence for business representation.',
     solution: 'Built and launched a responsive corporate website.',
     outcome: 'Live client website supporting credibility and visibility.',
-    liveUrl: 'https://tcbomarketingllc.in',
+    liveUrl: 'http://darkseagreen-dog-161075.hostingersite.com/',
     githubUrl: null,
   },
 ];
