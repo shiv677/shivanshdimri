@@ -8,6 +8,7 @@ import doctorHealthyLogo from '@/assets/doctor-healthy-logo.png';
 import doctorHealthyScreenshot from '@/assets/doctor-healthy-screenshot.png';
 import eliteshopScreenshot from '@/assets/eliteshop-screenshot.png';
 import bookingScreenshot from '@/assets/booking-screenshot.png';
+import carbonixScreenshot from '@/assets/carbonix-screenshot.png';
 
 interface Project {
   id: number;
@@ -101,6 +102,7 @@ const fullProjects: Project[] = [
     outcome: 'Live production website delivered for a real client.',
     liveUrl: 'https://darkred-stork-731280.hostingersite.com',
     githubUrl: null,
+    screenshot: carbonixScreenshot,
   },
   {
     id: 7,
