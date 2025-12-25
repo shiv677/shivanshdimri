@@ -6,10 +6,12 @@ import Button from '@/components/Button';
 
 import doctorHealthyLogo from '@/assets/doctor-healthy-logo.png';
 import doctorHealthyScreenshot from '@/assets/doctor-healthy-screenshot.png';
+import eliteshopScreenshot from '@/assets/eliteshop-screenshot.png';
 
 interface Project {
   id: number;
   title: string;
+  subtitle?: string;
   role: string;
   industry?: string;
   tech: string[];
@@ -38,7 +40,8 @@ const fullProjects: Project[] = [
   },
   {
     id: 2,
-    title: 'EliteShop (E-Commerce Website)',
+    title: 'EliteShop',
+    subtitle: '(E-Commerce Website)',
     role: 'Frontend Developer',
     tech: ['Next.js', 'TypeScript', 'Stripe', 'Tailwind CSS'],
     problem: 'Client needed a modern, high-performance e-commerce platform with seamless checkout experience.',
@@ -46,6 +49,7 @@ const fullProjects: Project[] = [
     outcome: 'Achieved 40% faster page loads and improved conversion rates.',
     liveUrl: 'https://eliteshop-7u97i30.public.builtwithrocket.new',
     githubUrl: '#',
+    screenshot: eliteshopScreenshot,
   },
   {
     id: 3,
@@ -229,9 +233,14 @@ const Work = () => {
                 {/* Content */}
                 <div className={`space-y-6 ${index % 2 === 1 ? 'lg:order-1' : ''}`}>
                   <div>
-                    <h2 className="text-display-sm font-display font-bold mb-2">
+                    <h2 className="text-display-sm font-display font-bold mb-1">
                       {project.title}
                     </h2>
+                    {project.subtitle && (
+                      <p className="text-lg text-muted-foreground font-medium mb-2">
+                        {project.subtitle}
+                      </p>
+                    )}
                     <p className="text-primary text-sm font-medium">
                       {project.role}
                     </p>
