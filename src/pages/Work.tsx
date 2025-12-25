@@ -10,7 +10,6 @@ import eliteshopScreenshot from '@/assets/eliteshop-screenshot.png';
 import bookingScreenshot from '@/assets/booking-screenshot.png';
 import carbonixScreenshot from '@/assets/carbonix-screenshot.png';
 import tcboScreenshot from '@/assets/tcbo-screenshot.png';
-import soletraderScreenshot from '@/assets/soletrader-screenshot.png';
 
 interface Project {
   id: number;
@@ -133,7 +132,6 @@ const contributionProjects: Project[] = [
     outcome: 'Live production website supporting international business credibility.',
     liveUrl: 'https://soleetrader.com',
     githubUrl: null,
-    screenshot: soletraderScreenshot,
   },
   {
     id: 9,
