@@ -82,7 +82,7 @@ const projects: Project[] = [
     problem: 'Client required a professional website to establish digital presence.',
     solution: 'Designed and deployed a clean, business-focused website with reliable hosting.',
     outcome: 'Live production website delivered for a real client.',
-    liveUrl: 'https://carbonix.org.in',
+    liveUrl: 'https://darkred-stork-731280.hostingersite.com',
     githubUrl: null,
   },
   {
