@@ -105,13 +105,13 @@ const Home = () => {
 
               {/* Credibility */}
               <motion.div
-                className="flex items-center gap-4 text-base text-muted-foreground/80 font-medium"
+                className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 text-base text-muted-foreground/80 font-medium"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ duration: 0.8, delay: 0.8, ease: "easeOut" }}
               >
                 <span>Worked with global clients across</span>
-                <div className="flex items-center gap-3">
+                <div className="flex flex-wrap items-center gap-2 sm:gap-3">
                   <span className="inline-flex items-center gap-1.5 text-primary/80">
                     <Fuel size={16} />
                     <span className="text-sm">Petroleum</span>
