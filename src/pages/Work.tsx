@@ -152,7 +152,7 @@ const Work = () => {
               Portfolio
             </p>
             <h1 className="text-display-lg font-display font-bold mb-6">
-              Selected <span className="text-gradient">Work</span>
+              Work & Client <span className="text-gradient">Projects</span>
             </h1>
             <p className="text-xl text-muted-foreground max-w-2xl">
               A collection of projects that showcase my expertise in building 
