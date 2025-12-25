@@ -9,6 +9,7 @@ import doctorHealthyScreenshot from '@/assets/doctor-healthy-screenshot.png';
 import eliteshopScreenshot from '@/assets/eliteshop-screenshot.png';
 import bookingScreenshot from '@/assets/booking-screenshot.png';
 import carbonixScreenshot from '@/assets/carbonix-screenshot.png';
+import tcboScreenshot from '@/assets/tcbo-screenshot.png';
 
 interface Project {
   id: number;
@@ -115,6 +116,7 @@ const fullProjects: Project[] = [
     outcome: 'Live client website supporting credibility and visibility.',
     liveUrl: 'http://darkseagreen-dog-161075.hostingersite.com/',
     githubUrl: null,
+    screenshot: tcboScreenshot,
   },
 ];
 
