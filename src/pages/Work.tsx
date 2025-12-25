@@ -57,6 +57,9 @@ const fullProjects: Project[] = [
     githubUrl: '#',
     screenshot: eliteshopScreenshot,
   },
+];
+
+const clientContributions: Project[] = [
   {
     id: 3,
     title: 'Carbonix',
@@ -109,6 +112,9 @@ const fullProjects: Project[] = [
     githubUrl: null,
     screenshot: yaliScreenshot,
   },
+];
+
+const inProgressProjects: Project[] = [
   {
     id: 7,
     title: 'Grocery Management Website',
@@ -156,21 +162,26 @@ const Work = () => {
         </div>
       </section>
 
-      {/* Full Projects Section */}
+      {/* Client Contributions Section */}
       <section className="pb-16">
         <div className="container mx-auto px-6">
           <AnimatedSection>
-            <div className="mb-12">
-              <h2 className="text-display-sm font-display font-bold mb-2">
-                Full <span className="text-gradient">Projects</span>
-              </h2>
+            <div className="mb-12 pt-8 border-t border-primary/20">
+              <div className="flex items-center gap-3 mb-2">
+                <h2 className="text-display-sm font-display font-bold">
+                  Client <span className="text-gradient">Contributions</span>
+                </h2>
+                <span className="px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-medium border border-primary/20">
+                  Live Client Websites
+                </span>
+              </div>
               <p className="text-muted-foreground">
-                Projects where I had complete ownership and responsibility
+                Client projects where I led key development responsibilities
               </p>
             </div>
           </AnimatedSection>
 
-          {fullProjects.map((project, index) => (
+          {clientContributions.map((project, index) => (
             <AnimatedSection
               key={project.id}
               direction={index % 2 === 0 ? 'left' : 'right'}
@@ -196,22 +207,14 @@ const Work = () => {
                       />
                     ) : (
                       <div className="w-full h-full bg-gradient-to-br from-primary/10 to-transparent flex items-center justify-center">
-                        {project.logo ? (
-                          <img 
-                            src={project.logo} 
-                            alt={`${project.title} logo`}
-                            className="w-24 h-24 object-contain"
-                          />
-                        ) : (
-                          <div className="text-center">
-                            <div className="text-6xl font-display font-bold text-primary/20 mb-2">
-                              0{project.id}
-                            </div>
-                            <div className="text-muted-foreground text-sm">
-                              {project.role}
-                            </div>
+                        <div className="text-center">
+                          <div className="text-6xl font-display font-bold text-primary/20 mb-2">
+                            0{project.id}
                           </div>
-                        )}
+                          <div className="text-muted-foreground text-sm">
+                            {project.role}
+                          </div>
+                        </div>
                       </div>
                     )}
                   </div>
@@ -231,24 +234,16 @@ const Work = () => {
                 {/* Content */}
                 <div className={`space-y-6 ${index % 2 === 1 ? 'lg:order-1' : ''}`}>
                   <div>
-                    <div className="flex items-center gap-3 mb-1">
-                      <h2 className="text-display-sm font-display font-bold">
-                        {project.title}
-                      </h2>
-                      {project.status === 'in-progress' && (
-                        <span className="px-2 py-1 rounded-full bg-yellow-500/20 text-yellow-400 text-xs font-medium border border-yellow-500/30">
-                          In Progress
-                        </span>
-                      )}
-                    </div>
-                    {project.subtitle && (
-                      <p className="text-lg text-muted-foreground font-medium mb-2">
-                        {project.subtitle}
+                    <h2 className="text-display-sm font-display font-bold mb-2">
+                      {project.title}
+                    </h2>
+                    <div className="flex items-center gap-2">
+                      <p className="text-primary text-sm font-medium">
+                        {project.role}
                       </p>
-                    )}
-                    <p className="text-primary text-sm font-medium">
-                      {project.role}
-                    </p>
+                      <span className="text-muted-foreground text-xs">•</span>
+                      <span className="text-xs text-muted-foreground">Major Contribution</span>
+                    </div>
                     {project.industry && (
                       <p className="text-muted-foreground text-xs mt-1">
                         {project.industry}
@@ -281,17 +276,113 @@ const Work = () => {
                     <a href={project.liveUrl} target="_blank" rel="noopener noreferrer">
                       <Button variant="primary" size="md" data-cursor="View Live">
                         <ExternalLink size={16} />
-                        {project.liveUrl !== '#' ? 'Visit Website' : 'Live Preview'}
+                        Visit Website
                       </Button>
                     </a>
-                    {project.githubUrl && (
-                      <a href={project.githubUrl} target="_blank" rel="noopener noreferrer">
-                        <Button variant="outline" size="md" data-cursor="GitHub">
-                          <Github size={16} />
-                          Source Code
-                        </Button>
-                      </a>
-                    )}
+                  </div>
+                </div>
+              </div>
+            </AnimatedSection>
+          ))}
+        </div>
+      </section>
+
+      {/* In Progress Section */}
+      <section className="pb-24">
+        <div className="container mx-auto px-6">
+          <AnimatedSection>
+            <div className="mb-12 pt-8 border-t border-yellow-500/20">
+              <div className="flex items-center gap-3 mb-2">
+                <h2 className="text-display-sm font-display font-bold">
+                  In <span className="text-gradient">Progress</span>
+                </h2>
+                <span className="px-3 py-1 rounded-full bg-yellow-500/20 text-yellow-400 text-xs font-medium border border-yellow-500/30">
+                  Coming Soon
+                </span>
+              </div>
+              <p className="text-muted-foreground">
+                Projects currently under development
+              </p>
+            </div>
+          </AnimatedSection>
+
+          {inProgressProjects.map((project, index) => (
+            <AnimatedSection
+              key={project.id}
+              direction={index % 2 === 0 ? 'left' : 'right'}
+              delay={0.1}
+            >
+              <div
+                className={`grid lg:grid-cols-2 gap-12 items-center py-16 border-b border-border/30 ${
+                  index % 2 === 1 ? 'lg:flex-row-reverse' : ''
+                }`}
+              >
+                {/* Visual */}
+                <motion.div
+                  className={`relative ${index % 2 === 1 ? 'lg:order-2' : ''}`}
+                  whileHover={{ scale: 1.02 }}
+                  transition={{ duration: 0.4 }}
+                >
+                  <div className="aspect-video rounded-2xl glass border-glow overflow-hidden hover-glow">
+                    <div className="w-full h-full bg-gradient-to-br from-yellow-500/10 to-transparent flex items-center justify-center">
+                      <div className="text-center">
+                        <div className="text-6xl font-display font-bold text-yellow-500/20 mb-2">
+                          0{project.id}
+                        </div>
+                        <div className="text-muted-foreground text-sm">
+                          {project.role}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  {/* Floating tech badges */}
+                  <div className="absolute -bottom-4 left-4 right-4 flex flex-wrap gap-2 justify-center">
+                    {project.tech.slice(0, 3).map((t) => (
+                      <span
+                        key={t}
+                        className="px-3 py-1.5 rounded-full glass-strong text-xs font-medium text-foreground"
+                      >
+                        {t}
+                      </span>
+                    ))}
+                  </div>
+                </motion.div>
+
+                {/* Content */}
+                <div className={`space-y-6 ${index % 2 === 1 ? 'lg:order-1' : ''}`}>
+                  <div>
+                    <div className="flex items-center gap-3 mb-1">
+                      <h2 className="text-display-sm font-display font-bold">
+                        {project.title}
+                      </h2>
+                      <span className="px-2 py-1 rounded-full bg-yellow-500/20 text-yellow-400 text-xs font-medium border border-yellow-500/30">
+                        In Progress
+                      </span>
+                    </div>
+                    <p className="text-primary text-sm font-medium">
+                      {project.role}
+                    </p>
+                  </div>
+
+                  <div className="space-y-4">
+                    <div>
+                      <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider mb-2">
+                        The Problem
+                      </h3>
+                      <p className="text-foreground">{project.problem}</p>
+                    </div>
+                    <div>
+                      <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider mb-2">
+                        The Solution
+                      </h3>
+                      <p className="text-foreground">{project.solution}</p>
+                    </div>
+                    <div>
+                      <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider mb-2">
+                        Expected Outcome
+                      </h3>
+                      <p className="text-primary font-medium">{project.outcome}</p>
+                    </div>
                   </div>
                 </div>
               </div>
