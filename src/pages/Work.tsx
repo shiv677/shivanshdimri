@@ -11,6 +11,7 @@ import bookingScreenshot from '@/assets/booking-screenshot.png';
 import carbonixScreenshot from '@/assets/carbonix-screenshot.png';
 import tcboScreenshot from '@/assets/tcbo-screenshot.png';
 import soletraderScreenshot from '@/assets/soletrader-screenshot.png';
+import yaliScreenshot from '@/assets/yali-screenshot.png';
 
 interface Project {
   id: number;
@@ -146,6 +147,7 @@ const contributionProjects: Project[] = [
     outcome: 'Live client website successfully launched.',
     liveUrl: 'https://yalienergytrading.com',
     githubUrl: null,
+    screenshot: yaliScreenshot,
   },
 ];
 
