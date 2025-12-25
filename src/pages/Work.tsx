@@ -88,6 +88,7 @@ const fullProjects: Project[] = [
     outcome: 'Boosted online visibility and increased table reservations by 150%.',
     liveUrl: '#',
     githubUrl: '#',
+    status: 'in-progress',
   },
   {
     id: 6,
