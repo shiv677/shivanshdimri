@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { ArrowRight, Download, MapPin, Briefcase, Code2, Rocket, Users } from 'lucide-react';
+import { ArrowRight, Download, MapPin, Briefcase, Code2, Rocket, Users, Fuel, ShoppingBag, Cloud } from 'lucide-react';
 import Layout from '@/components/Layout';
 import AnimatedSection from '@/components/AnimatedSection';
 import TechOrbit from '@/components/TechOrbit';
@@ -104,14 +104,30 @@ const Home = () => {
               </motion.p>
 
               {/* Credibility */}
-              <motion.p
-                className="text-base text-muted-foreground/80 font-medium tracking-wide"
+              <motion.div
+                className="flex items-center gap-4 text-base text-muted-foreground/80 font-medium"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ duration: 0.8, delay: 0.8, ease: "easeOut" }}
               >
-                Worked with global clients across Petroleum, E-commerce & SaaS.
-              </motion.p>
+                <span>Worked with global clients across</span>
+                <div className="flex items-center gap-3">
+                  <span className="inline-flex items-center gap-1.5 text-primary/80">
+                    <Fuel size={16} />
+                    <span className="text-sm">Petroleum</span>
+                  </span>
+                  <span className="text-muted-foreground/40">·</span>
+                  <span className="inline-flex items-center gap-1.5 text-primary/80">
+                    <ShoppingBag size={16} />
+                    <span className="text-sm">E-commerce</span>
+                  </span>
+                  <span className="text-muted-foreground/40">·</span>
+                  <span className="inline-flex items-center gap-1.5 text-primary/80">
+                    <Cloud size={16} />
+                    <span className="text-sm">SaaS</span>
+                  </span>
+                </div>
+              </motion.div>
 
               {/* Description */}
               <motion.p
