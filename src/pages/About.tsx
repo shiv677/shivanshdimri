@@ -1,8 +1,9 @@
 import { motion } from 'framer-motion';
-import { Code2, Zap, Users, Target, Coffee, Lightbulb } from 'lucide-react';
+import { Zap, Users, Target, Coffee } from 'lucide-react';
 import Layout from '@/components/Layout';
 import AnimatedSection from '@/components/AnimatedSection';
 import TechPanels from '@/components/TechPanels';
+import OrbitalProfile from '@/components/OrbitalProfile';
 
 const values = [
   {
@@ -98,32 +99,10 @@ const About = () => {
               </div>
             </AnimatedSection>
 
-            {/* Visual */}
+            {/* Orbital Profile Image */}
             <AnimatedSection direction="right">
-              <div className="relative">
-                <div className="aspect-square rounded-3xl glass border-glow overflow-hidden">
-                  <div className="w-full h-full bg-gradient-to-br from-primary/20 via-transparent to-primary/10 flex items-center justify-center">
-                    <motion.div
-                      className="text-center"
-                      animate={{ y: [0, -10, 0] }}
-                      transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
-                    >
-                      <Code2 size={120} className="text-primary/30 mx-auto mb-4" />
-                      <span className="text-xl font-display text-muted-foreground">
-                        Developer at Work
-                      </span>
-                    </motion.div>
-                  </div>
-                </div>
-                
-                {/* Floating badge */}
-                <motion.div
-                  className="absolute -top-4 -right-4 glass-strong rounded-xl p-4"
-                  animate={{ rotate: [0, 5, 0, -5, 0] }}
-                  transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}
-                >
-                  <Lightbulb className="text-primary" size={24} />
-                </motion.div>
+              <div className="flex justify-center lg:justify-end">
+                <OrbitalProfile />
               </div>
             </AnimatedSection>
           </div>
