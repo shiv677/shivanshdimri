@@ -4,6 +4,8 @@ import Layout from '@/components/Layout';
 import AnimatedSection from '@/components/AnimatedSection';
 import Button from '@/components/Button';
 
+import doctorHealthyLogo from '@/assets/doctor-healthy-logo.png';
+
 interface Project {
   id: number;
   title: string;
@@ -15,6 +17,7 @@ interface Project {
   outcome: string;
   liveUrl: string;
   githubUrl: string | null;
+  logo?: string;
 }
 
 const fullProjects: Project[] = [
@@ -28,6 +31,7 @@ const fullProjects: Project[] = [
     outcome: 'Streamlined booking process, reducing administrative overhead by 60%.',
     liveUrl: 'https://doctor-healthy-you-atd4362.public.builtwithrocket.new',
     githubUrl: '#',
+    logo: doctorHealthyLogo,
   },
   {
     id: 2,
@@ -180,14 +184,22 @@ const Work = () => {
                 >
                   <div className="aspect-video rounded-2xl glass border-glow overflow-hidden hover-glow">
                     <div className="w-full h-full bg-gradient-to-br from-primary/10 to-transparent flex items-center justify-center">
-                      <div className="text-center">
-                        <div className="text-6xl font-display font-bold text-primary/20 mb-2">
-                          0{project.id}
+                      {project.logo ? (
+                        <img 
+                          src={project.logo} 
+                          alt={`${project.title} logo`}
+                          className="w-24 h-24 object-contain"
+                        />
+                      ) : (
+                        <div className="text-center">
+                          <div className="text-6xl font-display font-bold text-primary/20 mb-2">
+                            0{project.id}
+                          </div>
+                          <div className="text-muted-foreground text-sm">
+                            {project.role}
+                          </div>
                         </div>
-                        <div className="text-muted-foreground text-sm">
-                          {project.role}
-                        </div>
-                      </div>
+                      )}
                     </div>
                   </div>
                   {/* Floating tech badges */}
