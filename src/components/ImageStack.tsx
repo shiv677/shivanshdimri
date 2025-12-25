@@ -1,6 +1,5 @@
 import { useState, useRef } from 'react';
 import { motion, AnimatePresence, PanInfo } from 'framer-motion';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 import profilePhoto1 from '@/assets/profile-photo.jpg';
 import profilePhoto2 from '@/assets/profile-2.jpg';
@@ -21,17 +20,17 @@ const ImageStack = () => {
     setDirection(newDirection);
     setCurrentIndex((prev) => {
       if (newDirection > 0) {
-        return prev === images.length - 1 ? 0 : prev + 1;
+        return prev === images.length - 1 ? prev : prev + 1;
       }
-      return prev === 0 ? images.length - 1 : prev - 1;
+      return prev === 0 ? prev : prev - 1;
     });
   };
 
   const handleDragEnd = (_: MouseEvent | TouchEvent | PointerEvent, info: PanInfo) => {
     const threshold = 50;
-    if (info.offset.x > threshold) {
+    if (info.offset.x > threshold && currentIndex > 0) {
       navigate(-1);
-    } else if (info.offset.x < -threshold) {
+    } else if (info.offset.x < -threshold && currentIndex < images.length - 1) {
       navigate(1);
     }
   };
@@ -58,9 +57,15 @@ const ImageStack = () => {
     ? { duration: 0 } 
     : { duration: 0.4, ease: [0.25, 0.46, 0.45, 0.94] };
 
+  // Calculate elastic resistance at edges
+  const getDragElastic = () => {
+    if (currentIndex === 0) return { left: 0.1, right: 0.2 };
+    if (currentIndex === images.length - 1) return { left: 0.2, right: 0.1 };
+    return 0.2;
+  };
+
   return (
     <div className="relative w-full" ref={containerRef}>
-      {/* Stack effect - back images */}
       <div className="relative aspect-[4/5] w-full">
         {/* Background stack layers */}
         {[2, 1].map((offset) => {
@@ -97,36 +102,19 @@ const ImageStack = () => {
             transition={transition}
             drag="x"
             dragConstraints={{ left: 0, right: 0 }}
-            dragElastic={0.2}
+            dragElastic={getDragElastic()}
             onDragEnd={handleDragEnd}
             className="absolute inset-0 rounded-xl overflow-hidden cursor-grab active:cursor-grabbing z-20 bg-muted"
           >
             <img
               src={images[currentIndex]}
               alt={`Profile photo ${currentIndex + 1}`}
-              className="w-full h-full object-cover"
+              className="w-full h-full object-cover pointer-events-none"
               loading="eager"
+              draggable={false}
             />
           </motion.div>
         </AnimatePresence>
-      </div>
-
-      {/* Navigation arrows */}
-      <div className="flex justify-center gap-4 mt-4">
-        <button
-          onClick={() => navigate(-1)}
-          className="p-2 rounded-full bg-muted/50 hover:bg-muted transition-colors duration-200"
-          aria-label="Previous image"
-        >
-          <ChevronLeft size={18} className="text-muted-foreground" />
-        </button>
-        <button
-          onClick={() => navigate(1)}
-          className="p-2 rounded-full bg-muted/50 hover:bg-muted transition-colors duration-200"
-          aria-label="Next image"
-        >
-          <ChevronRight size={18} className="text-muted-foreground" />
-        </button>
       </div>
     </div>
   );
