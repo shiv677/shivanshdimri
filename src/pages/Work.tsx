@@ -162,6 +162,140 @@ const Work = () => {
         </div>
       </section>
 
+      {/* Full Projects Section */}
+      <section className="pb-16">
+        <div className="container mx-auto px-6">
+          <AnimatedSection>
+            <div className="mb-12">
+              <h2 className="text-display-sm font-display font-bold mb-2">
+                Full <span className="text-gradient">Projects</span>
+              </h2>
+              <p className="text-muted-foreground">
+                Projects where I had complete ownership and responsibility
+              </p>
+            </div>
+          </AnimatedSection>
+
+          {fullProjects.map((project, index) => (
+            <AnimatedSection
+              key={project.id}
+              direction={index % 2 === 0 ? 'left' : 'right'}
+              delay={0.1}
+            >
+              <div
+                className={`grid lg:grid-cols-2 gap-12 items-center py-16 border-b border-border/30 ${
+                  index % 2 === 1 ? 'lg:flex-row-reverse' : ''
+                }`}
+              >
+                {/* Visual */}
+                <motion.div
+                  className={`relative ${index % 2 === 1 ? 'lg:order-2' : ''}`}
+                  whileHover={{ scale: 1.02 }}
+                  transition={{ duration: 0.4 }}
+                >
+                  <div className="aspect-video rounded-2xl glass border-glow overflow-hidden hover-glow">
+                    {project.screenshot ? (
+                      <img 
+                        src={project.screenshot} 
+                        alt={`${project.title} screenshot`}
+                        className="w-full h-full object-cover"
+                      />
+                    ) : (
+                      <div className="w-full h-full bg-gradient-to-br from-primary/10 to-transparent flex items-center justify-center">
+                        {project.logo ? (
+                          <img 
+                            src={project.logo} 
+                            alt={`${project.title} logo`}
+                            className="w-24 h-24 object-contain"
+                          />
+                        ) : (
+                          <div className="text-center">
+                            <div className="text-6xl font-display font-bold text-primary/20 mb-2">
+                              0{project.id}
+                            </div>
+                            <div className="text-muted-foreground text-sm">
+                              {project.role}
+                            </div>
+                          </div>
+                        )}
+                      </div>
+                    )}
+                  </div>
+                  {/* Floating tech badges */}
+                  <div className="absolute -bottom-4 left-4 right-4 flex flex-wrap gap-2 justify-center">
+                    {project.tech.slice(0, 3).map((t) => (
+                      <span
+                        key={t}
+                        className="px-3 py-1.5 rounded-full glass-strong text-xs font-medium text-foreground"
+                      >
+                        {t}
+                      </span>
+                    ))}
+                  </div>
+                </motion.div>
+
+                {/* Content */}
+                <div className={`space-y-6 ${index % 2 === 1 ? 'lg:order-1' : ''}`}>
+                  <div>
+                    <div className="flex items-center gap-3 mb-1">
+                      <h2 className="text-display-sm font-display font-bold">
+                        {project.title}
+                      </h2>
+                    </div>
+                    {project.subtitle && (
+                      <p className="text-lg text-muted-foreground font-medium mb-2">
+                        {project.subtitle}
+                      </p>
+                    )}
+                    <p className="text-primary text-sm font-medium">
+                      {project.role}
+                    </p>
+                  </div>
+
+                  <div className="space-y-4">
+                    <div>
+                      <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider mb-2">
+                        The Problem
+                      </h3>
+                      <p className="text-foreground">{project.problem}</p>
+                    </div>
+                    <div>
+                      <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider mb-2">
+                        The Solution
+                      </h3>
+                      <p className="text-foreground">{project.solution}</p>
+                    </div>
+                    <div>
+                      <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider mb-2">
+                        The Outcome
+                      </h3>
+                      <p className="text-primary font-medium">{project.outcome}</p>
+                    </div>
+                  </div>
+
+                  <div className="flex gap-4 pt-4">
+                    <a href={project.liveUrl} target="_blank" rel="noopener noreferrer">
+                      <Button variant="primary" size="md" data-cursor="View Live">
+                        <ExternalLink size={16} />
+                        Visit Website
+                      </Button>
+                    </a>
+                    {project.githubUrl && (
+                      <a href={project.githubUrl} target="_blank" rel="noopener noreferrer">
+                        <Button variant="outline" size="md" data-cursor="GitHub">
+                          <Github size={16} />
+                          Source Code
+                        </Button>
+                      </a>
+                    )}
+                  </div>
+                </div>
+              </div>
+            </AnimatedSection>
+          ))}
+        </div>
+      </section>
+
       {/* Client Contributions Section */}
       <section className="pb-16">
         <div className="container mx-auto px-6">
