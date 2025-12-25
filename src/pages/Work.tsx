@@ -158,6 +158,9 @@ const Work = () => {
               A collection of projects that showcase my expertise in building 
               production-ready web applications.
             </p>
+            <p className="text-sm text-muted-foreground/70 mt-3 italic">
+              Includes live client websites and selected personal projects.
+            </p>
           </AnimatedSection>
         </div>
       </section>
