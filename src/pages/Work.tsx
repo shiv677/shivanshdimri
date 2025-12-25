@@ -26,7 +26,7 @@ const fullProjects: Project[] = [
     problem: 'Healthcare providers needed an efficient way to manage patient appointments and reduce no-shows.',
     solution: 'Built a comprehensive appointment booking system with real-time availability, automated reminders, and admin dashboard.',
     outcome: 'Streamlined booking process, reducing administrative overhead by 60%.',
-    liveUrl: '#',
+    liveUrl: 'https://doctor-healthy-you-atd4362.public.builtwithrocket.new',
     githubUrl: '#',
   },
   {
