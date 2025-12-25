@@ -43,9 +43,9 @@ const About = () => {
       {/* Bio Section */}
       <section className="pb-24">
         <div className="container mx-auto px-6">
-          <div className="grid lg:grid-cols-2 gap-16 items-center">
+          <div className="flex flex-col-reverse lg:flex-row lg:items-center gap-12 lg:gap-16">
             {/* Text Content */}
-            <AnimatedSection direction="left">
+            <AnimatedSection direction="left" className="flex-1">
               <div className="space-y-6">
                 <motion.p
                   className="text-xl leading-relaxed text-foreground"
@@ -100,9 +100,11 @@ const About = () => {
             </AnimatedSection>
 
             {/* Profile Card */}
-            <AnimatedSection direction="right">
-              <div className="flex justify-center lg:justify-end">
-                <ProfileCard />
+            <AnimatedSection direction="right" className="w-full lg:w-auto lg:flex-shrink-0">
+              <div className="flex justify-center">
+                <div className="w-64 lg:w-72">
+                  <ProfileCard />
+                </div>
               </div>
             </AnimatedSection>
           </div>
