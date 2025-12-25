@@ -23,6 +23,7 @@ interface Project {
   githubUrl: string | null;
   logo?: string;
   screenshot?: string;
+  status?: 'in-progress' | 'live';
 }
 
 const fullProjects: Project[] = [
@@ -75,6 +76,7 @@ const fullProjects: Project[] = [
     outcome: 'Increased online orders by 200% and improved inventory accuracy.',
     liveUrl: '#',
     githubUrl: '#',
+    status: 'in-progress',
   },
   {
     id: 5,
@@ -236,9 +238,16 @@ const Work = () => {
                 {/* Content */}
                 <div className={`space-y-6 ${index % 2 === 1 ? 'lg:order-1' : ''}`}>
                   <div>
-                    <h2 className="text-display-sm font-display font-bold mb-1">
-                      {project.title}
-                    </h2>
+                    <div className="flex items-center gap-3 mb-1">
+                      <h2 className="text-display-sm font-display font-bold">
+                        {project.title}
+                      </h2>
+                      {project.status === 'in-progress' && (
+                        <span className="px-2 py-1 rounded-full bg-yellow-500/20 text-yellow-400 text-xs font-medium border border-yellow-500/30">
+                          In Progress
+                        </span>
+                      )}
+                    </div>
                     {project.subtitle && (
                       <p className="text-lg text-muted-foreground font-medium mb-2">
                         {project.subtitle}
