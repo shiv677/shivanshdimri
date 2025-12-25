@@ -20,17 +20,17 @@ const ImageStack = () => {
     setDirection(newDirection);
     setCurrentIndex((prev) => {
       if (newDirection > 0) {
-        return prev === images.length - 1 ? prev : prev + 1;
+        return (prev + 1) % images.length;
       }
-      return prev === 0 ? prev : prev - 1;
+      return prev === 0 ? images.length - 1 : prev - 1;
     });
   };
 
   const handleDragEnd = (_: MouseEvent | TouchEvent | PointerEvent, info: PanInfo) => {
     const threshold = 50;
-    if (info.offset.x > threshold && currentIndex > 0) {
+    if (info.offset.x > threshold) {
       navigate(-1);
-    } else if (info.offset.x < -threshold && currentIndex < images.length - 1) {
+    } else if (info.offset.x < -threshold) {
       navigate(1);
     }
   };
@@ -57,12 +57,7 @@ const ImageStack = () => {
     ? { duration: 0 } 
     : { duration: 0.4, ease: [0.25, 0.46, 0.45, 0.94] };
 
-  // Calculate elastic resistance at edges
-  const getDragElastic = () => {
-    if (currentIndex === 0) return { left: 0.1, right: 0.2 };
-    if (currentIndex === images.length - 1) return { left: 0.2, right: 0.1 };
-    return 0.2;
-  };
+  const dragElastic = 0.2;
 
   return (
     <div className="relative w-full" ref={containerRef}>
@@ -102,7 +97,7 @@ const ImageStack = () => {
             transition={transition}
             drag="x"
             dragConstraints={{ left: 0, right: 0 }}
-            dragElastic={getDragElastic()}
+            dragElastic={dragElastic}
             onDragEnd={handleDragEnd}
             className="absolute inset-0 rounded-xl overflow-hidden cursor-grab active:cursor-grabbing z-20 bg-muted border border-primary/30"
           >
