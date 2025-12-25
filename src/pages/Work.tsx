@@ -10,6 +10,7 @@ import eliteshopScreenshot from '@/assets/eliteshop-screenshot.png';
 import bookingScreenshot from '@/assets/booking-screenshot.png';
 import carbonixScreenshot from '@/assets/carbonix-screenshot.png';
 import tcboScreenshot from '@/assets/tcbo-screenshot.png';
+import soletraderScreenshot from '@/assets/soletrader-screenshot.png';
 
 interface Project {
   id: number;
@@ -132,6 +133,7 @@ const contributionProjects: Project[] = [
     outcome: 'Live production website supporting international business credibility.',
     liveUrl: 'https://soleetrader.com',
     githubUrl: null,
+    screenshot: soletraderScreenshot,
   },
   {
     id: 9,
@@ -349,16 +351,24 @@ const Work = () => {
                   transition={{ duration: 0.4 }}
                 >
                   <div className="aspect-video rounded-2xl glass border-glow overflow-hidden hover-glow">
-                    <div className="w-full h-full bg-gradient-to-br from-primary/10 to-transparent flex items-center justify-center">
-                      <div className="text-center">
-                        <div className="text-6xl font-display font-bold text-primary/20 mb-2">
-                          0{project.id}
-                        </div>
-                        <div className="text-muted-foreground text-sm">
-                          {project.role}
+                    {project.screenshot ? (
+                      <img 
+                        src={project.screenshot} 
+                        alt={`${project.title} screenshot`}
+                        className="w-full h-full object-cover"
+                      />
+                    ) : (
+                      <div className="w-full h-full bg-gradient-to-br from-primary/10 to-transparent flex items-center justify-center">
+                        <div className="text-center">
+                          <div className="text-6xl font-display font-bold text-primary/20 mb-2">
+                            0{project.id}
+                          </div>
+                          <div className="text-muted-foreground text-sm">
+                            {project.role}
+                          </div>
                         </div>
                       </div>
-                    </div>
+                    )}
                   </div>
                   {/* Floating tech badges */}
                   <div className="absolute -bottom-4 left-4 right-4 flex flex-wrap gap-2 justify-center">
