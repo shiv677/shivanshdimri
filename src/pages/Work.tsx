@@ -7,6 +7,7 @@ import Button from '@/components/Button';
 import doctorHealthyLogo from '@/assets/doctor-healthy-logo.png';
 import doctorHealthyScreenshot from '@/assets/doctor-healthy-screenshot.png';
 import eliteshopScreenshot from '@/assets/eliteshop-screenshot.png';
+import bookingScreenshot from '@/assets/booking-screenshot.png';
 
 interface Project {
   id: number;
@@ -53,14 +54,16 @@ const fullProjects: Project[] = [
   },
   {
     id: 3,
-    title: 'Hotel Management System',
+    title: 'Booking',
+    subtitle: '(Hotel Management System)',
     role: 'WordPress Developer',
     tech: ['WordPress', 'PHP', 'MySQL', 'Custom Theme'],
     problem: 'Hotel chain required a centralized booking and room management solution.',
     solution: 'Created a custom WordPress solution with booking calendar, room availability, and guest management.',
     outcome: 'Enabled real-time booking management across multiple properties.',
-    liveUrl: '#',
+    liveUrl: 'https://hotel-management-demo-five.vercel.app/',
     githubUrl: '#',
+    screenshot: bookingScreenshot,
   },
   {
     id: 4,
