@@ -7,7 +7,7 @@ import Button from '@/components/Button';
 import doctorHealthyLogo from '@/assets/doctor-healthy-logo.png';
 import doctorHealthyScreenshot from '@/assets/doctor-healthy-screenshot.png';
 import eliteshopScreenshot from '@/assets/eliteshop-screenshot.png';
-import bookingScreenshot from '@/assets/booking-screenshot.png';
+
 import carbonixScreenshot from '@/assets/carbonix-screenshot.png';
 import tcboScreenshot from '@/assets/tcbo-screenshot.png';
 import soletraderScreenshot from '@/assets/soletrader-screenshot.png';
@@ -59,43 +59,6 @@ const fullProjects: Project[] = [
   },
   {
     id: 3,
-    title: 'Booking',
-    subtitle: '(Hotel Management System)',
-    role: 'WordPress Developer',
-    tech: ['WordPress', 'PHP', 'MySQL', 'Custom Theme'],
-    problem: 'Hotel chain required a centralized booking and room management solution.',
-    solution: 'Created a custom WordPress solution with booking calendar, room availability, and guest management.',
-    outcome: 'Enabled real-time booking management across multiple properties.',
-    liveUrl: 'https://hotel-management-demo-five.vercel.app/',
-    githubUrl: '#',
-    screenshot: bookingScreenshot,
-  },
-  {
-    id: 4,
-    title: 'Grocery Management Website',
-    role: 'Full-Stack Developer',
-    tech: ['React', 'Firebase', 'Tailwind CSS', 'PWA'],
-    problem: 'Local grocery store needed inventory management and online ordering capabilities.',
-    solution: 'Built a progressive web app with inventory tracking, order management, and delivery scheduling.',
-    outcome: 'Increased online orders by 200% and improved inventory accuracy.',
-    liveUrl: '#',
-    githubUrl: '#',
-    status: 'in-progress',
-  },
-  {
-    id: 5,
-    title: 'Café Website',
-    role: 'WordPress Developer',
-    tech: ['WordPress', 'Elementor', 'WooCommerce', 'SEO'],
-    problem: 'Café needed an online presence with menu display and table reservation system.',
-    solution: 'Designed a visually appealing website with interactive menu, reservation form, and Google Maps integration.',
-    outcome: 'Boosted online visibility and increased table reservations by 150%.',
-    liveUrl: '#',
-    githubUrl: '#',
-    status: 'in-progress',
-  },
-  {
-    id: 6,
     title: 'Carbonix',
     role: 'Live Client Website',
     industry: 'Petroleum • USA',
@@ -108,7 +71,7 @@ const fullProjects: Project[] = [
     screenshot: carbonixScreenshot,
   },
   {
-    id: 7,
+    id: 4,
     title: 'TCBO Marketing LLC',
     role: 'Live Client Website',
     industry: 'Petroleum • USA',
@@ -120,11 +83,8 @@ const fullProjects: Project[] = [
     githubUrl: null,
     screenshot: tcboScreenshot,
   },
-];
-
-const contributionProjects: Project[] = [
   {
-    id: 8,
+    id: 5,
     title: 'Sole Trader',
     role: 'Lead Web Development',
     industry: 'Petroleum • Australia',
@@ -137,7 +97,7 @@ const contributionProjects: Project[] = [
     screenshot: soletraderScreenshot,
   },
   {
-    id: 9,
+    id: 6,
     title: 'Yali Energy Trading',
     role: 'Lead Web Development',
     industry: 'Petroleum • Canada',
@@ -148,6 +108,30 @@ const contributionProjects: Project[] = [
     liveUrl: 'https://yalienergytrading.com',
     githubUrl: null,
     screenshot: yaliScreenshot,
+  },
+  {
+    id: 7,
+    title: 'Grocery Management Website',
+    role: 'Full-Stack Developer',
+    tech: ['React', 'Firebase', 'Tailwind CSS', 'PWA'],
+    problem: 'Local grocery store needed inventory management and online ordering capabilities.',
+    solution: 'Built a progressive web app with inventory tracking, order management, and delivery scheduling.',
+    outcome: 'Increased online orders by 200% and improved inventory accuracy.',
+    liveUrl: '#',
+    githubUrl: '#',
+    status: 'in-progress',
+  },
+  {
+    id: 8,
+    title: 'Café Website',
+    role: 'WordPress Developer',
+    tech: ['WordPress', 'Elementor', 'WooCommerce', 'SEO'],
+    problem: 'Café needed an online presence with menu display and table reservation system.',
+    solution: 'Designed a visually appealing website with interactive menu, reservation form, and Google Maps integration.',
+    outcome: 'Boosted online visibility and increased table reservations by 150%.',
+    liveUrl: '#',
+    githubUrl: '#',
+    status: 'in-progress',
   },
 ];
 
@@ -316,130 +300,6 @@ const Work = () => {
         </div>
       </section>
 
-      {/* Major Contributions Section */}
-      <section className="pb-24">
-        <div className="container mx-auto px-6">
-          <AnimatedSection>
-            <div className="mb-12 pt-8 border-t border-primary/20">
-              <div className="flex items-center gap-3 mb-2">
-                <h2 className="text-display-sm font-display font-bold">
-                  Major <span className="text-gradient">Contributions</span>
-                </h2>
-                <span className="px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-medium border border-primary/20">
-                  Live Client Websites
-                </span>
-              </div>
-              <p className="text-muted-foreground">
-                Client projects where I led key development responsibilities
-              </p>
-            </div>
-          </AnimatedSection>
-
-          {contributionProjects.map((project, index) => (
-            <AnimatedSection
-              key={project.id}
-              direction={index % 2 === 0 ? 'left' : 'right'}
-              delay={0.1}
-            >
-              <div
-                className={`grid lg:grid-cols-2 gap-12 items-center py-16 border-b border-border/30 ${
-                  index % 2 === 1 ? 'lg:flex-row-reverse' : ''
-                }`}
-              >
-                {/* Visual */}
-                <motion.div
-                  className={`relative ${index % 2 === 1 ? 'lg:order-2' : ''}`}
-                  whileHover={{ scale: 1.02 }}
-                  transition={{ duration: 0.4 }}
-                >
-                  <div className="aspect-video rounded-2xl glass border-glow overflow-hidden hover-glow">
-                    {project.screenshot ? (
-                      <img 
-                        src={project.screenshot} 
-                        alt={`${project.title} screenshot`}
-                        className="w-full h-full object-cover"
-                      />
-                    ) : (
-                      <div className="w-full h-full bg-gradient-to-br from-primary/10 to-transparent flex items-center justify-center">
-                        <div className="text-center">
-                          <div className="text-6xl font-display font-bold text-primary/20 mb-2">
-                            0{project.id}
-                          </div>
-                          <div className="text-muted-foreground text-sm">
-                            {project.role}
-                          </div>
-                        </div>
-                      </div>
-                    )}
-                  </div>
-                  {/* Floating tech badges */}
-                  <div className="absolute -bottom-4 left-4 right-4 flex flex-wrap gap-2 justify-center">
-                    {project.tech.slice(0, 3).map((t) => (
-                      <span
-                        key={t}
-                        className="px-3 py-1.5 rounded-full glass-strong text-xs font-medium text-foreground"
-                      >
-                        {t}
-                      </span>
-                    ))}
-                  </div>
-                </motion.div>
-
-                {/* Content */}
-                <div className={`space-y-6 ${index % 2 === 1 ? 'lg:order-1' : ''}`}>
-                  <div>
-                    <h2 className="text-display-sm font-display font-bold mb-2">
-                      {project.title}
-                    </h2>
-                    <div className="flex items-center gap-2">
-                      <p className="text-primary text-sm font-medium">
-                        {project.role}
-                      </p>
-                      <span className="text-muted-foreground text-xs">•</span>
-                      <span className="text-xs text-muted-foreground">Major Contribution</span>
-                    </div>
-                    {project.industry && (
-                      <p className="text-muted-foreground text-xs mt-1">
-                        {project.industry}
-                      </p>
-                    )}
-                  </div>
-
-                  <div className="space-y-4">
-                    <div>
-                      <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider mb-2">
-                        The Problem
-                      </h3>
-                      <p className="text-foreground">{project.problem}</p>
-                    </div>
-                    <div>
-                      <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider mb-2">
-                        The Solution
-                      </h3>
-                      <p className="text-foreground">{project.solution}</p>
-                    </div>
-                    <div>
-                      <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider mb-2">
-                        The Outcome
-                      </h3>
-                      <p className="text-primary font-medium">{project.outcome}</p>
-                    </div>
-                  </div>
-
-                  <div className="flex gap-4 pt-4">
-                    <a href={project.liveUrl} target="_blank" rel="noopener noreferrer">
-                      <Button variant="primary" size="md" data-cursor="View Live">
-                        <ExternalLink size={16} />
-                        Visit Website
-                      </Button>
-                    </a>
-                  </div>
-                </div>
-              </div>
-            </AnimatedSection>
-          ))}
-        </div>
-      </section>
     </Layout>
   );
 };
