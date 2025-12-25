@@ -105,12 +105,12 @@ const Home = () => {
 
               {/* Credibility */}
               <motion.p
-                className="text-primary text-sm font-medium tracking-wide"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.8 }}
+                className="text-base text-muted-foreground/80 font-medium tracking-wide"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.8, delay: 0.8, ease: "easeOut" }}
               >
-                10+ live & demo projects · 6 months professional experience
+                Worked with global clients across Petroleum, E-commerce & SaaS.
               </motion.p>
 
               {/* Description */}
