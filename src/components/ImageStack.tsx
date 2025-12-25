@@ -104,7 +104,7 @@ const ImageStack = () => {
             dragConstraints={{ left: 0, right: 0 }}
             dragElastic={getDragElastic()}
             onDragEnd={handleDragEnd}
-            className="absolute inset-0 rounded-xl overflow-hidden cursor-grab active:cursor-grabbing z-20 bg-muted border border-primary/15"
+            className="absolute inset-0 rounded-xl overflow-hidden cursor-grab active:cursor-grabbing z-20 bg-muted border border-primary/30"
           >
             <img
               src={images[currentIndex]}
