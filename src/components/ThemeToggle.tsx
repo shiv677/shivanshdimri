@@ -1,13 +1,26 @@
 import { Moon, Sun } from 'lucide-react';
 import { useTheme } from 'next-themes';
 import { motion } from 'framer-motion';
+import { useEffect, useCallback } from 'react';
 
 const ThemeToggle = () => {
-  const { theme, setTheme, resolvedTheme } = useTheme();
+  const { setTheme, resolvedTheme } = useTheme();
 
-  const toggleTheme = () => {
+  const toggleTheme = useCallback(() => {
     setTheme(resolvedTheme === 'dark' ? 'light' : 'dark');
-  };
+  }, [resolvedTheme, setTheme]);
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'd') {
+        e.preventDefault();
+        toggleTheme();
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [toggleTheme]);
 
   return (
     <motion.button
