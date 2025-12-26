@@ -4,6 +4,47 @@
 
 @layer base {
   :root {
+    /* Light theme */
+    --background: 220 20% 97%;
+    --foreground: 240 10% 10%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 240 10% 10%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 240 10% 10%;
+
+    /* Cyan accent - premium neon */
+    --primary: 185 85% 40%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 220 15% 92%;
+    --secondary-foreground: 240 10% 20%;
+
+    --muted: 220 15% 90%;
+    --muted-foreground: 240 5% 45%;
+
+    --accent: 185 85% 40%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 220 15% 88%;
+    --input: 220 15% 88%;
+    --ring: 185 85% 40%;
+
+    --radius: 0.75rem;
+
+    /* Custom design tokens */
+    --glow-primary: 185 85% 40%;
+    --glow-secondary: 200 80% 50%;
+    --surface-glass: 220 20% 95%;
+    --text-gradient-start: 185 85% 40%;
+    --text-gradient-end: 200 80% 50%;
+  }
+
+  .dark {
     /* Dark cinematic theme */
     --background: 240 10% 4%;
     --foreground: 0 0% 98%;
@@ -34,36 +75,12 @@
     --input: 240 10% 15%;
     --ring: 185 100% 50%;
 
-    --radius: 0.75rem;
-
     /* Custom design tokens */
     --glow-primary: 185 100% 50%;
     --glow-secondary: 200 100% 60%;
     --surface-glass: 240 10% 8%;
     --text-gradient-start: 185 100% 50%;
     --text-gradient-end: 200 100% 70%;
-  }
-
-  .dark {
-    --background: 240 10% 4%;
-    --foreground: 0 0% 98%;
-    --card: 240 10% 6%;
-    --card-foreground: 0 0% 98%;
-    --popover: 240 10% 6%;
-    --popover-foreground: 0 0% 98%;
-    --primary: 185 100% 50%;
-    --primary-foreground: 240 10% 4%;
-    --secondary: 240 10% 12%;
-    --secondary-foreground: 0 0% 98%;
-    --muted: 240 10% 15%;
-    --muted-foreground: 240 5% 55%;
-    --accent: 185 100% 50%;
-    --accent-foreground: 240 10% 4%;
-    --destructive: 0 84% 60%;
-    --destructive-foreground: 0 0% 98%;
-    --border: 240 10% 15%;
-    --input: 240 10% 15%;
-    --ring: 185 100% 50%;
   }
 }
 
@@ -79,6 +96,25 @@
   body {
     @apply bg-background text-foreground antialiased;
     font-family: 'Inter', system-ui, sans-serif;
+    transition: background-color 0.25s ease, color 0.25s ease;
+  }
+
+  /* Smooth theme transition for all elements */
+  *,
+  *::before,
+  *::after {
+    transition-property: background-color, border-color, color;
+    transition-duration: 0.25s;
+    transition-timing-function: ease;
+  }
+
+  /* Exclude animations from theme transition */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      transition: none !important;
+    }
   }
 
   h1, h2, h3, h4, h5, h6 {
