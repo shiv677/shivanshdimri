@@ -72,7 +72,7 @@ const clientContributions: Project[] = [
     solution: 'Designed and developed a complete end-to-end business website with clean dark-toned UI, structured service pages, performance optimization, and mobile-first responsive layout.',
     outcome: 'Professional brand presence for international clients with improved lead trust and inquiry flow.',
     liveUrl: 'https://arkoseinfosoft.in/',
-    githubUrl: null,
+    githubUrl: 'https://github.com/arkoseinfosoft-lang/arkoseinfosoft',
     screenshot: arkoseScreenshot,
   },
   {
