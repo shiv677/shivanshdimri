@@ -15,6 +15,7 @@ import soletraderScreenshot from '@/assets/soletrader-screenshot.png';
 import yaliScreenshot from '@/assets/yali-screenshot.png';
 import arkoseScreenshot from '@/assets/arkose-screenshot.png';
 import arkoseBuildcomScreenshot from '@/assets/arkose-buildcom-screenshot.png';
+import pearlsScreenshot from '@/assets/32pearls-screenshot.png';
 
 interface Project {
   id: number;
@@ -91,6 +92,19 @@ const fullProjects: Project[] = [
 const clientContributions: Project[] = [
   {
     id: 4,
+    title: '32 Pearls Dental World',
+    role: 'WordPress Developer',
+    industry: 'Healthcare • Dental Clinic',
+    tech: ['WordPress', 'PHP', 'HTML5/CSS3', 'JavaScript'],
+    problem: 'Dental clinic needed a professional, trustworthy online presence with clear service showcasing and conversion-focused design.',
+    solution: 'Built a fully custom WordPress theme with responsive UI, clear service pages, SEO-friendly structure, and easy-to-manage backend for clinic staff.',
+    outcome: 'Professional healthcare website with improved patient trust and easy content management.',
+    liveUrl: 'https://32pearlsdentalworld.com/',
+    githubUrl: null,
+    screenshot: pearlsScreenshot,
+  },
+  {
+    id: 5,
     title: 'Carbonix',
     role: 'Live Client Website',
     industry: 'Petroleum • USA',
