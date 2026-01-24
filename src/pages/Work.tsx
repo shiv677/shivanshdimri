@@ -13,6 +13,7 @@ import carbonixScreenshot from '@/assets/carbonix-screenshot.png';
 import tcboScreenshot from '@/assets/tcbo-screenshot.png';
 import soletraderScreenshot from '@/assets/soletrader-screenshot.png';
 import yaliScreenshot from '@/assets/yali-screenshot.png';
+import arkoseScreenshot from '@/assets/arkose-screenshot.png';
 
 interface Project {
   id: number;
@@ -63,6 +64,19 @@ const fullProjects: Project[] = [
 const clientContributions: Project[] = [
   {
     id: 3,
+    title: 'Arkose Infosoft',
+    role: 'Full-Stack Web Developer & Digital Experience Lead',
+    industry: 'IT Services • Digital Marketing • Web Solutions',
+    tech: ['WordPress', 'HTML5/CSS3', 'JavaScript', 'SEO'],
+    problem: 'Needed a professional, conversion-focused digital presence with clear service positioning, strong trust signals, and lead-focused structure.',
+    solution: 'Designed and developed a complete end-to-end business website with clean dark-toned UI, structured service pages, performance optimization, and mobile-first responsive layout.',
+    outcome: 'Professional brand presence for international clients with improved lead trust and inquiry flow.',
+    liveUrl: 'https://arkoseinfosoft.in/',
+    githubUrl: null,
+    screenshot: arkoseScreenshot,
+  },
+  {
+    id: 4,
     title: 'Carbonix',
     role: 'Live Client Website',
     industry: 'Petroleum • USA',
@@ -75,7 +89,7 @@ const clientContributions: Project[] = [
     screenshot: carbonixScreenshot,
   },
   {
-    id: 4,
+    id: 5,
     title: 'TCBO Marketing LLC',
     role: 'Live Client Website',
     industry: 'Petroleum • USA',
@@ -88,7 +102,7 @@ const clientContributions: Project[] = [
     screenshot: tcboScreenshot,
   },
   {
-    id: 5,
+    id: 6,
     title: 'Sole Trader',
     role: 'Lead Web Development',
     industry: 'Petroleum • Australia',
@@ -101,7 +115,7 @@ const clientContributions: Project[] = [
     screenshot: soletraderScreenshot,
   },
   {
-    id: 6,
+    id: 7,
     title: 'Yali Energy Trading',
     role: 'Lead Web Development',
     industry: 'Petroleum • Canada',
@@ -117,7 +131,7 @@ const clientContributions: Project[] = [
 
 const inProgressProjects: Project[] = [
   {
-    id: 7,
+    id: 8,
     title: 'Grocery Management Website',
     role: 'Full-Stack Developer',
     tech: ['React', 'Firebase', 'Tailwind CSS', 'PWA'],
@@ -129,7 +143,7 @@ const inProgressProjects: Project[] = [
     status: 'in-progress',
   },
   {
-    id: 8,
+    id: 9,
     title: 'Café Website',
     role: 'WordPress Developer',
     tech: ['WordPress', 'Elementor', 'WooCommerce', 'SEO'],
