@@ -48,6 +48,18 @@ const fullProjects: Project[] = [
   },
   {
     id: 2,
+    title: 'Arkose Buildcom',
+    role: 'UI/UX Designer & Frontend Developer',
+    industry: 'Architecture • Construction • Real Estate',
+    tech: ['WordPress', 'HTML5/CSS3', 'JavaScript', 'UX Design'],
+    problem: 'Existing website looked outdated, lacked visual hierarchy, and failed to communicate trust and premium construction standards.',
+    solution: 'Complete UI/UX redesign with modern minimal interface, improved typography, clear service segmentation, strong hero sections, and fully responsive layouts.',
+    outcome: 'Modernized digital identity with stronger visual trust and better user flow across service pages.',
+    liveUrl: 'https://arkose.co.in/',
+    githubUrl: null,
+  },
+  {
+    id: 2,
     title: 'Doctor Healthy You',
     role: 'Full-Stack Developer',
     tech: ['React', 'Node.js', 'MongoDB', 'Express'],
