@@ -6,10 +6,10 @@ import AnimatedSection from '@/components/AnimatedSection';
 import TechOrbit from '@/components/TechOrbit';
 import Button from '@/components/Button';
 
-import tcboScreenshot from '@/assets/tcbo-screenshot.png';
-import carbonixScreenshot from '@/assets/carbonix-screenshot.png';
-import soletraderScreenshot from '@/assets/soletrader-screenshot.png';
-import yaliScreenshot from '@/assets/yali-screenshot.png';
+import arkoseScreenshot from '@/assets/arkose-screenshot.png';
+import arkoseBuildcomScreenshot from '@/assets/arkose-buildcom-screenshot.png';
+import pearlsScreenshot from '@/assets/32pearls-screenshot.png';
+import pitchandplayScreenshot from '@/assets/pitchandplay-screenshot.png';
 
 const proofPoints = [
   { icon: Rocket, value: '10+', label: 'Projects Delivered' },
@@ -20,27 +20,27 @@ const proofPoints = [
 
 const featuredProjects = [
   {
-    title: 'TCBO Marketing LLC',
-    description: 'Corporate website for a petroleum marketing company',
-    image: tcboScreenshot,
+    title: 'Arkose Infosoft',
+    description: 'Full-stack business website for IT services & digital marketing',
+    image: arkoseScreenshot,
     isLiveClient: true,
   },
   {
-    title: 'Carbonix',
-    description: 'Professional business website for petroleum industry',
-    image: carbonixScreenshot,
+    title: 'Arkose Buildcom',
+    description: 'UI/UX redesign for architecture & construction firm',
+    image: arkoseBuildcomScreenshot,
     isLiveClient: true,
   },
   {
-    title: 'Sole Trader',
-    description: 'International petroleum trading company website',
-    image: soletraderScreenshot,
+    title: '32 Pearls Dental World',
+    description: 'Custom WordPress website for healthcare dental clinic',
+    image: pearlsScreenshot,
     isLiveClient: true,
   },
   {
-    title: 'Yali Energy Trading',
-    description: 'Energy trading company digital presence',
-    image: yaliScreenshot,
+    title: 'Pitch & Play',
+    description: 'Custom-coded website for influencer marketing agency',
+    image: pitchandplayScreenshot,
     isLiveClient: true,
   },
 ];
