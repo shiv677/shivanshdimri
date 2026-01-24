@@ -5,6 +5,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { AnimatePresence } from "framer-motion";
 import { ThemeProvider } from "./components/ThemeProvider";
+import CommandPalette from "./components/CommandPalette";
 import Home from "./pages/Home";
 import Work from "./pages/Work";
 import About from "./pages/About";
@@ -46,6 +47,7 @@ const App = () => (
         <Sonner />
         <BrowserRouter>
           <ScrollToTop />
+          <CommandPalette />
           <AnimatedRoutes />
         </BrowserRouter>
       </TooltipProvider>

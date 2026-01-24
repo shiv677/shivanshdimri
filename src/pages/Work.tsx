@@ -3,6 +3,7 @@ import { ExternalLink, Github } from 'lucide-react';
 import Layout from '@/components/Layout';
 import AnimatedSection from '@/components/AnimatedSection';
 import Button from '@/components/Button';
+import ProjectCard from '@/components/ProjectCard';
 
 import doctorHealthyLogo from '@/assets/doctor-healthy-logo.png';
 import doctorHealthyScreenshot from '@/assets/doctor-healthy-screenshot.png';
@@ -191,17 +192,15 @@ const Work = () => {
                 }`}
               >
                 {/* Visual */}
-                <motion.div
-                  className={`relative ${index % 2 === 1 ? 'lg:order-2' : ''}`}
-                  whileHover={{ scale: 1.02 }}
-                  transition={{ duration: 0.4 }}
+                <ProjectCard
+                  className={`relative group ${index % 2 === 1 ? 'lg:order-2' : ''}`}
                 >
                   <div className="aspect-video rounded-2xl glass border-glow overflow-hidden hover-glow">
                     {project.screenshot ? (
                       <img 
                         src={project.screenshot} 
                         alt={`${project.title} screenshot`}
-                        className="w-full h-full object-cover"
+                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                       />
                     ) : (
                       <div className="w-full h-full bg-gradient-to-br from-primary/10 to-transparent flex items-center justify-center">
@@ -235,7 +234,7 @@ const Work = () => {
                       </span>
                     ))}
                   </div>
-                </motion.div>
+                </ProjectCard>
 
                 {/* Content */}
                 <div className={`space-y-6 ${index % 2 === 1 ? 'lg:order-1' : ''}`}>
@@ -330,17 +329,15 @@ const Work = () => {
                 }`}
               >
                 {/* Visual */}
-                <motion.div
-                  className={`relative ${index % 2 === 1 ? 'lg:order-2' : ''}`}
-                  whileHover={{ scale: 1.02 }}
-                  transition={{ duration: 0.4 }}
+                <ProjectCard
+                  className={`relative group ${index % 2 === 1 ? 'lg:order-2' : ''}`}
                 >
                   <div className="aspect-video rounded-2xl glass border-glow overflow-hidden hover-glow">
                     {project.screenshot ? (
                       <img 
                         src={project.screenshot} 
                         alt={`${project.title} screenshot`}
-                        className="w-full h-full object-cover"
+                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                       />
                     ) : (
                       <div className="w-full h-full bg-gradient-to-br from-primary/10 to-transparent flex items-center justify-center">
@@ -366,7 +363,7 @@ const Work = () => {
                       </span>
                     ))}
                   </div>
-                </motion.div>
+                </ProjectCard>
 
                 {/* Content */}
                 <div className={`space-y-6 ${index % 2 === 1 ? 'lg:order-1' : ''}`}>
