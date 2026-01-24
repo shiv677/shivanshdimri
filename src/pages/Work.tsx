@@ -63,7 +63,7 @@ const fullProjects: Project[] = [
     screenshot: arkoseBuildcomScreenshot,
   },
   {
-    id: 2,
+    id: 3,
     title: 'Doctor Healthy You',
     role: 'Full-Stack Developer',
     tech: ['React', 'Node.js', 'MongoDB', 'Express'],
@@ -76,7 +76,7 @@ const fullProjects: Project[] = [
     screenshot: doctorHealthyScreenshot,
   },
   {
-    id: 3,
+    id: 4,
     title: 'EliteShop',
     subtitle: '(E-Commerce Website)',
     role: 'Frontend Developer',
@@ -92,7 +92,7 @@ const fullProjects: Project[] = [
 
 const clientContributions: Project[] = [
   {
-    id: 4,
+    id: 5,
     title: '32 Pearls Dental World',
     role: 'WordPress Developer',
     industry: 'Healthcare • Dental Clinic',
@@ -105,7 +105,7 @@ const clientContributions: Project[] = [
     screenshot: pearlsScreenshot,
   },
   {
-    id: 5,
+    id: 6,
     title: 'Pitch & Play',
     role: 'WordPress Developer & Frontend Engineer',
     industry: 'Influencer Marketing • Digital Marketing',
@@ -118,7 +118,7 @@ const clientContributions: Project[] = [
     screenshot: pitchandplayScreenshot,
   },
   {
-    id: 6,
+    id: 7,
     title: 'Carbonix',
     role: 'Live Client Website',
     industry: 'Petroleum • USA',
@@ -131,7 +131,7 @@ const clientContributions: Project[] = [
     screenshot: carbonixScreenshot,
   },
   {
-    id: 5,
+    id: 8,
     title: 'TCBO Marketing LLC',
     role: 'Live Client Website',
     industry: 'Petroleum • USA',
@@ -144,7 +144,7 @@ const clientContributions: Project[] = [
     screenshot: tcboScreenshot,
   },
   {
-    id: 6,
+    id: 9,
     title: 'Sole Trader',
     role: 'Lead Web Development',
     industry: 'Petroleum • Australia',
@@ -157,7 +157,7 @@ const clientContributions: Project[] = [
     screenshot: soletraderScreenshot,
   },
   {
-    id: 7,
+    id: 10,
     title: 'Yali Energy Trading',
     role: 'Lead Web Development',
     industry: 'Petroleum • Canada',
@@ -168,33 +168,6 @@ const clientContributions: Project[] = [
     liveUrl: 'https://yalienergytrading.com',
     githubUrl: null,
     screenshot: yaliScreenshot,
-  },
-];
-
-const inProgressProjects: Project[] = [
-  {
-    id: 8,
-    title: 'Grocery Management Website',
-    role: 'Full-Stack Developer',
-    tech: ['React', 'Firebase', 'Tailwind CSS', 'PWA'],
-    problem: 'Local grocery store needed inventory management and online ordering capabilities.',
-    solution: 'Built a progressive web app with inventory tracking, order management, and delivery scheduling.',
-    outcome: 'Increased online orders by 200% and improved inventory accuracy.',
-    liveUrl: '#',
-    githubUrl: '#',
-    status: 'in-progress',
-  },
-  {
-    id: 9,
-    title: 'Café Website',
-    role: 'WordPress Developer',
-    tech: ['WordPress', 'Elementor', 'WooCommerce', 'SEO'],
-    problem: 'Café needed an online presence with menu display and table reservation system.',
-    solution: 'Designed a visually appealing website with interactive menu, reservation form, and Google Maps integration.',
-    outcome: 'Boosted online visibility and increased table reservations by 150%.',
-    liveUrl: '#',
-    githubUrl: '#',
-    status: 'in-progress',
   },
 ];
 
@@ -477,109 +450,6 @@ const Work = () => {
         </div>
       </section>
 
-      {/* In Progress Section */}
-      <section className="pb-24">
-        <div className="container mx-auto px-6">
-          <AnimatedSection>
-            <div className="mb-12 pt-8 border-t border-yellow-500/20">
-              <div className="flex items-center gap-3 mb-2">
-                <h2 className="text-display-sm font-display font-bold">
-                  In <span className="text-gradient">Progress</span>
-                </h2>
-                <span className="px-3 py-1 rounded-full bg-yellow-500/20 text-yellow-400 text-xs font-medium border border-yellow-500/30">
-                  Coming Soon
-                </span>
-              </div>
-              <p className="text-muted-foreground">
-                Projects currently under development
-              </p>
-            </div>
-          </AnimatedSection>
-
-          {inProgressProjects.map((project, index) => (
-            <AnimatedSection
-              key={project.id}
-              direction={index % 2 === 0 ? 'left' : 'right'}
-              delay={0.1}
-            >
-              <div
-                className={`grid lg:grid-cols-2 gap-12 items-center py-16 border-b border-border/30 ${
-                  index % 2 === 1 ? 'lg:flex-row-reverse' : ''
-                }`}
-              >
-                {/* Visual */}
-                <motion.div
-                  className={`relative ${index % 2 === 1 ? 'lg:order-2' : ''}`}
-                  whileHover={{ scale: 1.02 }}
-                  transition={{ duration: 0.4 }}
-                >
-                  <div className="aspect-video rounded-2xl glass border-glow overflow-hidden hover-glow">
-                    <div className="w-full h-full bg-gradient-to-br from-yellow-500/10 to-transparent flex items-center justify-center">
-                      <div className="text-center">
-                        <div className="text-6xl font-display font-bold text-yellow-500/20 mb-2">
-                          0{project.id}
-                        </div>
-                        <div className="text-muted-foreground text-sm">
-                          {project.role}
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  {/* Floating tech badges */}
-                  <div className="absolute -bottom-4 left-4 right-4 flex flex-wrap gap-2 justify-center">
-                    {project.tech.slice(0, 3).map((t) => (
-                      <span
-                        key={t}
-                        className="px-3 py-1.5 rounded-full glass-strong text-xs font-medium text-foreground"
-                      >
-                        {t}
-                      </span>
-                    ))}
-                  </div>
-                </motion.div>
-
-                {/* Content */}
-                <div className={`space-y-6 ${index % 2 === 1 ? 'lg:order-1' : ''}`}>
-                  <div>
-                    <div className="flex items-center gap-3 mb-1">
-                      <h2 className="text-display-sm font-display font-bold">
-                        {project.title}
-                      </h2>
-                      <span className="px-2 py-1 rounded-full bg-yellow-500/20 text-yellow-400 text-xs font-medium border border-yellow-500/30">
-                        In Progress
-                      </span>
-                    </div>
-                    <p className="text-primary text-sm font-medium">
-                      {project.role}
-                    </p>
-                  </div>
-
-                  <div className="space-y-4">
-                    <div>
-                      <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider mb-2">
-                        The Problem
-                      </h3>
-                      <p className="text-foreground">{project.problem}</p>
-                    </div>
-                    <div>
-                      <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider mb-2">
-                        The Solution
-                      </h3>
-                      <p className="text-foreground">{project.solution}</p>
-                    </div>
-                    <div>
-                      <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider mb-2">
-                        Expected Outcome
-                      </h3>
-                      <p className="text-primary font-medium">{project.outcome}</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </AnimatedSection>
-          ))}
-        </div>
-      </section>
 
     </Layout>
   );
