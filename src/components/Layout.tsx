@@ -3,6 +3,7 @@ import Navigation from './Navigation';
 import Footer from './Footer';
 import PageTransition from './PageTransition';
 import ScrollProgress from './ScrollProgress';
+import ShortcutHint from './ShortcutHint';
 
 interface LayoutProps {
   children: ReactNode;
@@ -16,6 +17,7 @@ const Layout = ({ children }: LayoutProps) => {
         <Navigation />
         <main className="relative z-10">{children}</main>
         <Footer />
+        <ShortcutHint />
       </div>
     </PageTransition>
   );
