@@ -16,6 +16,7 @@ import yaliScreenshot from '@/assets/yali-screenshot.png';
 import arkoseScreenshot from '@/assets/arkose-screenshot.png';
 import arkoseBuildcomScreenshot from '@/assets/arkose-buildcom-screenshot.png';
 import pearlsScreenshot from '@/assets/32pearls-screenshot.png';
+import pitchandplayScreenshot from '@/assets/pitchandplay-screenshot.png';
 
 interface Project {
   id: number;
@@ -105,6 +106,19 @@ const clientContributions: Project[] = [
   },
   {
     id: 5,
+    title: 'Pitch & Play',
+    role: 'WordPress Developer & Frontend Engineer',
+    industry: 'Influencer Marketing • Digital Marketing',
+    tech: ['WordPress', 'PHP', 'HTML5/CSS3', 'JavaScript'],
+    problem: 'Required a modern, performance-focused website to represent influencer marketing services with bold, engaging brand presence.',
+    solution: 'Developed a custom-coded WordPress website with responsive frontend, clear service positioning, and conversion-focused CTAs.',
+    outcome: 'Distinct brand identity with improved clarity of offerings and scalable WordPress implementation.',
+    liveUrl: 'https://pitchandplay.in/',
+    githubUrl: null,
+    screenshot: pitchandplayScreenshot,
+  },
+  {
+    id: 6,
     title: 'Carbonix',
     role: 'Live Client Website',
     industry: 'Petroleum • USA',
