@@ -14,6 +14,7 @@ import tcboScreenshot from '@/assets/tcbo-screenshot.png';
 import soletraderScreenshot from '@/assets/soletrader-screenshot.png';
 import yaliScreenshot from '@/assets/yali-screenshot.png';
 import arkoseScreenshot from '@/assets/arkose-screenshot.png';
+import arkoseBuildcomScreenshot from '@/assets/arkose-buildcom-screenshot.png';
 
 interface Project {
   id: number;
@@ -57,6 +58,7 @@ const fullProjects: Project[] = [
     outcome: 'Modernized digital identity with stronger visual trust and better user flow across service pages.',
     liveUrl: 'https://arkose.co.in/',
     githubUrl: null,
+    screenshot: arkoseBuildcomScreenshot,
   },
   {
     id: 2,
