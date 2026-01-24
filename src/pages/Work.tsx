@@ -35,6 +35,19 @@ interface Project {
 const fullProjects: Project[] = [
   {
     id: 1,
+    title: 'Arkose Infosoft',
+    role: 'Full-Stack Web Developer & Digital Experience Lead',
+    industry: 'IT Services • Digital Marketing • Web Solutions',
+    tech: ['WordPress', 'HTML5/CSS3', 'JavaScript', 'SEO'],
+    problem: 'Needed a professional, conversion-focused digital presence with clear service positioning, strong trust signals, and lead-focused structure.',
+    solution: 'Designed and developed a complete end-to-end business website with clean dark-toned UI, structured service pages, performance optimization, and mobile-first responsive layout.',
+    outcome: 'Professional brand presence for international clients with improved lead trust and inquiry flow.',
+    liveUrl: 'https://arkoseinfosoft.in/',
+    githubUrl: 'https://github.com/arkoseinfosoft-lang/arkoseinfosoft',
+    screenshot: arkoseScreenshot,
+  },
+  {
+    id: 2,
     title: 'Doctor Healthy You',
     role: 'Full-Stack Developer',
     tech: ['React', 'Node.js', 'MongoDB', 'Express'],
@@ -47,7 +60,7 @@ const fullProjects: Project[] = [
     screenshot: doctorHealthyScreenshot,
   },
   {
-    id: 2,
+    id: 3,
     title: 'EliteShop',
     subtitle: '(E-Commerce Website)',
     role: 'Frontend Developer',
@@ -62,19 +75,6 @@ const fullProjects: Project[] = [
 ];
 
 const clientContributions: Project[] = [
-  {
-    id: 3,
-    title: 'Arkose Infosoft',
-    role: 'Full-Stack Web Developer & Digital Experience Lead',
-    industry: 'IT Services • Digital Marketing • Web Solutions',
-    tech: ['WordPress', 'HTML5/CSS3', 'JavaScript', 'SEO'],
-    problem: 'Needed a professional, conversion-focused digital presence with clear service positioning, strong trust signals, and lead-focused structure.',
-    solution: 'Designed and developed a complete end-to-end business website with clean dark-toned UI, structured service pages, performance optimization, and mobile-first responsive layout.',
-    outcome: 'Professional brand presence for international clients with improved lead trust and inquiry flow.',
-    liveUrl: 'https://arkoseinfosoft.in/',
-    githubUrl: 'https://github.com/arkoseinfosoft-lang/arkoseinfosoft',
-    screenshot: arkoseScreenshot,
-  },
   {
     id: 4,
     title: 'Carbonix',
