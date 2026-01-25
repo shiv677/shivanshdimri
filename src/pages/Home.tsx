@@ -1,10 +1,9 @@
-import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { ArrowRight, Download, MapPin, Briefcase, Code2, Rocket, Users, Fuel, ShoppingBag, Cloud } from 'lucide-react';
+import { ArrowRight, Briefcase, Code2, Rocket, Users } from 'lucide-react';
 import Layout from '@/components/Layout';
 import AnimatedSection from '@/components/AnimatedSection';
-import TechOrbit from '@/components/TechOrbit';
 import Button from '@/components/Button';
+import SplineHero from '@/components/SplineHero';
 
 import arkoseScreenshot from '@/assets/arkose-screenshot.png';
 import arkoseBuildcomScreenshot from '@/assets/arkose-buildcom-screenshot.png';
@@ -48,158 +47,8 @@ const featuredProjects = [
 const Home = () => {
   return (
     <Layout>
-      {/* Hero Section */}
-      <section className="relative min-h-screen flex items-center pt-20 overflow-hidden">
-        {/* Background gradient */}
-        <div className="absolute inset-0 bg-hero-gradient pointer-events-none" />
-        
-        <div className="container mx-auto px-6">
-          <div className="grid lg:grid-cols-5 gap-12 items-center">
-            {/* Left Content - 60% */}
-            <div className="lg:col-span-3 space-y-8">
-              {/* Meta line */}
-              <motion.div
-                className="flex items-center gap-2 text-muted-foreground text-sm"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.2 }}
-              >
-                <MapPin size={14} className="text-primary" />
-                <span>Kanpur, India · Open to freelance & full-time roles</span>
-              </motion.div>
-
-              {/* Main Headline */}
-              <motion.h1
-                className="text-display-xl font-display font-bold tracking-tight"
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 0.4 }}
-              >
-                <motion.span
-                  className="inline-block"
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, delay: 0.5 }}
-                >
-                  Shivansh
-                </motion.span>{' '}
-                <motion.span
-                  className="inline-block text-gradient glow-text"
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, delay: 0.6 }}
-                >
-                  Dimri
-                </motion.span>
-              </motion.h1>
-
-              {/* Title */}
-              <motion.p
-                className="text-display-sm font-display text-muted-foreground"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.7 }}
-              >
-                Web Developer | WordPress & Next.js Specialist
-              </motion.p>
-
-              {/* Credibility */}
-              <motion.div
-                className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 text-base text-muted-foreground/80 font-medium"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ duration: 0.8, delay: 0.8, ease: "easeOut" }}
-              >
-                <span>Worked with global clients across</span>
-                <div className="flex flex-wrap items-center gap-2 sm:gap-3">
-                  <span className="inline-flex items-center gap-1.5 text-primary/80">
-                    <Fuel size={16} />
-                    <span className="text-sm">Petroleum</span>
-                  </span>
-                  <span className="text-muted-foreground/40">·</span>
-                  <span className="inline-flex items-center gap-1.5 text-primary/80">
-                    <ShoppingBag size={16} />
-                    <span className="text-sm">E-commerce</span>
-                  </span>
-                  <span className="text-muted-foreground/40">·</span>
-                  <span className="inline-flex items-center gap-1.5 text-primary/80">
-                    <Cloud size={16} />
-                    <span className="text-sm">SaaS</span>
-                  </span>
-                </div>
-              </motion.div>
-
-              {/* Description */}
-              <motion.p
-                className="text-lg text-muted-foreground max-w-xl leading-relaxed"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.9 }}
-              >
-                I design and build fast, clean, production-ready websites that scale. 
-                Focused on clarity, performance, and real-world usability.
-              </motion.p>
-
-              {/* CTAs */}
-              <motion.div
-                className="flex flex-wrap gap-4"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 1 }}
-              >
-                <Link to="/work">
-                  <Button variant="primary" size="lg" data-cursor="View">
-                    View Selected Work
-                    <ArrowRight size={18} />
-                  </Button>
-                </Link>
-                <a href="/SHIVANSH_DIMRI_CV.pdf" download>
-                  <Button variant="outline" size="lg" data-cursor="Download">
-                    <Download size={18} />
-                    Download Resume
-                  </Button>
-                </a>
-              </motion.div>
-
-              {/* Micro-copy */}
-              <motion.p
-                className="text-sm text-muted-foreground/60"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ duration: 0.6, delay: 1.2 }}
-              >
-                Available for freelance & full-time roles
-              </motion.p>
-            </div>
-
-            {/* Right Visual - 40% */}
-            <motion.div
-              className="lg:col-span-2 hidden lg:block"
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 1, delay: 0.8 }}
-            >
-              <TechOrbit />
-            </motion.div>
-          </div>
-        </div>
-
-        {/* Scroll indicator */}
-        <motion.div
-          className="absolute bottom-8 left-1/2 -translate-x-1/2"
-          initial={{ opacity: 0, y: -10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 1.5, repeat: Infinity, repeatType: 'reverse', repeatDelay: 1 }}
-        >
-          <div className="w-6 h-10 rounded-full border-2 border-muted-foreground/30 flex items-start justify-center p-2">
-            <motion.div
-              className="w-1 h-2 rounded-full bg-primary"
-              animate={{ y: [0, 12, 0] }}
-              transition={{ duration: 1.5, repeat: Infinity, ease: 'easeInOut' }}
-            />
-          </div>
-        </motion.div>
-      </section>
+      {/* Spline Hero Section */}
+      <SplineHero />
 
       {/* Proof Strip */}
       <section className="py-24 border-t border-border/50">
