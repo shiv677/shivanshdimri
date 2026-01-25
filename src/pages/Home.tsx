@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { ArrowRight, Download, MapPin, Briefcase, Code2, Rocket, Users, Fuel, ShoppingBag, Cloud } from 'lucide-react';
+import { ArrowRight, Download, MapPin, Briefcase, Code2, Rocket, Users, HeartPulse, Megaphone, Monitor } from 'lucide-react';
 import Layout from '@/components/Layout';
 import AnimatedSection from '@/components/AnimatedSection';
 import TechOrbit from '@/components/TechOrbit';
@@ -113,18 +113,18 @@ const Home = () => {
                 <span>Worked with global clients across</span>
                 <div className="flex flex-wrap items-center gap-2 sm:gap-3">
                   <span className="inline-flex items-center gap-1.5 text-primary/80">
-                    <Fuel size={16} />
-                    <span className="text-sm">Petroleum</span>
+                    <HeartPulse size={16} />
+                    <span className="text-sm">Healthcare</span>
                   </span>
                   <span className="text-muted-foreground/40">·</span>
                   <span className="inline-flex items-center gap-1.5 text-primary/80">
-                    <ShoppingBag size={16} />
-                    <span className="text-sm">E-commerce</span>
+                    <Megaphone size={16} />
+                    <span className="text-sm">Marketing</span>
                   </span>
                   <span className="text-muted-foreground/40">·</span>
                   <span className="inline-flex items-center gap-1.5 text-primary/80">
-                    <Cloud size={16} />
-                    <span className="text-sm">SaaS</span>
+                    <Monitor size={16} />
+                    <span className="text-sm">IT Services</span>
                   </span>
                 </div>
               </motion.div>
