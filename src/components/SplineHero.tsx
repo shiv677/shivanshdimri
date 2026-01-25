@@ -1,31 +1,53 @@
-'use client';
-
-import { Suspense, lazy } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { ArrowRight, Download, MapPin, Fuel, ShoppingBag, Cloud } from 'lucide-react';
 import Button from '@/components/Button';
 
-// Lazy load Spline to avoid SSR issues
-const Spline = lazy(() => import('@splinetool/react-spline'));
-
 const SplineHero = () => {
+  const splineContainerRef = useRef<HTMLDivElement>(null);
+  const [isLoaded, setIsLoaded] = useState(false);
+
+  useEffect(() => {
+    // Dynamically load the Spline viewer script
+    const script = document.createElement('script');
+    script.type = 'module';
+    script.src = 'https://unpkg.com/@splinetool/viewer@1.9.48/build/spline-viewer.js';
+    script.onload = () => {
+      // Create the spline-viewer element after script loads
+      if (splineContainerRef.current) {
+        const viewer = document.createElement('spline-viewer');
+        viewer.setAttribute('url', 'https://prod.spline.design/aPcEaLcCpiXDoQMr/scene.splinecode');
+        viewer.style.width = '100%';
+        viewer.style.height = '100%';
+        viewer.addEventListener('load', () => setIsLoaded(true));
+        splineContainerRef.current.appendChild(viewer);
+      }
+    };
+    document.head.appendChild(script);
+
+    return () => {
+      // Cleanup
+      if (splineContainerRef.current) {
+        splineContainerRef.current.innerHTML = '';
+      }
+      document.head.removeChild(script);
+    };
+  }, []);
+
   return (
     <section className="relative h-screen w-full overflow-hidden">
       {/* Spline 3D Background */}
-      <div className="absolute inset-0 z-0">
-        <Suspense
-          fallback={
-            <div className="w-full h-full bg-background flex items-center justify-center">
-              <div className="w-8 h-8 border-2 border-primary border-t-transparent rounded-full animate-spin" />
-            </div>
-          }
-        >
-          <Spline
-            scene="https://prod.spline.design/aPcEaLcCpiXDoQMr/scene.splinecode"
-            className="w-full h-full"
-          />
-        </Suspense>
+      <div 
+        ref={splineContainerRef}
+        className="absolute inset-0 z-0"
+      >
+        {/* Loading state */}
+        {!isLoaded && (
+          <div className="w-full h-full bg-background flex items-center justify-center">
+            <div className="w-8 h-8 border-2 border-primary border-t-transparent rounded-full animate-spin" />
+          </div>
+        )}
       </div>
 
       {/* Dark Overlay for text readability */}
