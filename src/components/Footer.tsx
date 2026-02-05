@@ -7,7 +7,7 @@ const Footer = () => {
 
   const socialLinks = [
     { icon: Github, href: 'https://github.com/shiv677', label: 'GitHub' },
-    { icon: Linkedin, href: '#', label: 'LinkedIn' },
+    { icon: Linkedin, href: 'https://www.linkedin.com/in/shivansh-dimri-27820b268', label: 'LinkedIn' },
     { icon: Mail, href: 'mailto:dimrishiv933@gmail.com', label: 'Email' },
     { icon: Phone, href: 'https://wa.me/918957543247', label: 'WhatsApp' },
   ];
