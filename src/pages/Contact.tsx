@@ -30,8 +30,8 @@ const contactMethods = [
   {
     icon: Linkedin,
     label: 'LinkedIn',
-    value: 'Connect on LinkedIn',
-    href: '#',
+    value: 'linkedin.com/in/shivansh-dimri-27820b268',
+    href: 'https://www.linkedin.com/in/shivansh-dimri-27820b268',
   },
   {
     icon: Phone,
