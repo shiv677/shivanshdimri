@@ -18,7 +18,7 @@ const getExperienceMonths = () => {
 };
 
 const proofPoints = [
-  { icon: Rocket, value: '10+', label: 'Projects Delivered' },
+  { icon: Rocket, value: '20+', label: 'Projects Delivered' },
   { icon: Briefcase, value: `${getExperienceMonths()}+ Mo`, label: 'Professional Experience' },
   { icon: Users, value: '5+', label: 'Satisfied Clients' },
   { icon: Code2, value: '100%', label: 'End-to-End Ownership' },
