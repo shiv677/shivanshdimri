@@ -4,6 +4,7 @@ import Layout from '@/components/Layout';
 import AnimatedSection from '@/components/AnimatedSection';
 import Button from '@/components/Button';
 import ProjectCard from '@/components/ProjectCard';
+import InfrastructureProjects from '@/components/InfrastructureProjects';
 
 import doctorHealthyLogo from '@/assets/doctor-healthy-logo.png';
 import doctorHealthyScreenshot from '@/assets/doctor-healthy-screenshot.png';
@@ -450,6 +451,8 @@ const Work = () => {
         </div>
       </section>
 
+      {/* Infrastructure Projects */}
+      <InfrastructureProjects />
 
     </Layout>
   );
