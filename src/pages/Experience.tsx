@@ -1,3 +1,4 @@
+import { useMemo } from 'react';
 import { motion } from 'framer-motion';
 import { Calendar, MapPin, Building2, Briefcase, Rocket } from 'lucide-react';
 import Layout from '@/components/Layout';
@@ -52,6 +53,16 @@ const experiences = [
 ];
 
 const Experience = () => {
+  const experienceMonths = useMemo(() => {
+    const start = new Date(2025, 5); // Jun 2025
+    const now = new Date();
+    return Math.max(1, (now.getFullYear() - start.getFullYear()) * 12 + (now.getMonth() - start.getMonth()));
+  }, []);
+
+  const experienceLabel = experienceMonths >= 12
+    ? `${Math.floor(experienceMonths / 12)}+ Yr${Math.floor(experienceMonths / 12) > 1 ? 's' : ''}`
+    : `${experienceMonths}+`;
+
   return (
     <Layout>
       {/* Hero */}
@@ -201,7 +212,7 @@ const Experience = () => {
             <AnimatedSection delay={0}>
               <div className="p-8 rounded-2xl glass">
                 <div className="text-display-md font-display font-bold text-primary mb-2">
-                  6+
+                  {experienceLabel}
                 </div>
                 <div className="text-muted-foreground">Months Experience</div>
               </div>
