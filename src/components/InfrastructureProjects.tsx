@@ -112,19 +112,23 @@ const ProjectCard = ({ project, index }: { project: InfraProject; index: number 
   const Icon = project.icon;
 
   return (
-    <AnimatedSection delay={index * 0.1}>
+    <AnimatedSection delay={index * 0.15}>
       <motion.div
         className="border border-border/40 rounded-xl bg-card/30 backdrop-blur-sm overflow-hidden hover:border-primary/30 transition-colors duration-300"
-        layout
+        whileHover={{ scale: 1.005, transition: { duration: 0.2 } }}
       >
         {/* Header – always visible */}
         <button
           onClick={() => setIsOpen(!isOpen)}
           className="w-full text-left px-6 py-5 flex items-start gap-4 group cursor-pointer"
         >
-          <div className="mt-1 p-2 rounded-lg bg-primary/10 text-primary shrink-0">
+          <motion.div
+            className="mt-1 p-2 rounded-lg bg-primary/10 text-primary shrink-0"
+            whileHover={{ rotate: 8, scale: 1.1 }}
+            transition={{ type: 'spring', stiffness: 300, damping: 15 }}
+          >
             <Icon size={20} />
-          </div>
+          </motion.div>
           <div className="flex-1 min-w-0">
             <h3 className="text-lg font-display font-bold text-foreground group-hover:text-primary transition-colors">
               {project.title}
@@ -135,7 +139,7 @@ const ProjectCard = ({ project, index }: { project: InfraProject; index: number 
           </div>
           <motion.div
             animate={{ rotate: isOpen ? 180 : 0 }}
-            transition={{ duration: 0.2 }}
+            transition={{ duration: 0.3, ease: [0.23, 1, 0.32, 1] }}
             className="mt-2 text-muted-foreground shrink-0"
           >
             <ChevronDown size={18} />
@@ -149,22 +153,30 @@ const ProjectCard = ({ project, index }: { project: InfraProject; index: number 
               initial={{ height: 0, opacity: 0 }}
               animate={{ height: 'auto', opacity: 1 }}
               exit={{ height: 0, opacity: 0 }}
-              transition={{ duration: 0.3, ease: [0.23, 1, 0.32, 1] }}
+              transition={{ duration: 0.4, ease: [0.23, 1, 0.32, 1] }}
               className="overflow-hidden"
             >
               <div className="px-6 pb-6 space-y-6 border-t border-border/20 pt-5">
                 {/* Technical Overview */}
-                <div>
+                <motion.div
+                  initial={{ opacity: 0, y: 12 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.05, duration: 0.4 }}
+                >
                   <h4 className="text-xs font-semibold text-muted-foreground uppercase tracking-widest mb-2">
                     Technical Overview
                   </h4>
                   <p className="text-sm text-foreground/90 leading-relaxed">
                     {project.overview}
                   </p>
-                </div>
+                </motion.div>
 
                 {/* GitHub */}
-                <div>
+                <motion.div
+                  initial={{ opacity: 0, x: -12 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 0.1, duration: 0.4 }}
+                >
                   <a
                     href={project.github}
                     target="_blank"
@@ -175,55 +187,73 @@ const ProjectCard = ({ project, index }: { project: InfraProject; index: number 
                     View Repository
                     <ExternalLink size={14} />
                   </a>
-                </div>
+                </motion.div>
 
                 {/* Folder Structure */}
-                <div>
+                <motion.div
+                  initial={{ opacity: 0, y: 12 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.15, duration: 0.4 }}
+                >
                   <h4 className="text-xs font-semibold text-muted-foreground uppercase tracking-widest mb-2">
                     Project Structure
                   </h4>
                   <pre className="text-xs text-primary/80 bg-background/60 border border-border/30 rounded-lg p-4 font-mono overflow-x-auto">
                     {project.folderStructure}
                   </pre>
-                </div>
+                </motion.div>
 
                 {/* Core Concepts */}
-                <div>
+                <motion.div
+                  initial={{ opacity: 0, y: 12 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.2, duration: 0.4 }}
+                >
                   <h4 className="text-xs font-semibold text-muted-foreground uppercase tracking-widest mb-3">
                     Core Technologies & Architecture
                   </h4>
                   <div className="flex flex-wrap gap-2">
-                    {project.coreConcepts.map((concept) => (
-                      <span
+                    {project.coreConcepts.map((concept, i) => (
+                      <motion.span
                         key={concept}
+                        initial={{ opacity: 0, scale: 0.8 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        transition={{ delay: 0.25 + i * 0.04, duration: 0.3 }}
                         className="px-3 py-1.5 rounded-full bg-primary/5 border border-primary/15 text-xs font-medium text-foreground/80"
                       >
                         {concept}
-                      </span>
+                      </motion.span>
                     ))}
                   </div>
-                </div>
+                </motion.div>
 
                 {/* Validation & Stress Testing */}
-                <div>
+                <motion.div
+                  initial={{ opacity: 0, y: 12 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.3, duration: 0.4 }}
+                >
                   <h4 className="text-xs font-semibold text-muted-foreground uppercase tracking-widest mb-3 flex items-center gap-2">
                     <Shield size={14} className="text-primary" />
                     Validation & Stress Testing
                   </h4>
                   <div className="grid gap-2">
-                    {project.validation.map((item) => (
-                      <div
+                    {project.validation.map((item, i) => (
+                      <motion.div
                         key={item.label}
+                        initial={{ opacity: 0, x: -16 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ delay: 0.35 + i * 0.05, duration: 0.35 }}
                         className="flex gap-3 text-sm bg-background/40 rounded-lg px-4 py-2.5 border border-border/20"
                       >
                         <span className="text-muted-foreground font-medium shrink-0 min-w-[180px]">
                           {item.label}
                         </span>
                         <span className="text-foreground/80">{item.value}</span>
-                      </div>
+                      </motion.div>
                     ))}
                   </div>
-                </div>
+                </motion.div>
               </div>
             </motion.div>
           )}
