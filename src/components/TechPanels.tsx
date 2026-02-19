@@ -6,20 +6,16 @@ gsap.registerPlugin(ScrollTrigger);
 
 const techCategories = [
   {
-    title: 'Frontend',
-    items: ['React', 'Next.js', 'TypeScript', 'Tailwind CSS'],
+    title: 'Core Backend & Automation',
+    items: ['Python', 'Multithreading & Multiprocessing', 'Batch Processing Architecture', 'Fault Tolerance & Checkpointing', 'Deduplication Systems', 'Database Integrity Enforcement', 'SQLite / MySQL', 'Memory Optimisation', 'Logging & Validation Systems'],
   },
   {
-    title: 'Backend',
-    items: ['Node.js', 'Express', 'MongoDB', 'MySQL'],
+    title: 'Web Development & Deployment',
+    items: ['HTML / CSS / JavaScript', 'Tailwind CSS', 'WordPress / WooCommerce', 'API Integration', 'Deployment & Hosting', 'Basic React / Next.js'],
   },
   {
-    title: 'CMS',
-    items: ['WordPress', 'Elementor', 'WooCommerce', 'PHP'],
-  },
-  {
-    title: 'Tools',
-    items: ['Git', 'VS Code', 'Figma', 'Vercel'],
+    title: 'Tools & Infrastructure',
+    items: ['Git', 'VS Code', 'Vercel', 'Figma'],
   },
   {
     title: 'AI Automation',

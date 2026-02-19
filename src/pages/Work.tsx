@@ -183,14 +183,14 @@ const Work = () => {
               Portfolio
             </p>
             <h1 className="text-display-lg font-display font-bold mb-6">
-              Work & Client <span className="text-gradient">Projects</span>
+              Backend Systems & <span className="text-gradient">Web Projects</span>
             </h1>
             <p className="text-xl text-muted-foreground max-w-2xl">
-              A collection of projects that showcase my expertise in building 
-              production-ready web applications.
+              Backend infrastructure tools, scalable automation systems, and 
+              production web applications.
             </p>
             <p className="text-sm text-muted-foreground/70 mt-3 italic">
-              Includes live client websites and selected personal projects.
+              Backend systems engineering showcased first, followed by web development work.
             </p>
           </AnimatedSection>
         </div>
@@ -204,11 +204,11 @@ const Work = () => {
         <div className="container mx-auto px-6">
           <AnimatedSection>
             <div className="mb-12">
-              <h2 className="text-display-sm font-display font-bold mb-2">
-                Full <span className="text-gradient">Projects</span>
+              <h2 className="text-display-sm font-display font-bold mb-2" id="web">
+                Web & Application <span className="text-gradient">Development</span>
               </h2>
               <p className="text-muted-foreground">
-                Projects where I had complete ownership and responsibility
+                Production web applications with complete ownership and responsibility
               </p>
             </div>
           </AnimatedSection>
@@ -338,7 +338,7 @@ const Work = () => {
             <div className="mb-12 pt-8 border-t border-primary/20">
               <div className="flex items-center gap-3 mb-2">
                 <h2 className="text-display-sm font-display font-bold">
-                  Client <span className="text-gradient">Contributions</span>
+                  Client Web <span className="text-gradient">Contributions</span>
                 </h2>
                 <span className="px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-medium border border-primary/20">
                   Live Client Websites

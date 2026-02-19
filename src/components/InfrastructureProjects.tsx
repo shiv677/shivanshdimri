@@ -265,7 +265,7 @@ const ProjectCard = ({ project, index }: { project: InfraProject; index: number 
 
 const InfrastructureProjects = () => {
   return (
-    <section className="pb-20">
+    <section className="pb-20" id="backend">
       <div className="container mx-auto px-6">
         <AnimatedSection>
           <div className="mb-12 pt-8 border-t border-primary/20">

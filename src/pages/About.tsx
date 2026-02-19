@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { Zap, Users, Target, Coffee } from 'lucide-react';
+import { Zap, Users, Target, Terminal } from 'lucide-react';
 import Layout from '@/components/Layout';
 import AnimatedSection from '@/components/AnimatedSection';
 import TechPanels from '@/components/TechPanels';
@@ -34,7 +34,7 @@ const About = () => {
               About Me
             </p>
             <h1 className="text-display-lg font-display font-bold mb-6">
-              Building with <span className="text-gradient">Purpose</span>
+              Engineering with <span className="text-gradient">Purpose</span>
             </h1>
           </AnimatedSection>
         </div>
@@ -54,10 +54,10 @@ const About = () => {
                   transition={{ duration: 0.8 }}
                   viewport={{ once: true }}
                 >
-                  I'm a practical developer who focuses on{' '}
-                  <span className="text-primary font-medium">clarity</span>,{' '}
-                  <span className="text-primary font-medium">performance</span>, and{' '}
-                  <span className="text-primary font-medium">real-world usability</span>.
+                  I am a Python-focused backend developer specialising in{' '}
+                  <span className="text-primary font-medium">scalable automation systems</span>,{' '}
+                  <span className="text-primary font-medium">deterministic batch pipelines</span>,{' '}
+                  deduplication architecture, and memory-aware large dataset processing.
                 </motion.p>
                 
                 <motion.p
@@ -67,9 +67,8 @@ const About = () => {
                   transition={{ duration: 0.8, delay: 0.1 }}
                   viewport={{ once: true }}
                 >
-                  I prefer building things that work cleanly rather than overengineering. 
-                  Every line of code I write serves a purpose—whether it's improving user 
-                  experience, boosting performance, or making the codebase more maintainable.
+                  My work centres on reliability, concurrency control, database-backed integrity 
+                  enforcement, and failure-resilient execution.
                 </motion.p>
 
                 <motion.p
@@ -79,9 +78,10 @@ const About = () => {
                   transition={{ duration: 0.8, delay: 0.2 }}
                   viewport={{ once: true }}
                 >
-                  Comfortable working independently, owning projects end-to-end, and 
-                  communicating directly with clients. I believe the best work comes from 
-                  understanding both the technical requirements and the business goals.
+                  Alongside backend systems engineering, I have practical experience building 
+                  and deploying production web applications using modern frontend technologies 
+                  and WordPress-based ecosystems. This combination allows me to design both 
+                  infrastructure logic and user-facing implementation layers.
                 </motion.p>
 
                 <motion.div
@@ -91,9 +91,9 @@ const About = () => {
                   transition={{ duration: 0.6, delay: 0.3 }}
                   viewport={{ once: true }}
                 >
-                  <Coffee className="text-primary" size={24} />
+                  <Terminal className="text-primary" size={24} />
                   <span className="text-muted-foreground">
-                    Fueled by coffee and curiosity
+                    Systems-oriented developer with infrastructure reliability mindset
                   </span>
                 </motion.div>
               </div>

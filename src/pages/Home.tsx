@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { ArrowRight, Download, MapPin, Briefcase, Code2, Rocket, Users, HeartPulse, Megaphone, Monitor } from 'lucide-react';
+import { ArrowRight, Download, MapPin, Briefcase, Code2, Rocket, Users, Terminal, Globe, Github } from 'lucide-react';
 import Layout from '@/components/Layout';
 import AnimatedSection from '@/components/AnimatedSection';
 import TechOrbit from '@/components/TechOrbit';
@@ -100,33 +100,21 @@ const Home = () => {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.7 }}
               >
-                Web Developer | WordPress & Next.js Specialist
+                Junior Python Developer & Backend Automation Engineer
               </motion.p>
 
-              {/* Credibility */}
+              {/* Subtitle tags */}
               <motion.div
-                className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 text-base text-muted-foreground/80 font-medium"
+                className="flex flex-wrap gap-2 text-sm text-muted-foreground/70"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ duration: 0.8, delay: 0.8, ease: "easeOut" }}
               >
-                <span>Worked with global clients across</span>
-                <div className="flex flex-wrap items-center gap-2 sm:gap-3">
-                  <span className="inline-flex items-center gap-1.5 text-primary/80">
-                    <HeartPulse size={16} />
-                    <span className="text-sm">Healthcare</span>
+                {['Scalable automation systems', 'Fault-tolerant batch pipelines', 'Data integrity architecture', 'Performance-optimised processing', 'Web systems implementation'].map((tag) => (
+                  <span key={tag} className="px-3 py-1 rounded-full border border-border/40 text-xs font-medium">
+                    {tag}
                   </span>
-                  <span className="text-muted-foreground/40">·</span>
-                  <span className="inline-flex items-center gap-1.5 text-primary/80">
-                    <Megaphone size={16} />
-                    <span className="text-sm">Marketing</span>
-                  </span>
-                  <span className="text-muted-foreground/40">·</span>
-                  <span className="inline-flex items-center gap-1.5 text-primary/80">
-                    <Monitor size={16} />
-                    <span className="text-sm">IT Services</span>
-                  </span>
-                </div>
+                ))}
               </motion.div>
 
               {/* Description */}
@@ -136,8 +124,9 @@ const Home = () => {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.9 }}
               >
-                I design and build fast, clean, production-ready websites that scale. 
-                Focused on clarity, performance, and real-world usability.
+                Backend-focused developer building reliable, database-driven automation systems 
+                and large-scale batch pipelines, with hands-on experience delivering production 
+                web applications and client-facing solutions.
               </motion.p>
 
               {/* CTAs */}
@@ -147,16 +136,28 @@ const Home = () => {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 1 }}
               >
-                <Link to="/work">
+                <Link to="/work#backend">
                   <Button variant="primary" size="lg" data-cursor="View">
-                    View Selected Work
-                    <ArrowRight size={18} />
+                    <Terminal size={18} />
+                    View Backend Projects
                   </Button>
                 </Link>
+                <Link to="/work#web">
+                  <Button variant="outline" size="lg" data-cursor="View">
+                    <Globe size={18} />
+                    View Web Projects
+                  </Button>
+                </Link>
+                <a href="https://github.com/shiv677" target="_blank" rel="noopener noreferrer">
+                  <Button variant="outline" size="lg" data-cursor="GitHub">
+                    <Github size={18} />
+                    GitHub
+                  </Button>
+                </a>
                 <a href="/SHIVANSH_DIMRI_CV.pdf" download>
                   <Button variant="outline" size="lg" data-cursor="Download">
                     <Download size={18} />
-                    Download Resume
+                    Resume
                   </Button>
                 </a>
               </motion.div>
