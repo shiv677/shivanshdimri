@@ -196,6 +196,9 @@ const Work = () => {
         </div>
       </section>
 
+      {/* Infrastructure Projects */}
+      <InfrastructureProjects />
+
       {/* Full Projects Section */}
       <section className="pb-16">
         <div className="container mx-auto px-6">
@@ -450,9 +453,6 @@ const Work = () => {
           ))}
         </div>
       </section>
-
-      {/* Infrastructure Projects */}
-      <InfrastructureProjects />
 
     </Layout>
   );
