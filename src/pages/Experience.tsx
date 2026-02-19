@@ -6,6 +6,21 @@ import AnimatedSection from '@/components/AnimatedSection';
 const experiences = [
   {
     id: 1,
+    title: 'Backend Automation Engineer',
+    company: 'EduGorilla',
+    location: 'On-site',
+    period: 'Jan 2026 – Present',
+    type: 'Professional',
+    responsibilities: [
+      'Designing and building backend automation pipelines for large-scale data processing',
+      'Developing batch processing systems with fault tolerance and checkpointing',
+      'Implementing deterministic validation logic and database integrity enforcement',
+      'Optimising multiprocessing workflows for production-grade reliability',
+      'Building structured logging and monitoring for pipeline observability',
+    ],
+  },
+  {
+    id: 2,
     title: 'Web Developer',
     company: 'Global Connection 21',
     location: 'Remote',
@@ -20,7 +35,7 @@ const experiences = [
     ],
   },
   {
-    id: 2,
+    id: 3,
     title: 'Founder & Lead Developer',
     company: 'Zynex Studio',
     location: 'Kanpur, India',
