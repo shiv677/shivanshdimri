@@ -11,9 +11,15 @@ import arkoseBuildcomScreenshot from '@/assets/arkose-buildcom-screenshot.png';
 import pearlsScreenshot from '@/assets/32pearls-screenshot.png';
 import pitchandplayScreenshot from '@/assets/pitchandplay-screenshot.png';
 
+const getExperienceMonths = () => {
+  const start = new Date(2025, 5); // Jun 2025
+  const now = new Date();
+  return Math.max(1, (now.getFullYear() - start.getFullYear()) * 12 + (now.getMonth() - start.getMonth()));
+};
+
 const proofPoints = [
   { icon: Rocket, value: '10+', label: 'Projects Delivered' },
-  { icon: Briefcase, value: '6 Mo', label: 'Professional Experience' },
+  { icon: Briefcase, value: `${getExperienceMonths()}+ Mo`, label: 'Professional Experience' },
   { icon: Users, value: '5+', label: 'Satisfied Clients' },
   { icon: Code2, value: '100%', label: 'End-to-End Ownership' },
 ];
