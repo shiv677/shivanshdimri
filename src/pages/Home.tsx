@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { ArrowRight, Download, MapPin, Briefcase, Code2, Rocket, Users, Terminal, Globe, Github } from 'lucide-react';
+import { ArrowRight, Download, MapPin, Briefcase, Code2, Rocket, Users, Terminal, Globe, Github, Database, Cpu, Shield } from 'lucide-react';
 import Layout from '@/components/Layout';
 import AnimatedSection from '@/components/AnimatedSection';
 import TechOrbit from '@/components/TechOrbit';
@@ -22,6 +22,27 @@ const proofPoints = [
   { icon: Briefcase, value: `${getExperienceMonths()}+ Mo`, label: 'Professional Experience' },
   { icon: Users, value: '25+', label: 'Satisfied Clients' },
   { icon: Code2, value: '100%', label: 'End-to-End Ownership' },
+];
+
+const backendProjects = [
+  {
+    title: 'Audio Duplicacy Checker',
+    description: 'Deterministic fingerprint-based audio deduplication across vendor batches',
+    icon: Database,
+    tech: ['Python', 'Multiprocessing', 'Hash Fingerprinting'],
+  },
+  {
+    title: 'T2NAS Transfer Tool',
+    description: 'CPU-aware, resumable high-volume file migration with SHA-256 verification',
+    icon: Cpu,
+    tech: ['Python', 'Checkpointing', 'Batch Segmentation'],
+  },
+  {
+    title: 'Enterprise Rsync Platform',
+    description: 'Self-contained rsync orchestration with embedded runtime and fault tolerance',
+    icon: Shield,
+    tech: ['Python', 'Subprocess Streaming', 'RBAC'],
+  },
 ];
 
 const featuredProjects = [
@@ -231,16 +252,76 @@ const Home = () => {
         </div>
       </section>
 
-      {/* Selected Work Preview */}
+      {/* Backend Projects */}
+      <section className="py-24 border-t border-border/50">
+        <div className="container mx-auto px-6">
+          <AnimatedSection>
+            <div className="flex items-center justify-between mb-16">
+              <div>
+                <div className="flex items-center gap-2 mb-2">
+                  <Terminal size={20} className="text-primary" />
+                  <p className="text-primary text-sm font-medium tracking-wider uppercase">Primary Focus</p>
+                </div>
+                <h2 className="text-display-md font-display font-bold">
+                  Backend <span className="text-gradient">Infrastructure</span>
+                </h2>
+              </div>
+              <Link
+                to="/work#backend"
+                className="hidden md:flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors duration-300"
+                data-cursor="View All"
+              >
+                View All
+                <ArrowRight size={16} />
+              </Link>
+            </div>
+          </AnimatedSection>
+
+          <div className="grid md:grid-cols-3 gap-6">
+            {backendProjects.map((project, index) => (
+              <AnimatedSection key={project.title} delay={index * 0.1}>
+                <Link to="/work#backend" className="group block" data-cursor="View">
+                  <div className="relative overflow-hidden rounded-2xl bg-card/30 backdrop-blur-sm border border-border/40 p-6 hover:border-primary/30 hover:shadow-md transition-all duration-300 h-full">
+                    <div className="p-3 rounded-xl bg-primary/10 text-primary w-fit mb-4 group-hover:scale-110 transition-transform duration-300">
+                      <project.icon size={24} />
+                    </div>
+                    <h3 className="text-lg font-display font-bold mb-2 group-hover:text-primary transition-colors duration-300">
+                      {project.title}
+                    </h3>
+                    <p className="text-sm text-muted-foreground mb-4 leading-relaxed">
+                      {project.description}
+                    </p>
+                    <div className="flex flex-wrap gap-1.5">
+                      {project.tech.map((t) => (
+                        <span key={t} className="px-2 py-1 rounded-full bg-primary/5 border border-primary/15 text-xs font-medium text-foreground/70">
+                          {t}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                </Link>
+              </AnimatedSection>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Selected Web Work */}
       <section className="py-24">
         <div className="container mx-auto px-6">
           <AnimatedSection>
             <div className="flex items-center justify-between mb-16">
-              <h2 className="text-display-md font-display font-bold">
-                Selected <span className="text-gradient">Work</span>
-              </h2>
+              <div>
+                <div className="flex items-center gap-2 mb-2">
+                  <Globe size={20} className="text-primary" />
+                  <p className="text-primary text-sm font-medium tracking-wider uppercase">Web Development</p>
+                </div>
+                <h2 className="text-display-md font-display font-bold">
+                  Client <span className="text-gradient">Work</span>
+                </h2>
+              </div>
               <Link
-                to="/work"
+                to="/work#web"
                 className="hidden md:flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors duration-300"
                 data-cursor="View All"
               >
