@@ -95,6 +95,15 @@ const Home = () => {
                 <span>Kanpur, India · Open to freelance & full-time roles</span>
               </motion.div>
 
+              <motion.p
+                className="text-xs font-medium text-muted-foreground"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.6, delay: 0.3 }}
+              >
+                SHIVANSH DIMRI · AI ENGINEERING
+              </motion.p>
+
               {/* Main Headline */}
               <motion.h1
                 className="text-display-xl font-display font-bold tracking-tight"
@@ -127,7 +136,16 @@ const Home = () => {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.7 }}
               >
-                Junior Python Developer & Backend Automation Engineer
+                Engineering Intelligent Systems. Automating Complex Workflows.
+              </motion.p>
+
+              <motion.p
+                className="text-lg font-medium text-primary"
+                initial={{ opacity: 0, y: 12 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.75 }}
+              >
+                Associate AI Engineer
               </motion.p>
 
               {/* Subtitle tags */}
@@ -137,7 +155,7 @@ const Home = () => {
                 animate={{ opacity: 1 }}
                 transition={{ duration: 0.8, delay: 0.8, ease: "easeOut" }}
               >
-                {['Scalable automation systems', 'Fault-tolerant batch pipelines', 'Data integrity architecture', 'Performance-optimised processing', 'Web systems implementation'].map((tag) => (
+                {['Python', 'AI Pipelines', 'Automation', 'AI Engineering', 'Model evaluation and AI workflows', 'Systems Engineering', 'Scalable automation and data pipelines'].map((tag) => (
                   <span key={tag} className="px-3 py-1 rounded-full border border-border/40 text-xs font-medium">
                     {tag}
                   </span>
@@ -151,9 +169,7 @@ const Home = () => {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.9 }}
               >
-                Backend-focused developer building reliable, database-driven automation systems 
-                and large-scale batch pipelines, with hands-on experience delivering production 
-                web applications and client-facing solutions.
+                Associate AI Engineer building scalable Python automation systems, AI-powered pipelines, multimodal evaluation workflows, and reliable data processing infrastructure.
               </motion.p>
 
               {/* CTAs */}
