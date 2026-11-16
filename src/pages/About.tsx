@@ -54,10 +54,9 @@ const About = () => {
                   transition={{ duration: 0.8 }}
                   viewport={{ once: true }}
                 >
-                  I am a Python-focused backend developer specialising in{' '}
-                  <span className="text-primary font-medium">scalable automation systems</span>,{' '}
-                  <span className="text-primary font-medium">deterministic batch pipelines</span>,{' '}
-                  deduplication architecture, and memory-aware large dataset processing.
+                  I am an Associate AI Engineer building scalable Python automation systems,{' '}
+                  <span className="text-primary font-medium">AI-powered pipelines</span>,{' '}
+                  multimodal evaluation workflows, and reliable data processing infrastructure.
                 </motion.p>
                 
                 <motion.p
@@ -67,7 +66,7 @@ const About = () => {
                   transition={{ duration: 0.8, delay: 0.1 }}
                   viewport={{ once: true }}
                 >
-                  My work centres on reliability, concurrency control, database-backed integrity 
+                  My work centres on model evaluation, reliability, concurrency control, database-backed integrity 
                   enforcement, and failure-resilient execution.
                 </motion.p>
 
