@@ -7,17 +7,17 @@ import AnimatedSection from '@/components/AnimatedSection';
 const experiences = [
   {
     id: 1,
-    title: 'Backend Automation Engineer',
+    title: 'Associate AI Engineer',
     company: 'EduGorilla',
     location: 'On-site',
     period: 'Jan 2026 – Present',
     type: 'Professional',
     responsibilities: [
-      'Designing and building backend automation pipelines for large-scale data processing',
-      'Developing batch processing systems with fault tolerance and checkpointing',
-      'Implementing deterministic validation logic and database integrity enforcement',
-      'Optimising multiprocessing workflows for production-grade reliability',
-      'Building structured logging and monitoring for pipeline observability',
+      'Building scalable Python automation systems for reliable data processing',
+      'Developing AI-powered pipelines and multimodal evaluation workflows',
+      'Supporting model evaluation with structured, repeatable validation workflows',
+      'Designing scalable data systems with fault tolerance, checkpointing, and integrity controls',
+      'Improving pipeline reliability through resource-aware processing, logging, and observability',
     ],
   },
   {
