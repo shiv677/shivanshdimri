@@ -179,7 +179,7 @@ const FLAGSHIP_SYSTEMS: FlagshipSystem[] = [
         )
         return EvaluationRubric.model_validate_json(response.text)`,
     stack: ['Python 3.12', 'LangGraph', 'Vision-Language Models', 'Pydantic v2', 'AsyncIO'],
-    github: 'https://github.com/shiv677',
+    github: 'https://github.com/shiv677/multi-agent-consensus-engine',
   },
   {
     index: '05',
@@ -212,7 +212,7 @@ const FLAGSHIP_SYSTEMS: FlagshipSystem[] = [
     sim = compute_simhash64(text)
     return RecordAudit(raw_id=row["id"], clean_text=text, sha256=digest, simhash=sim)`,
     stack: ['Python 3.12', 'Pydantic v2', 'Unicode NFKC', 'SimHash', 'SQLite WAL'],
-    github: 'https://github.com/shiv677',
+    github: 'https://github.com/shiv677/dataset-quality-sentinel',
   },
   {
     index: '06',

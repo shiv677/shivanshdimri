@@ -296,7 +296,7 @@ def stream_embedded_rsync(job) -> Iterator[dict]:
       'Production LLM and VLM deployments suffered from stochastic hallucinations, lack of automated regression evaluation across model versions, and slow sequential API grading bottlenecks.',
     solution:
       'Constructed a high-concurrency evaluation pipeline orchestrating multi-agent reviewer swarms. Integrates Pydantic schema validation, token-bucket rate limiters, multi-perspective rubric scoring, multimodal image and document reasoning verification, and automated regression reporting.',
-    github: 'https://github.com/shiv677',
+    github: 'https://github.com/shiv677/multi-agent-consensus-engine',
     pipeline: [
       { step: '01', name: 'TASK DISPATCH', spec: 'Token-bucket async rate semaphore' },
       { step: '02', name: 'AGENT DEBATE', spec: 'Tri-perspective consensus scoring loop' },
@@ -381,7 +381,7 @@ async def evaluate_sample_with_consensus(sample: dict, client, semaphore) -> Rub
       'High-volume specialized question corpora and multimodal document extracts contained encoding artifacts, duplicate items across vendor dumps, malformed schema, and subtle corruption that silently skewed evaluation benchmarks.',
     solution:
       'Engineered an automated dataset quality-control pipeline with multi-pass question extraction, canonical Unicode normalization (NFKC), semantic and hash-based deduplication, corruption detection heuristics, and transactional SQLite WAL persistence with strict Pydantic v2 validation.',
-    github: 'https://github.com/shiv677',
+    github: 'https://github.com/shiv677/dataset-quality-sentinel',
     pipeline: [
       { step: '01', name: 'RAW INGEST', spec: 'Heterogeneous multi-source dataset dumps' },
       { step: '02', name: 'NORMALIZATION', spec: 'Canonical Unicode NFKC & whitespace cleanup' },
