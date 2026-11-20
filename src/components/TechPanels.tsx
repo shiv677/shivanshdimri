@@ -6,20 +6,20 @@ gsap.registerPlugin(ScrollTrigger);
 
 const techCategories = [
   {
-    title: 'Core Backend & Automation',
-    items: ['Python', 'Multithreading & Multiprocessing', 'Batch Processing Architecture', 'Fault Tolerance & Checkpointing', 'Deduplication Systems', 'Database Integrity Enforcement', 'SQLite / MySQL', 'Memory Optimisation', 'Logging & Validation Systems'],
+    title: 'AI & Model Engineering',
+    items: ['LLM Integration', 'Agentic AI & Multi-Agent Systems', 'Retrieval-Augmented Generation (RAG)', 'Vision-Language Models (VLMs)', 'PyTorch & Computer Vision', 'Model Evaluation & Benchmarking', 'Grad-CAM & Deep Learning', 'Prompt Engineering'],
+  },
+  {
+    title: 'Core Systems & Data Engineering',
+    items: ['Python', 'AsyncIO & Concurrency', 'Multiprocessing & Multithreading', 'Large-Scale Data Processing', 'ETL Pipelines & Web Scraping', 'Fault Tolerance & Checkpoint Recovery', 'Data Deduplication & Validation', 'Memory Optimisation', 'SQLite / MySQL'],
   },
   {
     title: 'Web Development & Deployment',
-    items: ['HTML / CSS / JavaScript', 'Tailwind CSS', 'WordPress / WooCommerce', 'API Integration', 'Deployment & Hosting', 'Basic React / Next.js'],
+    items: ['React / Next.js', 'TypeScript', 'Tailwind CSS', 'WordPress / WooCommerce', 'REST APIs', 'Deployment & Hosting'],
   },
   {
-    title: 'Tools & Infrastructure',
-    items: ['Git', 'VS Code', 'Vercel', 'Figma'],
-  },
-  {
-    title: 'AI Automation',
-    items: ['OpenAI API', 'n8n Workflows', 'Chatbots & Assistants', 'AI Form Handling', 'Content Automation', 'API Integrations'],
+    title: 'Infrastructure & AI Tooling',
+    items: ['Docker', 'Linux', 'Git & SSH', 'Hugging Face', 'Ollama & LM Studio', 'OpenAI Codex', 'CI/CD & Automated QA'],
   },
 ];
 

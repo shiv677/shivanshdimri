@@ -72,7 +72,7 @@ const fullProjects: Project[] = [
     solution: 'Built a comprehensive appointment booking system with real-time availability, automated reminders, and admin dashboard.',
     outcome: 'Streamlined booking process, reducing administrative overhead by 60%.',
     liveUrl: 'https://doctor-healthy-you-atd4362.public.builtwithrocket.new',
-    githubUrl: '#',
+    githubUrl: null,
     logo: doctorHealthyLogo,
     screenshot: doctorHealthyScreenshot,
   },
@@ -86,7 +86,7 @@ const fullProjects: Project[] = [
     solution: 'Developed a responsive storefront with product filtering, cart management, and Stripe payment integration.',
     outcome: 'Achieved 40% faster page loads and improved conversion rates.',
     liveUrl: 'https://eliteshop-7u97i30.public.builtwithrocket.new',
-    githubUrl: '#',
+    githubUrl: null,
     screenshot: eliteshopScreenshot,
   },
 ];
@@ -183,14 +183,14 @@ const Work = () => {
               Portfolio
             </p>
             <h1 className="text-display-lg font-display font-bold mb-6">
-              Backend Systems & <span className="text-gradient">Web Projects</span>
+              AI Systems, Backend & <span className="text-gradient">Web Projects</span>
             </h1>
             <p className="text-xl text-muted-foreground max-w-2xl">
-              Backend infrastructure tools, scalable automation systems, and 
+              AI evaluation workflows, backend infrastructure tools, scalable automation systems, and 
               production web applications.
             </p>
             <p className="text-sm text-muted-foreground/70 mt-3 italic">
-              Backend systems engineering showcased first, followed by web development work.
+              AI & backend systems engineering showcased first, followed by production web development work.
             </p>
           </AnimatedSection>
         </div>

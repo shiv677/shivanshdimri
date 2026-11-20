@@ -1,73 +1,62 @@
-# Welcome to your Lovable project
+# Shivansh Dimri - Portfolio & Systems Engineering Showcase
 
-## Project info
+Personal portfolio website for **Shivansh Dimri**, Associate AI Engineer. Showcases AI systems, benchmark evaluation workflows, Python data engineering pipelines, deduplication architectures, and production client web applications.
 
-**URL**: https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID
+## 🚀 Technologies Used
 
-## How can I edit this code?
+- **Framework**: [React 18](https://react.dev/) + [TypeScript](https://www.typescriptlang.org/)
+- **Bundler**: [Vite](https://vitejs.dev/)
+- **Styling**: [Tailwind CSS](https://tailwindcss.com/) + [shadcn/ui](https://ui.shadcn.com/) + [Radix UI](https://www.radix-ui.com/)
+- **Animations**: [Framer Motion](https://www.framer.com/motion/) + [GSAP](https://gsap.com/)
+- **Database & Backend**: [Supabase](https://supabase.com/) (Form submissions, Row-Level Security, Role-Based Access Control)
+- **Forms & Validation**: [Zod](https://zod.dev/) + [React Hook Form](https://react-hook-form.com/)
+- **Icons**: [Lucide React](https://lucide.dev/)
 
-There are several ways of editing your application.
+## 🛠️ Getting Started
 
-**Use Lovable**
+### Prerequisites
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and start prompting.
+- [Node.js](https://nodejs.org/) (v18 or higher recommended)
+- `npm` or `bun`
 
-Changes made via Lovable will be committed automatically to this repo.
+### Installation
 
-**Use your preferred IDE**
+1. Clone or navigate to the project root:
+   ```bash
+   cd shivanshdimri-main
+   ```
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+3. Configure environment variables in `.env`:
+   ```env
+   VITE_SUPABASE_PROJECT_ID="your-project-id"
+   VITE_SUPABASE_PUBLISHABLE_KEY="your-anon-key"
+   VITE_SUPABASE_URL="https://your-project.supabase.co"
+   ```
 
-Follow these steps:
+4. Start the local development server:
+   ```bash
+   npm run dev
+   ```
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+5. Build for production:
+   ```bash
+   npm run build
+   ```
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+6. Lint codebase:
+   ```bash
+   npm run lint
+   ```
 
-# Step 3: Install the necessary dependencies.
-npm i
+## 📁 Key Features
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
-```
-
-**Edit a file directly in GitHub**
-
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
-
-**Use GitHub Codespaces**
-
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
-
-## What technologies are used for this project?
-
-This project is built with:
-
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
-
-## How can I deploy this project?
-
-Simply open [Lovable](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and click on Share -> Publish.
-
-## Can I connect a custom domain to my Lovable project?
-
-Yes, you can!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+- **Interactive Command Palette**: Press `⌘K` or `Ctrl+K` for keyboard-driven navigation across sections and quick theme switching.
+- **Backend Architecture Demos**: Technical breakdown of multiprocessing audio deduplication, parallel NAS file transfer (T2NAS), and enterprise rsync orchestration.
+- **Dynamic Experience Tracker**: Automated month/year calculation from start date for up-to-date career metrics.
+- **Dark/Light Theme**: Persistent theme selection via `next-themes`.
+- **Contact Form**: Direct Supabase database insertion secured with Postgres RLS policies.

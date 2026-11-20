@@ -11,15 +11,15 @@ interface LayoutProps {
 
 const Layout = ({ children }: LayoutProps) => {
   return (
-    <PageTransition>
-      <div className="min-h-screen bg-background text-foreground relative noise">
-        <ScrollProgress />
-        <Navigation />
+    <div className="min-h-screen bg-[#08090a] text-[#ededed] relative overflow-x-hidden selection:bg-white/20 selection:text-white">
+      <ScrollProgress />
+      <Navigation />
+      <PageTransition>
         <main className="relative z-10">{children}</main>
-        <Footer />
-        <ShortcutHint />
-      </div>
-    </PageTransition>
+      </PageTransition>
+      <Footer />
+      <ShortcutHint />
+    </div>
   );
 };
 

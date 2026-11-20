@@ -230,7 +230,7 @@ const Contact = () => {
                   <div className="flex flex-wrap gap-4 text-sm text-muted-foreground">
                     <span className="flex items-center gap-2">
                       <MapPin size={14} className="text-primary" />
-                      Kanpur, India
+                      Lucknow, India
                     </span>
                     <span className="flex items-center gap-2">
                       <Clock size={14} className="text-primary" />

@@ -18,4 +18,4 @@ FOR INSERT
 WITH CHECK (true);
 
 -- Only allow reading via backend (no public read access)
--- This keeps submissions private and only accessible via Lovable Cloud
+-- This keeps submissions private and only accessible via admin backend

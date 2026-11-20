@@ -54,9 +54,10 @@ const About = () => {
                   transition={{ duration: 0.8 }}
                   viewport={{ once: true }}
                 >
-                  I am an Associate AI Engineer building scalable Python automation systems,{' '}
-                  <span className="text-primary font-medium">AI-powered pipelines</span>,{' '}
-                  multimodal evaluation workflows, and reliable data processing infrastructure.
+                  I am an Associate AI Engineer specialising in{' '}
+                  <span className="text-primary font-medium">Python engineering systems</span>,{' '}
+                  <span className="text-primary font-medium">LLM & agentic AI integration</span>,{' '}
+                  scalable data pipelines, and intelligent automation architecture.
                 </motion.p>
                 
                 <motion.p
@@ -66,8 +67,8 @@ const About = () => {
                   transition={{ duration: 0.8, delay: 0.1 }}
                   viewport={{ once: true }}
                 >
-                  My work centres on model evaluation, reliability, concurrency control, database-backed integrity 
-                  enforcement, and failure-resilient execution.
+                  My work centres on model evaluation workflows, benchmark engineering, concurrency control, 
+                  database-backed integrity enforcement, and failure-resilient system execution.
                 </motion.p>
 
                 <motion.p
@@ -77,10 +78,9 @@ const About = () => {
                   transition={{ duration: 0.8, delay: 0.2 }}
                   viewport={{ once: true }}
                 >
-                  Alongside backend systems engineering, I have practical experience building 
-                  and deploying production web applications using modern frontend technologies 
-                  and WordPress-based ecosystems. This combination allows me to design both 
-                  infrastructure logic and user-facing implementation layers.
+                  Alongside AI systems engineering and ETL data pipelines, I have practical experience building 
+                  and deploying production web applications and custom client solutions. This combination 
+                  allows me to design end-to-end solutions spanning intelligent backend infrastructure to polished interfaces.
                 </motion.p>
 
                 <motion.div
