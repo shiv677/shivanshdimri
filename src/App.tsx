@@ -8,6 +8,7 @@ import { ThemeProvider } from "./components/ThemeProvider";
 import CommandPalette from "./components/CommandPalette";
 import Home from "./pages/Home";
 import Work from "./pages/Work";
+import ArchitectureDocs from "./pages/ArchitectureDocs";
 import About from "./pages/About";
 import Experience from "./pages/Experience";
 import Contact from "./pages/Contact";
@@ -24,6 +25,7 @@ const AnimatedRoutes = () => {
       <Routes location={location} key={location.pathname}>
         <Route path="/" element={<Home />} />
         <Route path="/work" element={<Work />} />
+        <Route path="/architecture" element={<ArchitectureDocs />} />
         <Route path="/about" element={<About />} />
         <Route path="/experience" element={<Experience />} />
         <Route path="/contact" element={<Contact />} />

@@ -13,6 +13,7 @@ import {
 } from 'lucide-react';
 import { soundEngine } from './SoundEngine';
 import ScrambleText from './ScrambleText';
+import AudioOscilloscope from './AudioOscilloscope';
 
 interface ActiveTheoryHUDProps {
   activeZone: number;
@@ -159,6 +160,7 @@ export const ActiveTheoryHUD: React.FC<ActiveTheoryHUDProps> = ({
             title="Toggle Procedural Audio Synth"
           >
             {soundOn ? <Volume2 size={12} className="text-cyan-400" /> : <VolumeX size={12} />}
+            <AudioOscilloscope active={soundOn} width={42} height={12} className="hidden sm:inline-block" />
             <div className="flex items-end gap-0.5 h-2.5">
               {[0.5, 1.0, 0.6, 0.9].map((h, i) => (
                 <span

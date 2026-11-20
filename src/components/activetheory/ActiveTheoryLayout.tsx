@@ -19,6 +19,8 @@ import {
 } from 'lucide-react';
 import { soundEngine } from './SoundEngine';
 import ScrambleText from './ScrambleText';
+import AudioOscilloscope from './AudioOscilloscope';
+import TelemetryTicker from './TelemetryTicker';
 
 interface ActiveTheoryLayoutProps {
   children: React.ReactNode;
@@ -27,9 +29,10 @@ interface ActiveTheoryLayoutProps {
 const NAV_ITEMS = [
   { href: '/', label: '00 // 3D GATEWAY', shortLabel: '3D GATEWAY' },
   { href: '/work', label: '01 // SYSTEMS & ARCHITECTURE', shortLabel: 'SYSTEMS' },
-  { href: '/experience', label: '02 // SKILLS & EXP', shortLabel: 'SKILLS & EXP' },
-  { href: '/about', label: '03 // ABOUT', shortLabel: 'ABOUT' },
-  { href: '/contact', label: '04 // TRANSMIT', shortLabel: 'CONTACT' },
+  { href: '/architecture', label: '02 // ARCHITECTURE DOCS', shortLabel: 'WHITE PAPERS' },
+  { href: '/experience', label: '03 // SKILLS & EXP', shortLabel: 'SKILLS & EXP' },
+  { href: '/about', label: '04 // ABOUT', shortLabel: 'ABOUT' },
+  { href: '/contact', label: '05 // TRANSMIT', shortLabel: 'CONTACT' },
 ];
 
 export const ActiveTheoryLayout: React.FC<ActiveTheoryLayoutProps> = ({ children }) => {
@@ -170,6 +173,7 @@ export const ActiveTheoryLayout: React.FC<ActiveTheoryLayoutProps> = ({ children
             title="Toggle Procedural Audio Synth"
           >
             {soundOn ? <Volume2 size={12} className="text-cyan-400" /> : <VolumeX size={12} />}
+            <AudioOscilloscope active={soundOn} width={38} height={12} className="hidden sm:inline-block" />
             <div className="flex items-end gap-0.5 h-2.5">
               {[0.5, 1.0, 0.6, 0.9].map((h, i) => (
                 <span
@@ -339,6 +343,9 @@ export const ActiveTheoryLayout: React.FC<ActiveTheoryLayoutProps> = ({ children
           </div>
         </div>
       </footer>
+
+      {/* Hardware & Telemetry HUD Ticker */}
+      <TelemetryTicker />
     </div>
   );
 };

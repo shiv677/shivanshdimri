@@ -24,6 +24,7 @@ import ActiveTheoryHUD, { ZONE_LABELS } from './ActiveTheoryHUD';
 import ScrambleText from './ScrambleText';
 import { soundEngine } from './SoundEngine';
 import TerminalPortfolio from '@/components/terminal/TerminalPortfolio';
+import TelemetryTicker from './TelemetryTicker';
 
 interface FlagshipSystem {
   index: string;
@@ -811,6 +812,33 @@ export const ActiveTheoryExperience: React.FC = () => {
                   ))}
                 </div>
               </div>
+
+              {/* Technical Architecture Whitepapers Banner */}
+              <div className="p-6 rounded-2xl border border-cyan-400/30 bg-gradient-to-r from-cyan-400/10 via-black to-fuchsia-400/10 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                <div className="space-y-1">
+                  <div className="text-[10px] font-mono tracking-[0.25em] text-cyan-300 uppercase font-bold">
+                    DEEP DIVE DOCUMENTATION
+                  </div>
+                  <div className="text-lg font-display font-black text-white uppercase">
+                    3 TECHNICAL ARCHITECTURE WHITEPAPERS
+                  </div>
+                  <div className="text-xs font-mono text-white/60">
+                    Bypassing CPython's GIL &middot; SQLite WAL State Machines &middot; Multimodal AI Regression Harnesses
+                  </div>
+                </div>
+
+                <Link
+                  to="/architecture"
+                  onClick={() => {
+                    soundEngine.playClick(840);
+                    setShowIndexDrawer(false);
+                  }}
+                  className="px-5 py-2.5 rounded-full bg-cyan-400 text-black font-mono text-xs font-bold tracking-wider uppercase flex items-center gap-2 hover:bg-white transition-all whitespace-nowrap"
+                >
+                  <span>READ WHITEPAPERS</span>
+                  <ArrowUpRight size={14} />
+                </Link>
+              </div>
             </div>
           </motion.div>
         )}
@@ -919,6 +947,8 @@ export const ActiveTheoryExperience: React.FC = () => {
           </motion.div>
         )}
       </AnimatePresence>
+      {/* Hardware Telemetry HUD Ticker */}
+      <TelemetryTicker />
     </div>
   );
 };
