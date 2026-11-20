@@ -184,42 +184,29 @@ const CAREER_TIMELINE = [
     role: 'Associate AI Engineer',
     company: 'InfoBay AI Limited',
     location: 'Lucknow, India (On-site)',
-    period: 'Oct 2026 – Present',
-    status: 'PROMOTED // ACTIVE ROLE',
+    period: 'Feb 2026 – Present',
+    status: 'ACTIVE ROLE // PROMOTED',
     highlights: [
-      'Promoted rapidly to Associate AI Engineer following demonstrated impact in autonomous evaluation systems and model verification.',
-      'Architecting and scaling automated evaluation harnesses for Large Language Models & Vision-Language Models.',
-      'Developing distributed multi-agent swarm pipelines for complex reasoning, benchmark verification, and rubric scoring.',
-      'Engineering fault-tolerant Python multiprocessing pipelines handling 100,000+ data samples with zero data corruption.',
-      'Enforcing strict Pydantic v2 schema constraints and database-backed transactional integrity across AI output streams.',
-      'Leading engineering documentation, automated testing standards, and failure-resilient process recovery architecture.',
+      'Developing Python automation and high-throughput data-processing systems for enterprise operations.',
+      'Building AI/LLM evaluation and benchmarking workflows with automated scoring and structured schema validation.',
+      'Designing dataset validation, deduplication, and quality-control pipelines across large-scale question corpora.',
+      'Working with multimodal models (VLMs) and structured evaluation outputs with spatial bounding-box verification.',
+      'Automating research and discovery workflows for specialised question datasets and source classification.',
+      'Developing reliable processing systems with checkpointing, concurrency, and zero-loss crash-recovery mechanisms.',
     ],
     tech: ['Python 3.12', 'Multiprocessing', 'LangGraph', 'VLMs', 'Pydantic v2', 'SQLite WAL', 'Docker'],
   },
   {
-    role: 'AI Systems Developer / Vibe Coder',
-    company: 'InfoBay AI Limited',
-    location: 'Lucknow, India (On-site)',
-    period: 'Feb 2026 – Oct 2026',
-    status: 'PROMOTED TO ASSOCIATE AI ENG',
-    highlights: [
-      'Accelerated feature development using cutting-edge AI coding agents and LLM-assisted programming paradigms.',
-      'Engineered automated validation scripts and rapid prototyping workflows for core data engineering initiatives.',
-      'Assisted in model testing, benchmark dataset generation, and verification pipeline implementation.',
-    ],
-    tech: ['Python', 'AI-Assisted Dev', 'Prompt Engineering', 'Rapid Prototyping', 'Git'],
-  },
-  {
     role: 'Lead Systems Developer & Open-Source Author',
-    company: 'Zynex Studio / Independent Systems Research',
+    company: 'Independent Systems Research / Zynex Studio',
     location: 'Remote',
-    period: '2024 – Present',
+    period: '2024 – 2026',
     status: 'CONTINUOUS (2+ YEARS TOTAL)',
     highlights: [
       'Authored T2NAS, a CPU-aware resumable parallel transfer engine for 10Gbps NAS network environments.',
       'Developed Audio Internal & External Duplicacy Checker combining acoustic fingerprinting with atomic checkpointing.',
       'Constructed Enterprise Rsync Transfer Platform with embedded runtimes and subprocess telemetry extraction.',
-      'Engineered production web apps, automation pipelines, and custom API integrations across client and open-source ecosystems.',
+      'Engineered production web applications, automation pipelines, and custom API integrations with strict data integrity.',
     ],
     tech: ['Python', 'Multiprocessing', 'Acoustic Fingerprinting', 'Rsync', 'OpenSSH', 'React', 'TypeScript'],
   },
@@ -250,7 +237,7 @@ const Experience = () => {
         </h1>
 
         <p className="text-sm sm:text-base font-mono text-white/70 max-w-3xl leading-relaxed mb-8">
-          2+ years of professional engineering experience with considerable advances—advancing rapidly from systems programming to Associate AI Engineer at InfoBay AI Limited. Specialising in high-concurrency Python architectures, autonomous multi-agent evaluation suites, and fault-tolerant data infrastructure.
+          Associate AI Engineer at InfoBay AI Limited (Feb 2026 – Present). I build reliable Python systems, AI evaluation workflows, data-processing pipelines, and automation infrastructure for complex engineering problems.
         </p>
 
         {/* Dynamic Telemetry Stats */}

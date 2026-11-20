@@ -77,7 +77,7 @@ const About = () => {
         </h1>
 
         <p className="text-sm sm:text-base font-mono text-white/70 max-w-3xl leading-relaxed mb-8">
-          Shivansh Dimri is an Associate AI Engineer at InfoBay AI Limited (Lucknow, India) with 2+ years of professional engineering experience marked by rapid technical advances. He designs high-throughput Python concurrency architectures, autonomous multi-agent evaluation suites, and fault-tolerant data infrastructure.
+          I am an Associate AI Engineer at InfoBay AI Limited, focused on building Python-based engineering systems, AI evaluation workflows, and scalable data-processing infrastructure.
         </p>
 
         {/* Telemetry Bar */}
@@ -91,8 +91,8 @@ const About = () => {
             <div className="text-xl sm:text-2xl font-mono font-bold text-emerald-400">INFOBAY AI</div>
           </div>
           <div className="p-4 rounded-2xl border border-white/10 bg-white/[0.02] backdrop-blur-md">
-            <div className="text-[10px] font-mono text-white/40 tracking-[0.2em] mb-1">CAREER VELOCITY</div>
-            <div className="text-xl sm:text-2xl font-mono font-bold text-fuchsia-300">PROMOTED</div>
+            <div className="text-[10px] font-mono text-white/40 tracking-[0.2em] mb-1">PRIMARY DOMAINS</div>
+            <div className="text-xl sm:text-2xl font-mono font-bold text-fuchsia-300">AI & SYSTEMS</div>
           </div>
           <div className="p-4 rounded-2xl border border-white/10 bg-white/[0.02] backdrop-blur-md">
             <div className="text-[10px] font-mono text-white/40 tracking-[0.2em] mb-1">LOCATION</div>
@@ -106,16 +106,22 @@ const About = () => {
         <div className="lg:col-span-7 space-y-6">
           <div className="p-6 sm:p-8 rounded-3xl border border-white/15 bg-[#05060d]/85 backdrop-blur-xl space-y-5">
             <div className="text-[10px] font-mono tracking-[0.25em] text-cyan-400 uppercase">
-              BIOGRAPHICAL OVERVIEW // BACKGROUND
+              BIOGRAPHICAL OVERVIEW // ABOUT ME
             </div>
             <h2 className="text-2xl sm:text-3xl font-display font-black uppercase text-white">
               ENGINEERING SYSTEMS THAT DO NOT BREAK.
             </h2>
             <p className="text-xs sm:text-sm font-mono text-white/80 leading-relaxed">
-              My engineering focus is centered on the intersection of artificial intelligence, high-concurrency systems programming, and mission-critical data pipelines. At InfoBay AI Limited, I develop evaluation workflows and benchmarking suites for Large Language Models and Vision-Language Models—translating probabilistic machine learning outputs into verified, structured, and auditable production data.
+              I am an Associate AI Engineer at InfoBay AI Limited, focused on building Python-based engineering systems, AI evaluation workflows, and scalable data-processing infrastructure.
+            </p>
+            <p className="text-xs sm:text-sm font-mono text-white/80 leading-relaxed">
+              My work involves developing automation pipelines, evaluating LLM and multimodal model outputs, designing dataset quality-control systems, and building fault-tolerant processing architectures.
             </p>
             <p className="text-xs sm:text-sm font-mono text-white/75 leading-relaxed">
-              Before my current focus on autonomous agent swarms and multimodal evaluation, I developed high-performance storage migration utilities (T2NAS), hash-based audio deduplication engines, and self-contained rsync orchestration daemons. This background in low-level systems programming—managing process memory ceilings, avoiding Python GIL locks, and persisting atomic checkpoints—informs every AI architecture I construct today.
+              I work across Python, SQL, AI/LLM integration, data engineering, concurrency, and system automation, with an emphasis on reliability, reproducibility, and measurable engineering outcomes.
+            </p>
+            <p className="text-xs sm:text-sm font-mono text-white/75 leading-relaxed">
+              I am particularly interested in the intersection of AI systems, evaluation infrastructure, and large-scale data engineering. Prior to my AI focus, I developed high-performance storage migration utilities (T2NAS), hash-based audio deduplication engines, and self-contained rsync orchestration daemons.
             </p>
             <div className="pt-2 flex flex-wrap gap-3">
               <Link

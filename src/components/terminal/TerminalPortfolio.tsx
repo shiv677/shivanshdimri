@@ -304,45 +304,27 @@ export const TerminalPortfolio: React.FC<TerminalPortfolioProps> = ({ onSwitchTo
               <div className="border-l-2 border-primary/60 pl-3">
                 <div className="flex flex-wrap items-center justify-between gap-1">
                   <span className="font-bold text-foreground">Associate AI Engineer &middot; InfoBay AI Limited</span>
-                  <span className={`${t.accent} text-xs`}>Oct 2026 – Present (On-site)</span>
+                  <span className={`${t.accent} text-xs`}>Feb 2026 – Present (On-site)</span>
                 </div>
                 <ul className="list-disc list-inside text-muted-foreground text-xs mt-1.5 space-y-1">
-                  <li>Contributing to AI-driven engineering systems, benchmark evaluation workflows, and intelligent automation solutions.</li>
-                  <li>Designing scalable data engineering and web extraction workflows with strict data quality and structured outputs.</li>
-                  <li>Working with LLMs, vision-language models (VLMs), and autonomous AI agents for evaluation and automated testing.</li>
-                  <li>Building robust Python automation systems with high concurrency, fault tolerance, and process recovery.</li>
-                </ul>
-              </div>
-
-              <div className="border-l-2 border-purple-500/60 pl-3">
-                <div className="flex flex-wrap items-center justify-between gap-1">
-                  <span className="font-bold text-foreground">Vibe Coder &middot; InfoBay AI Limited</span>
-                  <span className={`${t.accent} text-xs`}>Feb 2026 – Oct 2026</span>
-                </div>
-                <ul className="list-disc list-inside text-muted-foreground text-xs mt-1.5 space-y-1">
-                  <li>Contributed to AI-assisted software development, rapid prototyping, and automation-oriented development workflows.</li>
-                  <li>Utilized modern AI tools to accelerate implementation, debugging, and delivery pipelines.</li>
-                </ul>
-              </div>
-
-              <div className="border-l-2 border-blue-500/60 pl-3">
-                <div className="flex flex-wrap items-center justify-between gap-1">
-                  <span className="font-bold text-foreground">Web Developer &middot; Global Connection 21</span>
-                  <span className={`${t.accent} text-xs`}>Jun 2025 – Dec 2025 (Remote)</span>
-                </div>
-                <ul className="list-disc list-inside text-muted-foreground text-xs mt-1.5 space-y-1">
-                  <li>Developed and maintained client websites and e-commerce solutions with custom WordPress & WooCommerce.</li>
-                  <li>Implemented API-based automation workflows, performance improvements, and SEO tuning.</li>
+                  <li>Developing Python automation and high-throughput data-processing systems for enterprise operations.</li>
+                  <li>Building AI/LLM evaluation and benchmarking workflows with automated scoring and structured schema validation.</li>
+                  <li>Designing dataset validation, deduplication, and quality-control pipelines across large-scale question corpora.</li>
+                  <li>Working with multimodal models (VLMs) and structured Pydantic v2 schema evaluation.</li>
+                  <li>Automating research and discovery workflows for specialised question datasets and source classification.</li>
+                  <li>Developing reliable processing systems with checkpointing, concurrency, and recovery mechanisms.</li>
                 </ul>
               </div>
 
               <div className="border-l-2 border-amber-500/60 pl-3">
                 <div className="flex flex-wrap items-center justify-between gap-1">
-                  <span className="font-bold text-foreground">Founder & Lead Developer &middot; Zynex Studio</span>
-                  <span className={`${t.accent} text-xs`}>2025 – Present (Remote)</span>
+                  <span className="font-bold text-foreground">Lead Systems Developer &middot; Independent Systems Research</span>
+                  <span className={`${t.accent} text-xs`}>2024 – 2026 (Remote)</span>
                 </div>
                 <ul className="list-disc list-inside text-muted-foreground text-xs mt-1.5 space-y-1">
-                  <li>Custom web application engineering using modern React, Next.js, and API integrations.</li>
+                  <li>Authored T2NAS, a CPU-aware resumable parallel transfer engine for 10Gbps NAS network environments.</li>
+                  <li>Developed Audio Internal & External Duplicacy Checker combining acoustic hashing with atomic SQLite WAL checkpointing.</li>
+                  <li>Constructed Enterprise Rsync Transfer Platform with embedded runtimes and live stdout regex telemetry.</li>
                 </ul>
               </div>
             </div>

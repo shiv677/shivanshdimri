@@ -62,10 +62,10 @@ const SYSTEMS: SystemArchitecture[] = [
       'SHA-256',
     ],
     metrics: [
-      { label: 'Ingestion Scale', value: '100,000+ files / run' },
-      { label: 'Duplication Catch Rate', value: '100% Deterministic' },
-      { label: 'Crash Recovery', value: '< 150ms to resume' },
-      { label: 'Memory Footprint', value: '< 380MB Bound' },
+      { label: 'Ingestion Scale', value: 'Multi-Core Batch Stream' },
+      { label: 'Duplication Detection', value: 'Deterministic Chromaprint' },
+      { label: 'Crash Recovery', value: 'Atomic WAL Checkpoints' },
+      { label: 'Memory Footprint', value: 'O(1) Bounded Buffer' },
     ],
     architecturePoints: [
       'CPU-core auto-balancing worker pool avoiding Global Interpreter Lock bottlenecks',
@@ -193,10 +193,10 @@ def transfer_chunked_file(src: str, dst: str, state: CheckpointTracker):
       'Cross-Platform',
     ],
     metrics: [
-      { label: 'Sync Success Rate', value: '99.98%' },
-      { label: 'Delta Bandwidth Savings', value: 'Up to 90%' },
-      { label: 'Host Dependencies', value: '0 (Fully embedded)' },
-      { label: 'Live Progress', value: 'Real-time byte stream' },
+      { label: 'Process Supervision', value: 'Auto-Reconnect Heartbeats' },
+      { label: 'Delta Bandwidth Savings', value: 'Block-Level Compression' },
+      { label: 'Host Dependencies', value: 'Zero (Embedded Binaries)' },
+      { label: 'Live Telemetry', value: 'Real-Time Regex Parser' },
     ],
     architecturePoints: [
       'Zero-dependency execution: embedded portable binaries isolated from host environment quirks',
@@ -260,10 +260,10 @@ def execute_rsync_stream(cmd: list[str]) -> Iterator[dict]:
       'RAG Benchmarking',
     ],
     metrics: [
-      { label: 'Evaluation Throughput', value: '50k+ prompts / day' },
-      { label: 'Schema Conformance', value: '100% Deterministic' },
-      { label: 'Rate-Limit Throttling', value: 'Zero 429 Drops' },
-      { label: 'Multi-Agent Consensus', value: 'Tri-perspective check' },
+      { label: 'Evaluation Model', value: 'Concurrent Multi-Agent' },
+      { label: 'Schema Conformance', value: 'Strict Pydantic v2' },
+      { label: 'Rate-Limit Throttling', value: 'Token-Bucket Shield' },
+      { label: 'Verification Protocol', value: 'Tri-Perspective Debate' },
     ],
     architecturePoints: [
       'Multi-agent debate & consensus architecture eliminating single-judge evaluation bias',
@@ -292,6 +292,121 @@ async def evaluate_sample_with_consensus(sample: dict, client, semaphore) -> Eva
             config={"response_mime_type": "application/json", "response_schema": EvaluationRubric}
         )
         return EvaluationRubric.model_validate_json(response.text)`,
+  },
+  {
+    id: 'dataset-quality-engineering',
+    code: '05',
+    title: 'Large-Scale Dataset Quality & Integrity Engineering',
+    category: 'DATA PIPELINE INTEGRITY, NORMALIZATION & DEDUPLICATION',
+    status: 'PRODUCTION ACTIVE',
+    description:
+      'High-throughput validation, normalization, and semantic corruption detection pipeline ensuring clean datasets for AI model evaluation.',
+    problem:
+      'High-volume specialized question corpora and multimodal document extracts contained encoding artifacts, duplicate items across vendor dumps, malformed schema, and subtle corruption that silently skewed evaluation benchmarks.',
+    solution:
+      'Engineered an automated dataset quality-control pipeline with multi-pass question extraction, canonical Unicode normalization, semantic and hash-based deduplication, corruption detection heuristics, and transactional SQLite WAL persistence with strict Pydantic v2 validation.',
+    github: 'https://github.com/shiv677',
+    technologies: [
+      'Python 3.12',
+      'Pydantic v2',
+      'SQLite WAL',
+      'PostgreSQL',
+      'Unicode Normalization',
+      'Multiprocessing',
+      'Fuzzy / Hash Matching',
+      'Corruption Detectors',
+    ],
+    metrics: [
+      { label: 'Schema Conformance', value: 'Strict Pydantic v2' },
+      { label: 'Deduplication Pass', value: 'Dual Hash + Semantic' },
+      { label: 'Corruption Catch', value: 'Zero Malformed Ingests' },
+      { label: 'Fault Recovery', value: 'Atomic Checkpoints' },
+    ],
+    architecturePoints: [
+      'Multi-stage normalization converting varied raw dumps into standardized canonical question representations',
+      'Dual-pass deduplication filtering identical text hashes and fuzzy semantic near-duplicates',
+      'Automated corruption detection flagging truncated inputs, encoding anomalies, and invalid schemas',
+      'Transactional SQLite WAL database guarantees with persistent checkpointing for crash resilience',
+    ],
+    codeSnippet: `from pydantic import BaseModel, Field, field_validator
+import unicodedata
+import hashlib
+
+class QuestionRecord(BaseModel):
+    question_id: str
+    prompt: str = Field(min_length=10)
+    canonical_answer: str
+    metadata: dict = Field(default_factory=dict)
+    
+    @field_validator('prompt')
+    def normalize_text(cls, v: str) -> str:
+        # Canonical Unicode normalization (NFKC) & whitespace cleanup
+        normalized = unicodedata.normalize('NFKC', v.strip())
+        if len(normalized) < 10:
+            raise ValueError('Prompt too short or corrupted')
+        return normalized
+
+def compute_record_fingerprint(record: QuestionRecord) -> str:
+    """Generates deterministic digest for duplicate detection."""
+    content = f"{record.prompt.lower()}::{record.canonical_answer.lower()}"
+    return hashlib.sha256(content.encode('utf-8')).hexdigest()`,
+  },
+  {
+    id: 'research-discovery-pipeline',
+    code: '06',
+    title: 'Automated Research & Website Discovery Engine',
+    category: 'INTELLIGENT WEB SCRAPING, RESEARCH AUTOMATION & EXTRACTION',
+    status: 'PRODUCTION ACTIVE',
+    description:
+      'Automated source discovery, shortlisting, and web scraping pipeline harvesting specialized question datasets with domain classification.',
+    problem:
+      'Creating comprehensive question benchmarks required manually searching, evaluating, and scraping specialized domain websites—a process vulnerable to anti-bot measures, dynamic JS rendering, and inconsistent HTML structures.',
+    solution:
+      'Constructed an asynchronous discovery and content extraction engine that shortlists high-yield target domains, orchestrates headless browser workers, extracts structured QA candidates, and tags sources with domain classification metadata while handling rate limits with exponential backoff.',
+    github: 'https://github.com/shiv677',
+    technologies: [
+      'Python 3.12',
+      'AsyncIO',
+      'Playwright / Headless',
+      'BeautifulSoup4',
+      'Domain Classifiers',
+      'Rate-Limiting Queues',
+      'SQLite Checkpoints',
+    ],
+    metrics: [
+      { label: 'Discovery Logic', value: 'Domain-Targeted' },
+      { label: 'Content Extraction', value: 'Clean QA Candidates' },
+      { label: 'Execution Model', value: 'Async Worker Queue' },
+      { label: 'Resilience', value: 'Backoff & Auto-Retry' },
+    ],
+    architecturePoints: [
+      'Target domain discovery and shortlisting based on relevance heuristics and question density',
+      'Asynchronous worker pool balancing concurrent requests to respect domain robots.txt and rate limits',
+      'Robust DOM parsing with fallback selectors resilient against website layout updates',
+      'Automated candidate classification tagging extracted content with source provenance metadata',
+    ],
+    codeSnippet: `import asyncio
+from typing import List, Dict
+import aiohttp
+from bs4 import BeautifulSoup
+
+async def extract_qa_candidates(session: aiohttp.ClientSession, url: str) -> List[Dict]:
+    """Asynchronous source extraction with retry and content structure parsing."""
+    try:
+        async with session.get(url, timeout=aiohttp.ClientTimeout(total=15)) as response:
+            if response.status != 200:
+                return []
+            html = await response.text()
+            soup = BeautifulSoup(html, 'html.parser')
+            # Extract structured question-answer containers
+            candidates = []
+            for item in soup.select('.question-block, .qa-item, article'):
+                text = item.get_text(separator=' ', strip=True)
+                if len(text) > 40 and ('?' in text):
+                    candidates.append({"source_url": url, "raw_content": text})
+            return candidates
+    except (aiohttp.ClientError, asyncio.TimeoutError):
+        return []`,
   },
 ];
 
@@ -344,18 +459,18 @@ const Work = () => {
         </h1>
 
         <p className="text-sm sm:text-base font-mono text-white/70 max-w-3xl leading-relaxed mb-8">
-          Production systems engineering focused on high-concurrency Python pipelines, deterministic deduplication engines, parallel NAS storage migration, and autonomous AI/VLM evaluation harnesses.
+          I build reliable Python systems, AI evaluation workflows, data-processing pipelines, and automation infrastructure for complex engineering problems.
         </p>
 
         {/* Top Telemetry Pills */}
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
           <div className="p-4 rounded-2xl border border-white/10 bg-white/[0.02] backdrop-blur-md">
             <div className="text-[10px] font-mono text-white/40 tracking-[0.2em] mb-1">TOTAL ARCHITECTURES</div>
-            <div className="text-xl sm:text-2xl font-mono font-bold text-cyan-300">4 PRODUCTION</div>
+            <div className="text-xl sm:text-2xl font-mono font-bold text-cyan-300">6 PRODUCTION</div>
           </div>
           <div className="p-4 rounded-2xl border border-white/10 bg-white/[0.02] backdrop-blur-md">
             <div className="text-[10px] font-mono text-white/40 tracking-[0.2em] mb-1">DATA INTEGRITY</div>
-            <div className="text-xl sm:text-2xl font-mono font-bold text-emerald-400">100% ZERO-LOSS</div>
+            <div className="text-xl sm:text-2xl font-mono font-bold text-emerald-400">ATOMIC WAL</div>
           </div>
           <div className="p-4 rounded-2xl border border-white/10 bg-white/[0.02] backdrop-blur-md">
             <div className="text-[10px] font-mono text-white/40 tracking-[0.2em] mb-1">CONCURRENCY MODEL</div>

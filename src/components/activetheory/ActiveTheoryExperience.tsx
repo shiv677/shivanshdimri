@@ -188,25 +188,45 @@ const CAPABILITY_MATRIX = [
     code: 'SYS.01',
     title: 'AI & MODEL ENGINEERING',
     icon: Brain,
-    skills: ['LLM & Agentic Workflows (94%)', 'Vision-Language Models / VLM (88%)', 'RAG & Vector Pipelines (92%)', 'PyTorch, Hugging Face, Ollama (90%)'],
+    skills: [
+      'LLM & Multimodal VLM Evaluation',
+      'Multi-Agent Consensus Swarms',
+      'Pydantic v2 Schema Constraints',
+      'Automated Benchmark Scoring',
+    ],
   },
   {
     code: 'SYS.02',
     title: 'CONCURRENCY & CORE SYSTEMS',
     icon: Cpu,
-    skills: ['Python Multiprocessing Pools (98%)', 'AsyncIO Event Loops (92%)', 'Crash-Resume Checkpointing (96%)', 'SHA-256 Deduplication (96%)'],
+    skills: [
+      'Multiprocessing Worker Pools (CPU-1)',
+      'AsyncIO Event Loops & Semaphores',
+      'Crash-Proof Checkpointing (SQLite WAL)',
+      'Deterministic Deduplication (SHA-256)',
+    ],
   },
   {
     code: 'SYS.03',
-    title: 'DATA PIPELINES & STORAGE',
+    title: 'DATA SYSTEMS & AUTOMATION',
     icon: Layers,
-    skills: ['Large-Scale Batch Processing (95%)', 'Automated ETL & Scrapers (93%)', 'Schema & Parity Validation (95%)', 'SQLite & MySQL Persistence (89%)'],
+    skills: [
+      'Dataset Quality & Corruption Guards',
+      'Automated Research & Web Discovery',
+      'Bounded Chunk Streaming (O(1) RAM)',
+      'Transactional State Recovery',
+    ],
   },
   {
     code: 'SYS.04',
-    title: 'INFRASTRUCTURE & FULL-STACK',
+    title: 'INFRASTRUCTURE & INTEGRATION',
     icon: ShieldCheck,
-    skills: ['Linux & Embedded OpenSSH/Rsync (92%)', 'Docker & Standalone Packaging (86%)', 'React, TypeScript & WebGL (89%)', 'Git Release Engineering (95%)'],
+    skills: [
+      'Linux & Embedded OpenSSH/Rsync',
+      'Subprocess Telemetry Parsing',
+      'Docker & Standalone Packaging',
+      'Reproducible Evaluation Harnesses',
+    ],
   },
 ];
 
@@ -389,9 +409,9 @@ export const ActiveTheoryExperience: React.FC = () => {
             >
               {/* Left Kinetic Title */}
               <div className="space-y-4 pointer-events-auto">
-                <div className="inline-flex items-center gap-2.5 px-3 py-1 rounded-full border border-cyan-400/40 bg-black/60 backdrop-blur-md text-[10px] font-mono tracking-[0.25em] text-cyan-300">
+                <div className="inline-flex items-center gap-2.5 px-3 py-1 rounded-full border border-cyan-400/40 bg-black/60 backdrop-blur-md text-[10px] font-mono tracking-[0.22em] text-cyan-300">
                   <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-ping" />
-                  <span>PORTAL 00 // LUCKNOW, IN &middot; INFOBAY AI LIMITED</span>
+                  <span>ASSOCIATE AI ENGINEER // PYTHON &middot; AI EVALUATION &middot; DATA SYSTEMS &middot; AUTOMATION</span>
                 </div>
 
                 <h1 className="font-display font-black uppercase tracking-[-0.04em] leading-[0.88] text-5xl sm:text-7xl lg:text-8xl text-white drop-shadow-[0_10px_30px_rgba(0,0,0,0.9)]">
@@ -404,7 +424,7 @@ export const ActiveTheoryExperience: React.FC = () => {
                 </h1>
 
                 <p className="max-w-md text-xs sm:text-sm font-mono text-white/75 leading-relaxed bg-black/55 backdrop-blur-md p-3.5 border-l-2 border-cyan-400">
-                  Associate AI Engineer with 2+ years of systems engineering track record, crafting autonomous multi-agent pipelines, VLM evaluation suites, and high-concurrency Python architectures.
+                  I build reliable Python systems, AI evaluation workflows, data-processing pipelines, and automation infrastructure for complex engineering problems.
                 </p>
 
                 <div className="flex flex-wrap items-center gap-2.5 pt-1">
@@ -579,7 +599,7 @@ export const ActiveTheoryExperience: React.FC = () => {
               <div className="lg:col-span-5 p-6 rounded-3xl border border-cyan-400/35 bg-[#05060d]/90 backdrop-blur-2xl space-y-4">
                 <div className="inline-flex items-center gap-2 px-2.5 py-1 rounded-full bg-emerald-400/10 border border-emerald-400/30 text-[10px] font-mono text-emerald-300">
                   <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-                  <span>2+ YEARS EXP // PROMOTED TO ASSOCIATE AI ENG</span>
+                  <span>ACTIVE ROLE // FEB 2026 – PRESENT</span>
                 </div>
                 <div>
                   <h2 className="text-2xl sm:text-3xl font-display font-black uppercase text-white">
@@ -590,11 +610,11 @@ export const ActiveTheoryExperience: React.FC = () => {
                     <span>INFOBAY AI LIMITED &middot; LUCKNOW, INDIA</span>
                   </div>
                   <div className="text-[10px] font-mono text-white/50 mt-1">
-                    CURRENT ROLE: OCT 2026 – PRESENT &middot; RAPID ADVANCEMENT FROM VIBE CODER (2+ YEARS TOTAL)
+                    FEB 2026 – PRESENT &middot; PYTHON SYSTEMS, AI EVALUATION & AUTOMATION
                   </div>
                 </div>
                 <p className="text-xs font-mono text-white/75 leading-relaxed">
-                  Architecting autonomous multi-agent workflows, multimodal VLM benchmark suites, RAG retrieval pipelines, and fault-tolerant Python multiprocessing engines with 100% deterministic ownership.
+                  Developing Python automation and data-processing systems, building AI/LLM evaluation workflows, designing dataset quality-control pipelines, and engineering fault-tolerant multiprocessing architectures.
                 </p>
                 <div className="flex flex-wrap gap-2 pt-2">
                   <Link
@@ -673,7 +693,7 @@ export const ActiveTheoryExperience: React.FC = () => {
                   className="px-6 py-3.5 rounded-full border border-white/25 bg-black/60 hover:border-cyan-400 font-mono text-xs tracking-[0.18em] uppercase text-white flex items-center gap-2 cursor-pointer"
                 >
                   {copiedEmail ? <Check size={14} className="text-emerald-400" /> : <Copy size={14} className="text-cyan-400" />}
-                  <span>{copiedEmail ? 'EMAIL COPIED' : 'SHIVANSHDIMRI677@GMAIL.COM'}</span>
+                  <span>{copiedEmail ? 'EMAIL COPIED' : 'DIMRISHIV933@GMAIL.COM'}</span>
                 </button>
 
                 <a
