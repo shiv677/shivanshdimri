@@ -25,11 +25,6 @@ import ScrambleText from './ScrambleText';
 import { soundEngine } from './SoundEngine';
 import TerminalPortfolio from '@/components/terminal/TerminalPortfolio';
 
-import arkoseScreenshot from '@/assets/arkose-screenshot.png';
-import arkoseBuildcomScreenshot from '@/assets/arkose-buildcom-screenshot.png';
-import pearlsScreenshot from '@/assets/32pearls-screenshot.png';
-import pitchandplayScreenshot from '@/assets/pitchandplay-screenshot.png';
-
 interface FlagshipSystem {
   index: string;
   zoneIndex: number;
@@ -148,44 +143,42 @@ const FLAGSHIP_SYSTEMS: FlagshipSystem[] = [
     stack: ['Python', 'Embedded OpenSSH', 'Subprocess Telemetry', 'RBAC Security'],
     github: 'https://github.com/shiv677/sync_tool',
   },
-];
-
-const CLIENT_DEPLOYMENTS = [
   {
     index: '04',
-    title: 'ARKOSE INFOSOFT',
-    role: 'FULL-STACK DEVELOPER',
-    url: 'https://arkoseinfosoft.in/',
-    image: arkoseScreenshot,
-    description: 'High-conversion commercial web architecture for IT consulting and digital marketing.',
-    tags: ['WordPress', 'JavaScript', 'SEO Architecture'],
-  },
-  {
-    index: '05',
-    title: 'ARKOSE BUILDCOM',
-    role: 'UI/UX & FRONTEND ENGINEER',
-    url: 'https://arkose.co.in/',
-    image: arkoseBuildcomScreenshot,
-    description: 'Enterprise showcase for civil engineering, architecture, and construction.',
-    tags: ['UI/UX Design', 'WordPress', 'Performance'],
-  },
-  {
-    index: '06',
-    title: '32 PEARLS DENTAL WORLD',
-    role: 'WORDPRESS ENGINEER',
-    url: 'https://32pearlsdentalworld.com/',
-    image: pearlsScreenshot,
-    description: 'Healthcare clinical platform featuring structured patient acquisition funnels.',
-    tags: ['Healthcare Web', 'PHP', 'Medical SEO'],
-  },
-  {
-    index: '07',
-    title: 'PITCH & PLAY',
-    role: 'FRONTEND DEVELOPER',
-    url: 'https://pitchandplay.in/',
-    image: pitchandplayScreenshot,
-    description: 'Custom-coded creative platform for an influencer marketing agency.',
-    tags: ['Custom Code', 'PHP', 'Interactive UI'],
+    zoneIndex: 4,
+    id: 'ai-eval-harness',
+    title: 'AUTONOMOUS AI & VLM EVALUATION HARNESS',
+    shortTitle: 'AI.HARNESS',
+    category: 'DISTRIBUTED AI BENCHMARKING & MULTI-AGENT SWARMS',
+    accent: '#00f0ff',
+    metrics: '50K+ PROMPTS/DAY // ZERO 429 DROPS // 100% SCHEMA CONFORMANCE',
+    summary:
+      'High-throughput evaluation framework distributing Vision-Language Model and multi-turn agent benchmarks across concurrent worker pools with Pydantic v2 schema validation and automated regression detection.',
+    architecture: [
+      { step: '01', name: 'TASK DISPATCH', spec: 'Token-bucket async semaphore' },
+      { step: '02', name: 'AGENT DEBATE', spec: 'Multi-perspective consensus scoring' },
+      { step: '03', name: 'VLM GROUNDING', spec: 'OCR & bounding-box verification' },
+      { step: '04', name: 'SCHEMA GUARD', spec: 'Pydantic v2 grammar enforcement' },
+      { step: '05', name: 'REGRESSION DB', spec: 'Continuous drift telemetry store' },
+    ],
+    telemetry: [
+      { label: 'EVAL SCALE', value: '50K+ / DAY', sub: 'AsyncIO concurrency pool' },
+      { label: 'SCHEMA LOCK', value: '100%', sub: 'Zero non-compliant outputs' },
+      { label: 'RATE THROTTLE', value: 'DYNAMIC', sub: 'Token-bucket quota shield' },
+      { label: 'FAULT TOLERANCE', value: 'RESUMABLE', sub: 'Per-sample state checkpoint' },
+    ],
+    code: `async def evaluate_sample_with_consensus(sample: dict, client, semaphore) -> EvaluationRubric:
+    """Asynchronous model evaluation with rate-limit semaphores and structured schema."""
+    async with semaphore:
+        prompt = f"Evaluate model response against reference ground truth:\\n{sample}"
+        response = await client.models.generate_content(
+            model="gemini-2.5-pro",
+            contents=prompt,
+            config={"response_mime_type": "application/json", "response_schema": EvaluationRubric}
+        )
+        return EvaluationRubric.model_validate_json(response.text)`,
+    stack: ['Python 3.12', 'LangGraph', 'Vision-Language Models', 'Pydantic v2', 'AsyncIO'],
+    github: 'https://github.com/shiv677',
   },
 ];
 
@@ -306,10 +299,10 @@ export const ActiveTheoryExperience: React.FC = () => {
       setAiMessage(
         'NAVIGATED TO PORTAL 03 [Z = -66m] // Enterprise Rsync Platform bundles embedded OpenSSH & rsync inside a standalone Windows binary with RBAC auth and <5ms stdout telemetry.'
       );
-    } else if (q.includes('web') || q.includes('client') || q.includes('arkose') || q.includes('dental') || q.includes('pitch')) {
+    } else if (q.includes('ai') || q.includes('vlm') || q.includes('harness') || q.includes('agent') || q.includes('benchmark')) {
       flyToZone(4);
       setAiMessage(
-        'NAVIGATED TO PORTAL 04 [Z = -88m] // Displaying 4 production client deployments: Arkose Infosoft, Arkose Buildcom, 32 Pearls Dental World, and Pitch & Play.'
+        'NAVIGATED TO PORTAL 04 [Z = -88m] // Autonomous AI & VLM Evaluation Harness distributes multi-agent benchmarking prompts with 100% Pydantic v2 schema conformance.'
       );
     } else if (q.includes('infobay') || q.includes('experience') || q.includes('role') || q.includes('skill') || q.includes('matrix')) {
       flyToZone(5);
@@ -319,25 +312,25 @@ export const ActiveTheoryExperience: React.FC = () => {
     } else if (q.includes('contact') || q.includes('email') || q.includes('hire') || q.includes('cv') || q.includes('resume')) {
       flyToZone(6);
       setAiMessage(
-        'NAVIGATED TO PORTAL 06 [Z = -132m] // Transmission Stargate ready. Direct email: shivanshdimri677@gmail.com | One-click CV.PDF available.'
+        'NAVIGATED TO PORTAL 06 [Z = -132m] // Transmission Stargate ready. Direct email: dimrishiv933@gmail.com | One-click CV.PDF available.'
       );
     } else {
       flyToZone(1);
       setAiMessage(
-        'NAVIGATED TO FLAGSHIP SYSTEMS [Z = -22m] // Explore 01 Audio Duplicacy Checker, 02 T2NAS Parallel Transfer, and 03 Enterprise Rsync Platform.'
+        'NAVIGATED TO FLAGSHIP SYSTEMS [Z = -22m] // Explore 01 Audio Duplicacy Checker, 02 T2NAS Parallel Transfer, 03 Enterprise Rsync, and 04 AI Evaluation Harness.'
       );
     }
   };
 
   const handleCopyEmail = () => {
     soundEngine.playClick(960);
-    navigator.clipboard.writeText('shivanshdimri677@gmail.com');
+    navigator.clipboard.writeText('dimrishiv933@gmail.com');
     setCopiedEmail(true);
     setTimeout(() => setCopiedEmail(false), 2200);
   };
 
   const currentSystem =
-    activeZone >= 1 && activeZone <= 3 ? FLAGSHIP_SYSTEMS[activeZone - 1] : null;
+    activeZone >= 1 && activeZone <= 4 ? FLAGSHIP_SYSTEMS[activeZone - 1] : null;
 
   return (
     <div className="relative w-screen h-screen overflow-hidden bg-[#020205] text-white select-none">
@@ -558,73 +551,6 @@ export const ActiveTheoryExperience: React.FC = () => {
             </motion.div>
           )}
 
-          {/* ==================== ZONE 4: COMMERCIAL WEB ECOSYSTEMS ==================== */}
-          {activeZone === 4 && (
-            <motion.div
-              key="zone-4"
-              initial={{ opacity: 0, y: 18 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -18 }}
-              className="w-full max-w-6xl pointer-events-auto"
-            >
-              <div className="flex flex-wrap items-end justify-between gap-4 mb-5 bg-black/60 backdrop-blur-md p-4 rounded-2xl border border-white/10">
-                <div>
-                  <div className="text-[10px] font-mono tracking-[0.25em] text-fuchsia-400">
-                    PORTAL /04 // COMMERCIAL WEB ECOSYSTEMS [Z = -88m]
-                  </div>
-                  <h2 className="text-2xl sm:text-4xl font-display font-black uppercase text-white">
-                    PRODUCTION CLIENT PLATFORMS.
-                  </h2>
-                </div>
-                <Link
-                  to="/work"
-                  className="px-4 py-2 rounded-full bg-white text-black hover:bg-cyan-400 text-[10px] font-mono font-bold tracking-[0.2em] uppercase flex items-center gap-1.5"
-                >
-                  <span>VIEW ALL 10+ SITES</span>
-                  <ArrowUpRight size={13} />
-                </Link>
-              </div>
-
-              <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-3.5">
-                {CLIENT_DEPLOYMENTS.map((client) => (
-                  <a
-                    key={client.index}
-                    href={client.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    onMouseEnter={() => soundEngine.playHover()}
-                    className="group rounded-2xl border border-white/15 bg-[#05060d]/85 backdrop-blur-xl hover:border-cyan-400 overflow-hidden transition-all flex flex-col justify-between"
-                  >
-                    <div className="aspect-[16/9] w-full overflow-hidden relative bg-black">
-                      <img
-                        src={client.image}
-                        alt={client.title}
-                        className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500"
-                      />
-                      <span className="absolute top-2 right-2 px-2 py-0.5 rounded-full bg-black/80 border border-emerald-400/40 text-[9px] font-mono text-emerald-300">
-                        LIVE
-                      </span>
-                    </div>
-                    <div className="p-4 space-y-2">
-                      <div className="text-[9px] font-mono tracking-[0.2em] text-cyan-400">
-                        /{client.index} // {client.role}
-                      </div>
-                      <div className="flex items-center justify-between">
-                        <h3 className="text-base font-display font-black uppercase text-white group-hover:text-cyan-300">
-                          {client.title}
-                        </h3>
-                        <ArrowUpRight size={14} className="text-white/50 group-hover:text-cyan-400" />
-                      </div>
-                      <p className="text-[11px] font-mono text-white/60 leading-snug">
-                        {client.description}
-                      </p>
-                    </div>
-                  </a>
-                ))}
-              </div>
-            </motion.div>
-          )}
-
           {/* ==================== ZONE 5: CAPABILITIES & INFOBAY AI PROVENANCE ==================== */}
           {activeZone === 5 && (
             <motion.div
@@ -838,24 +764,36 @@ export const ActiveTheoryExperience: React.FC = () => {
                 </div>
               </div>
 
-              {/* Commercial Web Platforms */}
+              {/* Core Capabilities & Skills Matrix */}
               <div className="space-y-4">
-                <div className="text-xs font-mono tracking-[0.25em] text-fuchsia-400 uppercase">
-                  02 // COMMERCIAL CLIENT DEPLOYMENTS
+                <div className="text-xs font-mono tracking-[0.25em] text-cyan-400 uppercase flex items-center justify-between">
+                  <span>02 // CORE CAPABILITIES & SKILLS MATRIX</span>
+                  <Link
+                    to="/experience"
+                    onClick={() => {
+                      soundEngine.playClick(800);
+                      setShowIndexDrawer(false);
+                    }}
+                    className="text-white/60 hover:text-cyan-300 flex items-center gap-1 text-[11px]"
+                  >
+                    <span>VIEW FULL SKILLS MATRIX</span>
+                    <ArrowUpRight size={12} />
+                  </Link>
                 </div>
                 <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                  {CLIENT_DEPLOYMENTS.map((c) => (
-                    <a
-                      key={c.index}
-                      href={c.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
+                  {CAPABILITY_MATRIX.map((c) => (
+                    <div
+                      key={c.code}
                       className="p-4 rounded-2xl border border-white/15 bg-white/[0.02] hover:border-cyan-400 transition-all space-y-2"
                     >
-                      <div className="text-[10px] font-mono text-cyan-400">/{c.index} // {c.role}</div>
-                      <div className="text-base font-display font-black text-white">{c.title}</div>
-                      <p className="text-[11px] font-mono text-white/60">{c.description}</p>
-                    </a>
+                      <div className="text-[10px] font-mono text-cyan-400">/{c.code} // DOMAIN</div>
+                      <div className="text-sm font-display font-black text-white">{c.title}</div>
+                      <ul className="space-y-1 text-[10px] font-mono text-white/70">
+                        {c.skills.slice(0, 3).map((s) => (
+                          <li key={s} className="truncate">✦ {s}</li>
+                        ))}
+                      </ul>
+                    </div>
                   ))}
                 </div>
               </div>

@@ -1,9 +1,24 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Mail, Github, Linkedin, Phone, Send, MapPin, Clock } from 'lucide-react';
+import {
+  Mail,
+  Github,
+  Linkedin,
+  Phone,
+  Send,
+  Check,
+  Copy,
+  Download,
+  Terminal,
+  Shield,
+  Clock,
+  MapPin,
+  ExternalLink,
+  Sparkles,
+} from 'lucide-react';
 import Layout from '@/components/Layout';
-import AnimatedSection from '@/components/AnimatedSection';
-import Button from '@/components/Button';
+import ScrambleText from '@/components/activetheory/ScrambleText';
+import { soundEngine } from '@/components/activetheory/SoundEngine';
 import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
 import { z } from 'zod';
@@ -14,81 +29,90 @@ const contactSchema = z.object({
   message: z.string().trim().min(1, 'Message is required').max(2000, 'Message must be less than 2000 characters'),
 });
 
-const contactMethods = [
+const DIRECT_CHANNELS = [
   {
     icon: Mail,
-    label: 'Email',
+    label: 'PRIMARY DIRECT INBOX',
     value: 'dimrishiv933@gmail.com',
     href: 'mailto:dimrishiv933@gmail.com',
-  },
-  {
-    icon: Github,
-    label: 'GitHub',
-    value: 'github.com/shiv677',
-    href: 'https://github.com/shiv677',
-  },
-  {
-    icon: Linkedin,
-    label: 'LinkedIn',
-    value: 'linkedin.com/in/shivansh-dimri-27820b268',
-    href: 'https://www.linkedin.com/in/shivansh-dimri-27820b268',
+    actionText: 'TRANSMIT EMAIL',
   },
   {
     icon: Phone,
-    label: 'WhatsApp',
+    label: 'WHATSAPP ENCRYPTED CHAT',
     value: '+91 8957543247',
     href: 'https://wa.me/918957543247',
+    actionText: 'OPEN WHATSAPP',
+  },
+  {
+    icon: Github,
+    label: 'GITHUB SOURCE REGISTRY',
+    value: 'github.com/shiv677',
+    href: 'https://github.com/shiv677',
+    actionText: 'VIEW COMMITS',
+  },
+  {
+    icon: Linkedin,
+    label: 'LINKEDIN PROFESSIONAL NETWORK',
+    value: 'linkedin.com/in/shivansh-dimri-27820b268',
+    href: 'https://www.linkedin.com/in/shivansh-dimri-27820b268',
+    actionText: 'VIEW PROFILE',
   },
 ];
 
 const Contact = () => {
   const { toast } = useToast();
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    message: '',
-  });
+  const [formData, setFormData] = useState({ name: '', email: '', message: '' });
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [copiedEmail, setCopiedEmail] = useState(false);
+
+  const handleCopyEmail = () => {
+    soundEngine.playClick(880);
+    navigator.clipboard.writeText('dimrishiv933@gmail.com');
+    setCopiedEmail(true);
+    setTimeout(() => setCopiedEmail(false), 2500);
+    toast({
+      title: 'Email Copied',
+      description: 'dimrishiv933@gmail.com copied to clipboard.',
+    });
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    soundEngine.playClick(940);
     setIsSubmitting(true);
 
     try {
-      // Validate form data
       const validatedData = contactSchema.parse(formData);
 
-      // Save to database
-      const { error } = await supabase
-        .from('contact_submissions')
-        .insert({
-          name: validatedData.name,
-          email: validatedData.email,
-          message: validatedData.message,
-        });
+      const { error } = await supabase.from('contact_submissions').insert({
+        name: validatedData.name,
+        email: validatedData.email,
+        message: validatedData.message,
+      });
 
       if (error) {
         console.error('Error saving submission:', error);
-        throw new Error('Failed to send message');
+        throw new Error('Failed to send transmission');
       }
 
       toast({
-        title: 'Message sent!',
-        description: "Thanks for reaching out. I'll get back to you soon.",
+        title: 'Transmission Dispatched',
+        description: 'Thank you. Shivansh Dimri will respond via secure channel shortly.',
       });
 
       setFormData({ name: '', email: '', message: '' });
     } catch (error) {
       if (error instanceof z.ZodError) {
         toast({
-          title: 'Validation Error',
+          title: 'Validation Fault',
           description: error.errors[0].message,
           variant: 'destructive',
         });
       } else {
         toast({
-          title: 'Error',
-          description: 'Failed to send message. Please try again.',
+          title: 'Transmission Interrupted',
+          description: 'Failed to record transmission. Please use direct email.',
           variant: 'destructive',
         });
       }
@@ -99,194 +123,187 @@ const Contact = () => {
 
   return (
     <Layout>
-      {/* Hero */}
-      <section className="pt-32 pb-16">
-        <div className="container mx-auto px-6">
-          <AnimatedSection>
-            <p className="text-primary text-sm font-medium tracking-wider uppercase mb-4">
-              Get in Touch
-            </p>
-            <h1 className="text-display-lg font-display font-bold mb-6">
-              Let's Work <span className="text-gradient">Together</span>
-            </h1>
-            <p className="text-xl text-muted-foreground max-w-2xl">
-              Want to work together or discuss an opportunity? I'm always open 
-              to new projects and collaborations.
-            </p>
-          </AnimatedSection>
+      {/* ==================== HERO SECTION ==================== */}
+      <section className="mb-16">
+        <div className="flex items-center gap-2 text-cyan-400 font-mono text-[10px] tracking-[0.3em] uppercase mb-3">
+          <span className="w-2 h-2 rounded-full bg-cyan-400 shadow-[0_0_8px_#00f0ff]" />
+          <span>PORTAL // 04 // SECURE TRANSMISSION INTERFACE</span>
         </div>
-      </section>
 
-      {/* Contact Content */}
-      <section className="pb-24">
-        <div className="container mx-auto px-6">
-          <div className="grid lg:grid-cols-2 gap-16">
-            {/* Contact Form */}
-            <AnimatedSection direction="left">
-              <div className="p-8 md:p-10 rounded-3xl glass border-glow">
-                <h2 className="text-xl font-display font-bold mb-8">
-                  Send a Message
-                </h2>
+        <h1 className="text-4xl sm:text-6xl font-display font-black uppercase tracking-tight text-white mb-6">
+          <ScrambleText text="TRANSMISSION INTERFACE" />
+        </h1>
 
-                <form onSubmit={handleSubmit} className="space-y-6">
-                  <div>
-                    <label
-                      htmlFor="name"
-                      className="block text-sm font-medium text-muted-foreground mb-2"
-                    >
-                      Name
-                    </label>
-                    <motion.input
-                      id="name"
-                      type="text"
-                      required
-                      value={formData.name}
-                      onChange={(e) =>
-                        setFormData({ ...formData, name: e.target.value })
-                      }
-                      className="w-full px-4 py-3 rounded-xl bg-muted border border-border text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all duration-300"
-                      placeholder="Your name"
-                      whileFocus={{ scale: 1.01 }}
-                    />
-                  </div>
+        <p className="text-sm sm:text-base font-mono text-white/70 max-w-3xl leading-relaxed mb-8">
+          Available for AI engineering positions, high-concurrency Python backend contracts, multimodal VLM evaluation infrastructure, and open-source systems architecture.
+        </p>
 
-                  <div>
-                    <label
-                      htmlFor="email"
-                      className="block text-sm font-medium text-muted-foreground mb-2"
-                    >
-                      Email
-                    </label>
-                    <motion.input
-                      id="email"
-                      type="email"
-                      required
-                      value={formData.email}
-                      onChange={(e) =>
-                        setFormData({ ...formData, email: e.target.value })
-                      }
-                      className="w-full px-4 py-3 rounded-xl bg-muted border border-border text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all duration-300"
-                      placeholder="your@email.com"
-                      whileFocus={{ scale: 1.01 }}
-                    />
-                  </div>
-
-                  <div>
-                    <label
-                      htmlFor="message"
-                      className="block text-sm font-medium text-muted-foreground mb-2"
-                    >
-                      Message
-                    </label>
-                    <motion.textarea
-                      id="message"
-                      required
-                      rows={5}
-                      value={formData.message}
-                      onChange={(e) =>
-                        setFormData({ ...formData, message: e.target.value })
-                      }
-                      className="w-full px-4 py-3 rounded-xl bg-muted border border-border text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all duration-300 resize-none"
-                      placeholder="Tell me about your project..."
-                      whileFocus={{ scale: 1.01 }}
-                    />
-                  </div>
-
-                  <Button
-                    type="submit"
-                    variant="primary"
-                    size="lg"
-                    className="w-full"
-                    disabled={isSubmitting}
-                  >
-                    {isSubmitting ? (
-                      <motion.div
-                        className="w-5 h-5 border-2 border-primary-foreground/30 border-t-primary-foreground rounded-full"
-                        animate={{ rotate: 360 }}
-                        transition={{ duration: 1, repeat: Infinity, ease: 'linear' }}
-                      />
-                    ) : (
-                      <>
-                        <Send size={18} />
-                        Send Message
-                      </>
-                    )}
-                  </Button>
-                </form>
-              </div>
-            </AnimatedSection>
-
-            {/* Contact Info */}
-            <AnimatedSection direction="right">
-              <div className="space-y-8">
-                {/* Availability */}
-                <div className="p-6 rounded-2xl glass border-glow">
-                  <div className="flex items-center gap-3 mb-4">
-                    <div className="w-3 h-3 rounded-full bg-green-500 animate-pulse" />
-                    <span className="text-foreground font-medium">
-                      Available for work
-                    </span>
-                  </div>
-                  <div className="flex flex-wrap gap-4 text-sm text-muted-foreground">
-                    <span className="flex items-center gap-2">
-                      <MapPin size={14} className="text-primary" />
-                      Lucknow, India
-                    </span>
-                    <span className="flex items-center gap-2">
-                      <Clock size={14} className="text-primary" />
-                      IST (UTC+5:30)
-                    </span>
-                  </div>
-                </div>
-
-                {/* Contact Methods */}
-                <div>
-                  <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider mb-4">
-                    Direct Contact
-                  </h3>
-                  <div className="space-y-4">
-                    {contactMethods.map((method, index) => (
-                      <motion.a
-                        key={method.label}
-                        href={method.href}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="flex items-center gap-4 p-4 rounded-xl glass hover-glow group transition-all duration-300"
-                        initial={{ opacity: 0, x: 20 }}
-                        whileInView={{ opacity: 1, x: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 0.5, delay: index * 0.1 }}
-                        data-cursor={method.label}
-                      >
-                        <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors duration-300">
-                          <method.icon size={20} className="text-primary" />
-                        </div>
-                        <div>
-                          <div className="text-sm text-muted-foreground">
-                            {method.label}
-                          </div>
-                          <div className="text-foreground font-medium group-hover:text-primary transition-colors duration-300">
-                            {method.value}
-                          </div>
-                        </div>
-                      </motion.a>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Quick note */}
-                <div className="p-6 rounded-2xl bg-primary/5 border border-primary/20">
-                  <p className="text-sm text-muted-foreground">
-                    <span className="text-primary font-medium">Prefer email?</span>{' '}
-                    I typically respond within 24-48 hours. For urgent matters, 
-                    feel free to reach out via WhatsApp.
-                  </p>
-                </div>
-              </div>
-            </AnimatedSection>
+        {/* Telemetry bar */}
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+          <div className="p-4 rounded-2xl border border-white/10 bg-white/[0.02] backdrop-blur-md">
+            <div className="text-[10px] font-mono text-white/40 tracking-[0.2em] mb-1">UPLINK STATUS</div>
+            <div className="text-xl sm:text-2xl font-mono font-bold text-emerald-400">ENCRYPTED</div>
+          </div>
+          <div className="p-4 rounded-2xl border border-white/10 bg-white/[0.02] backdrop-blur-md">
+            <div className="text-[10px] font-mono text-white/40 tracking-[0.2em] mb-1">AVAILABILITY</div>
+            <div className="text-xl sm:text-2xl font-mono font-bold text-cyan-300">OPEN TO OFFERS</div>
+          </div>
+          <div className="p-4 rounded-2xl border border-white/10 bg-white/[0.02] backdrop-blur-md">
+            <div className="text-[10px] font-mono text-white/40 tracking-[0.2em] mb-1">RESPONSE SLA</div>
+            <div className="text-xl sm:text-2xl font-mono font-bold text-fuchsia-300">&lt; 12 HOURS</div>
+          </div>
+          <div className="p-4 rounded-2xl border border-white/10 bg-white/[0.02] backdrop-blur-md">
+            <div className="text-[10px] font-mono text-white/40 tracking-[0.2em] mb-1">REGION</div>
+            <div className="text-xl sm:text-2xl font-mono font-bold text-white">ASIA // REMOTE</div>
           </div>
         </div>
       </section>
+
+      {/* ==================== TRANSMISSION GRID ==================== */}
+      <div className="grid lg:grid-cols-12 gap-8 items-start mb-20">
+        {/* Transmission Form */}
+        <div className="lg:col-span-7 p-6 sm:p-8 rounded-3xl border border-white/15 bg-[#05060d]/85 backdrop-blur-xl space-y-6">
+          <div className="flex items-center justify-between border-b border-white/10 pb-4">
+            <div className="flex items-center gap-2">
+              <span className="w-2.5 h-2.5 rounded-full bg-cyan-400" />
+              <span className="font-mono text-xs text-white font-bold tracking-wider">
+                TRANSMIT SECURE MESSAGE
+              </span>
+            </div>
+            <span className="text-[10px] font-mono text-white/40">TLS 1.3 // POSTGRES RLS</span>
+          </div>
+
+          <form onSubmit={handleSubmit} className="space-y-4">
+            <div>
+              <label className="block text-[10px] font-mono text-white/60 tracking-[0.2em] uppercase mb-1.5">
+                IDENTIFIER // YOUR NAME OR ENTITY *
+              </label>
+              <input
+                type="text"
+                required
+                value={formData.name}
+                onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                placeholder="e.g. Elena Rostova // DeepMind Research"
+                className="w-full px-4 py-3 rounded-xl bg-black/60 border border-white/15 focus:border-cyan-400 focus:outline-none text-xs font-mono text-white placeholder-white/25 transition-colors"
+              />
+            </div>
+
+            <div>
+              <label className="block text-[10px] font-mono text-white/60 tracking-[0.2em] uppercase mb-1.5">
+                RETURN ADDRESS // YOUR EMAIL *
+              </label>
+              <input
+                type="email"
+                required
+                value={formData.email}
+                onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                placeholder="elena@enterprise.ai"
+                className="w-full px-4 py-3 rounded-xl bg-black/60 border border-white/15 focus:border-cyan-400 focus:outline-none text-xs font-mono text-white placeholder-white/25 transition-colors"
+              />
+            </div>
+
+            <div>
+              <label className="block text-[10px] font-mono text-white/60 tracking-[0.2em] uppercase mb-1.5">
+                TRANSMISSION PAYLOAD // PROJECT SPEC OR MESSAGE *
+              </label>
+              <textarea
+                required
+                rows={5}
+                value={formData.message}
+                onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                placeholder="Outline project specifications, engineering scope, or role details..."
+                className="w-full px-4 py-3 rounded-xl bg-black/60 border border-white/15 focus:border-cyan-400 focus:outline-none text-xs font-mono text-white placeholder-white/25 transition-colors resize-none"
+              />
+            </div>
+
+            <div className="pt-2 flex flex-wrap items-center justify-between gap-4">
+              <button
+                type="submit"
+                disabled={isSubmitting}
+                className="px-6 py-3 rounded-full bg-cyan-400 text-black hover:bg-white font-mono text-xs font-bold tracking-[0.2em] uppercase transition-all flex items-center gap-2 cursor-pointer shadow-[0_0_25px_rgba(0,240,255,0.3)] disabled:opacity-50"
+              >
+                <Send size={13} />
+                <span>{isSubmitting ? 'TRANSMITTING...' : 'DISPATCH TRANSMISSION'}</span>
+              </button>
+
+              <div className="text-[10px] font-mono text-white/40">
+                DIRECT TO POSTGRESQL WAL
+              </div>
+            </div>
+          </form>
+        </div>
+
+        {/* Direct Channels & Contact Points */}
+        <div className="lg:col-span-5 space-y-4">
+          {/* Quick Copy Primary Email Card */}
+          <div className="p-6 rounded-3xl border border-cyan-400/30 bg-[#05060d]/85 backdrop-blur-xl space-y-4">
+            <div className="text-[10px] font-mono tracking-[0.25em] text-cyan-400 uppercase">
+              INSTANT DIRECT CONTACT
+            </div>
+            <div className="font-mono text-xs text-white/60">
+              Need immediate technical consultation or interview scheduling? Copy direct email address:
+            </div>
+            <button
+              onClick={handleCopyEmail}
+              onMouseEnter={() => soundEngine.playHover()}
+              className="w-full p-3.5 rounded-2xl border border-white/20 bg-black/80 hover:border-cyan-400 font-mono text-xs text-white flex items-center justify-between transition-all cursor-pointer group"
+            >
+              <span className="truncate group-hover:text-cyan-300">dimrishiv933@gmail.com</span>
+              {copiedEmail ? (
+                <Check size={14} className="text-emerald-400 flex-shrink-0" />
+              ) : (
+                <Copy size={14} className="text-white/60 group-hover:text-cyan-400 flex-shrink-0" />
+              )}
+            </button>
+            <a
+              href="/SHIVANSH_DIMRI_CV.pdf"
+              download
+              onClick={() => soundEngine.playClick(920)}
+              onMouseEnter={() => soundEngine.playHover()}
+              className="w-full py-3 rounded-full border border-white/20 bg-white text-black hover:bg-cyan-400 font-mono text-xs font-bold tracking-[0.2em] uppercase transition-all flex items-center justify-center gap-2 cursor-pointer"
+            >
+              <Download size={13} />
+              <span>DOWNLOAD OFFICIAL CV.PDF</span>
+            </a>
+          </div>
+
+          {/* Direct External Nodes */}
+          <div className="p-6 rounded-3xl border border-white/10 bg-[#04050a]/70 backdrop-blur-md space-y-3">
+            <div className="text-[10px] font-mono tracking-[0.25em] text-white/40 uppercase mb-2">
+              VERIFIED CHANNELS
+            </div>
+            {DIRECT_CHANNELS.map((ch) => {
+              const Icon = ch.icon;
+              return (
+                <a
+                  key={ch.label}
+                  href={ch.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={() => soundEngine.playClick(780)}
+                  onMouseEnter={() => soundEngine.playHover()}
+                  className="p-3.5 rounded-xl border border-white/[0.08] bg-black/40 hover:border-cyan-400/40 hover:bg-white/[0.02] flex items-center justify-between transition-all group"
+                >
+                  <div className="flex items-center gap-3">
+                    <div className="p-2 rounded-lg bg-white/[0.04] text-cyan-400">
+                      <Icon size={14} />
+                    </div>
+                    <div>
+                      <div className="text-[9px] font-mono text-white/40 tracking-wider">
+                        {ch.label}
+                      </div>
+                      <div className="font-mono text-xs text-white group-hover:text-cyan-300">
+                        {ch.value}
+                      </div>
+                    </div>
+                  </div>
+                  <ExternalLink size={12} className="text-white/30 group-hover:text-cyan-400" />
+                </a>
+              );
+            })}
+          </div>
+        </div>
+      </div>
     </Layout>
   );
 };

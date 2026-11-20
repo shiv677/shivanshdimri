@@ -1,146 +1,244 @@
+import React from 'react';
 import { motion } from 'framer-motion';
-import { Zap, Users, Target, Terminal } from 'lucide-react';
+import {
+  Terminal,
+  Shield,
+  Cpu,
+  Brain,
+  Download,
+  ArrowRight,
+  Compass,
+  CheckCircle2,
+  Code2,
+  HardDrive,
+  Workflow,
+  Sparkles,
+  Layers,
+} from 'lucide-react';
+import { Link } from 'react-router-dom';
 import Layout from '@/components/Layout';
-import AnimatedSection from '@/components/AnimatedSection';
-import TechPanels from '@/components/TechPanels';
-import ImageStack from '@/components/ImageStack';
+import ScrambleText from '@/components/activetheory/ScrambleText';
+import { soundEngine } from '@/components/activetheory/SoundEngine';
 
-const values = [
+const MANIFESTO_PILLARS = [
   {
-    icon: Target,
-    title: 'Clarity',
-    description: 'Clean code, clear communication. No unnecessary complexity.',
+    code: '01',
+    title: 'Simplicity is Prerequisite for Reliability',
+    desc: 'Avoid bloated micro-abstractions, excessive layers, or speculative frameworks. Straightforward control flow, explicit state machines, and direct standard library primitives outperform over-engineered systems every single time.',
   },
   {
-    icon: Zap,
-    title: 'Performance',
-    description: 'Fast, optimized solutions that scale with your business.',
+    code: '02',
+    title: 'Deterministic Anchors for Stochastic AI',
+    desc: 'Generative models are probabilistic by nature; the engineering harness surrounding them must be completely deterministic. Enforce strict Pydantic v2 schemas, automated regression rubric scoring, and cryptographic verification.',
   },
   {
-    icon: Users,
-    title: 'Ownership',
-    description: 'End-to-end responsibility from concept to deployment.',
+    code: '03',
+    title: 'Crash-Proof & Resumable by Default',
+    desc: 'Every data pipeline must anticipate unannounced SIGKILL, network disconnects, or power failure at any millisecond. Writing with atomic file replacements, WAL journaling, and byte-offset checkpoints ensures zero corruption and instant resume.',
+  },
+  {
+    code: '04',
+    title: 'Bound Resources & Eliminate Memory Leaks',
+    desc: 'Throughput is meaningless if memory swells uncontrollably. Architect streaming chunk buffers, generator pipelines, and core-aware process limits to ensure predictable memory ceilings regardless of dataset scale.',
+  },
+];
+
+const STACK_MATRIX = [
+  {
+    domain: 'AI & MODEL ENGINEERING',
+    tools: ['LangGraph / LangChain', 'VLM Multimodal Reasoning', 'Pydantic v2 Schema Constraints', 'Model Benchmarking & Regression', 'RAG & Vector Embeddings', 'Ollama & HuggingFace'],
+  },
+  {
+    domain: 'CONCURRENCY & DATA SYSTEMS',
+    tools: ['Python 3.12 Standard Library', 'multiprocessing & ProcessPool', 'asyncio & Asynchronous Streams', 'SQLite WAL & PostgreSQL', 'Chromaprint Acoustic Hashing', 'SHA-256 Block Verification'],
+  },
+  {
+    domain: 'INFRASTRUCTURE & ENVIRONMENT',
+    tools: ['Linux (Ubuntu, Debian)', 'Systemd Service Daemons', 'Embedded Rsync / OpenSSH', 'Docker Containerization', 'Git & GitHub Actions CI/CD', 'cProfile & tracemalloc Profiling'],
+  },
+  {
+    domain: 'CREATIVE & INTERFACE SYSTEMS',
+    tools: ['React 18 & TypeScript', 'Three.js / WebGL & GLSL Shaders', 'Framer Motion Animations', 'Tailwind CSS Modern Styling', 'Web Audio API Procedural Synth', 'Active Theory Cyberpunk UI'],
   },
 ];
 
 const About = () => {
   return (
     <Layout>
-      {/* Hero */}
-      <section className="pt-32 pb-16">
-        <div className="container mx-auto px-6">
-          <AnimatedSection>
-            <p className="text-primary text-sm font-medium tracking-wider uppercase mb-4">
-              About Me
-            </p>
-            <h1 className="text-display-lg font-display font-bold mb-6">
-              Engineering with <span className="text-gradient">Purpose</span>
-            </h1>
-          </AnimatedSection>
+      {/* ==================== HERO SECTION ==================== */}
+      <section className="mb-16">
+        <div className="flex items-center gap-2 text-cyan-400 font-mono text-[10px] tracking-[0.3em] uppercase mb-3">
+          <span className="w-2 h-2 rounded-full bg-cyan-400 shadow-[0_0_8px_#00f0ff]" />
+          <span>PORTAL // 03 // SYSTEMS PHILOSOPHY & IDENTITY</span>
         </div>
-      </section>
 
-      {/* Bio Section */}
-      <section className="pb-24">
-        <div className="container mx-auto px-6">
-          <div className="flex flex-col-reverse lg:flex-row lg:items-center gap-12 lg:gap-16">
-            {/* Text Content */}
-            <AnimatedSection direction="left" className="flex-1">
-              <div className="space-y-6">
-                <motion.p
-                  className="text-xl leading-relaxed text-foreground"
-                  initial={{ opacity: 0 }}
-                  whileInView={{ opacity: 1 }}
-                  transition={{ duration: 0.8 }}
-                  viewport={{ once: true }}
-                >
-                  I am an Associate AI Engineer specialising in{' '}
-                  <span className="text-primary font-medium">Python engineering systems</span>,{' '}
-                  <span className="text-primary font-medium">LLM & agentic AI integration</span>,{' '}
-                  scalable data pipelines, and intelligent automation architecture.
-                </motion.p>
-                
-                <motion.p
-                  className="text-lg text-muted-foreground leading-relaxed"
-                  initial={{ opacity: 0 }}
-                  whileInView={{ opacity: 1 }}
-                  transition={{ duration: 0.8, delay: 0.1 }}
-                  viewport={{ once: true }}
-                >
-                  My work centres on model evaluation workflows, benchmark engineering, concurrency control, 
-                  database-backed integrity enforcement, and failure-resilient system execution.
-                </motion.p>
+        <h1 className="text-4xl sm:text-6xl font-display font-black uppercase tracking-tight text-white mb-6">
+          <ScrambleText text="ENGINEERING PROVENANCE" />
+        </h1>
 
-                <motion.p
-                  className="text-lg text-muted-foreground leading-relaxed"
-                  initial={{ opacity: 0 }}
-                  whileInView={{ opacity: 1 }}
-                  transition={{ duration: 0.8, delay: 0.2 }}
-                  viewport={{ once: true }}
-                >
-                  Alongside AI systems engineering and ETL data pipelines, I have practical experience building 
-                  and deploying production web applications and custom client solutions. This combination 
-                  allows me to design end-to-end solutions spanning intelligent backend infrastructure to polished interfaces.
-                </motion.p>
+        <p className="text-sm sm:text-base font-mono text-white/70 max-w-3xl leading-relaxed mb-8">
+          Shivansh Dimri is an Associate AI Engineer at InfoBay AI Limited (Lucknow, India). He designs high-throughput Python concurrency architectures, autonomous multi-agent evaluation suites, and fault-tolerant data infrastructure.
+        </p>
 
-                <motion.div
-                  className="flex items-center gap-4 pt-4"
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, delay: 0.3 }}
-                  viewport={{ once: true }}
-                >
-                  <Terminal className="text-primary" size={24} />
-                  <span className="text-muted-foreground">
-                    Systems-oriented developer with infrastructure reliability mindset
-                  </span>
-                </motion.div>
-              </div>
-            </AnimatedSection>
-
-            {/* Image Stack */}
-            <AnimatedSection direction="right" className="w-full lg:w-auto lg:flex-shrink-0">
-              <div className="flex justify-center">
-                <div className="w-64 lg:w-72">
-                  <ImageStack />
-                </div>
-              </div>
-            </AnimatedSection>
+        {/* Telemetry Bar */}
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+          <div className="p-4 rounded-2xl border border-white/10 bg-white/[0.02] backdrop-blur-md">
+            <div className="text-[10px] font-mono text-white/40 tracking-[0.2em] mb-1">CORE DISCIPLINE</div>
+            <div className="text-xl sm:text-2xl font-mono font-bold text-cyan-300">AI & SYSTEMS</div>
+          </div>
+          <div className="p-4 rounded-2xl border border-white/10 bg-white/[0.02] backdrop-blur-md">
+            <div className="text-[10px] font-mono text-white/40 tracking-[0.2em] mb-1">CURRENT FIRM</div>
+            <div className="text-xl sm:text-2xl font-mono font-bold text-emerald-400">INFOBAY AI</div>
+          </div>
+          <div className="p-4 rounded-2xl border border-white/10 bg-white/[0.02] backdrop-blur-md">
+            <div className="text-[10px] font-mono text-white/40 tracking-[0.2em] mb-1">DESIGN CODE</div>
+            <div className="text-xl sm:text-2xl font-mono font-bold text-fuchsia-300">ACTIVE THEORY</div>
+          </div>
+          <div className="p-4 rounded-2xl border border-white/10 bg-white/[0.02] backdrop-blur-md">
+            <div className="text-[10px] font-mono text-white/40 tracking-[0.2em] mb-1">LOCATION</div>
+            <div className="text-xl sm:text-2xl font-mono font-bold text-cyan-300">LUCKNOW, IN</div>
           </div>
         </div>
       </section>
 
-      {/* Values */}
-      <section className="py-24 border-t border-border/50">
-        <div className="container mx-auto px-6">
-          <AnimatedSection>
-            <h2 className="text-display-sm font-display font-bold text-center mb-16">
-              Core <span className="text-gradient">Values</span>
+      {/* ==================== BIOGRAPHY & TRAJECTORY ==================== */}
+      <section className="mb-20 grid lg:grid-cols-12 gap-8 items-start">
+        <div className="lg:col-span-7 space-y-6">
+          <div className="p-6 sm:p-8 rounded-3xl border border-white/15 bg-[#05060d]/85 backdrop-blur-xl space-y-5">
+            <div className="text-[10px] font-mono tracking-[0.25em] text-cyan-400 uppercase">
+              BIOGRAPHICAL OVERVIEW // BACKGROUND
+            </div>
+            <h2 className="text-2xl sm:text-3xl font-display font-black uppercase text-white">
+              ENGINEERING SYSTEMS THAT DO NOT BREAK.
             </h2>
-          </AnimatedSection>
+            <p className="text-xs sm:text-sm font-mono text-white/80 leading-relaxed">
+              My engineering focus is centered on the intersection of artificial intelligence, high-concurrency systems programming, and mission-critical data pipelines. At InfoBay AI Limited, I develop evaluation workflows and benchmarking suites for Large Language Models and Vision-Language Models—translating probabilistic machine learning outputs into verified, structured, and auditable production data.
+            </p>
+            <p className="text-xs sm:text-sm font-mono text-white/75 leading-relaxed">
+              Before my current focus on autonomous agent swarms and multimodal evaluation, I developed high-performance storage migration utilities (T2NAS), hash-based audio deduplication engines, and self-contained rsync orchestration daemons. This background in low-level systems programming—managing process memory ceilings, avoiding Python GIL locks, and persisting atomic checkpoints—informs every AI architecture I construct today.
+            </p>
+            <div className="pt-2 flex flex-wrap gap-3">
+              <Link
+                to="/work"
+                onClick={() => soundEngine.playClick(800)}
+                className="px-5 py-2.5 rounded-full bg-white text-black hover:bg-cyan-400 font-mono text-xs font-bold tracking-[0.18em] uppercase transition-all flex items-center gap-1.5"
+              >
+                <span>EXPLORE SYSTEMS WORK</span>
+                <ArrowRight size={13} />
+              </Link>
+              <a
+                href="/SHIVANSH_DIMRI_CV.pdf"
+                download
+                onClick={() => soundEngine.playClick(920)}
+                className="px-5 py-2.5 rounded-full border border-white/20 bg-white/5 hover:border-cyan-400 font-mono text-xs tracking-[0.18em] uppercase text-white transition-all flex items-center gap-1.5"
+              >
+                <Download size={13} />
+                <span>DOWNLOAD CV.PDF</span>
+              </a>
+            </div>
+          </div>
+        </div>
 
-          <div className="grid md:grid-cols-3 gap-8">
-            {values.map((value, index) => (
-              <AnimatedSection key={value.title} delay={index * 0.15}>
-                <div className="p-8 rounded-2xl glass border-glow hover-glow text-center group">
-                  <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-primary/10 mb-6 group-hover:bg-primary/20 transition-colors duration-300">
-                    <value.icon size={32} className="text-primary" />
-                  </div>
-                  <h3 className="text-xl font-display font-bold mb-3">
-                    {value.title}
-                  </h3>
-                  <p className="text-muted-foreground">
-                    {value.description}
-                  </p>
-                </div>
-              </AnimatedSection>
-            ))}
+        {/* Systems Diagnostics Card */}
+        <div className="lg:col-span-5 p-6 sm:p-8 rounded-3xl border border-cyan-400/30 bg-[#04050a]/90 backdrop-blur-xl space-y-5">
+          <div className="text-[10px] font-mono tracking-[0.25em] text-cyan-400 uppercase flex items-center gap-2">
+            <span className="w-2 h-2 rounded-full bg-cyan-400 animate-ping" />
+            <span>DIAGNOSTICS & TELEMETRY</span>
+          </div>
+
+          <div className="space-y-4 text-xs font-mono">
+            <div className="p-3.5 rounded-xl bg-black/60 border border-white/10 flex items-center justify-between">
+              <span className="text-white/60">PRIMARY OPERATING RUNTIME</span>
+              <span className="text-cyan-300 font-bold">PYTHON 3.12 (CPYTHON)</span>
+            </div>
+            <div className="p-3.5 rounded-xl bg-black/60 border border-white/10 flex items-center justify-between">
+              <span className="text-white/60">CONCURRENCY ENGINE</span>
+              <span className="text-fuchsia-300 font-bold">MULTIPROCESSING + ASYNCIO</span>
+            </div>
+            <div className="p-3.5 rounded-xl bg-black/60 border border-white/10 flex items-center justify-between">
+              <span className="text-white/60">DATA INTEGRITY LOG</span>
+              <span className="text-emerald-400 font-bold">SQLITE WAL / POSTGRES</span>
+            </div>
+            <div className="p-3.5 rounded-xl bg-black/60 border border-white/10 flex items-center justify-between">
+              <span className="text-white/60">EVALUATION MODEL FOCUS</span>
+              <span className="text-cyan-300 font-bold">LLMs, VLMs & AGENTS</span>
+            </div>
+            <div className="p-3.5 rounded-xl bg-black/60 border border-white/10 flex items-center justify-between">
+              <span className="text-white/60">OS TARGETS</span>
+              <span className="text-white/90 font-bold">LINUX (SYSTEMD) / WINDOWS</span>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* Tools & Tech */}
-      <TechPanels />
+      {/* ==================== ENGINEERING MANIFESTO ==================== */}
+      <section className="mb-20 pt-8 border-t border-white/10">
+        <div className="text-[10px] font-mono tracking-[0.25em] text-fuchsia-400 uppercase mb-2">
+          AXIOMS // FIRST PRINCIPLES
+        </div>
+        <h2 className="text-3xl sm:text-5xl font-display font-black uppercase text-white mb-6">
+          <ScrambleText text="ENGINEERING MANIFESTO" />
+        </h2>
+        <p className="text-xs sm:text-sm font-mono text-white/60 max-w-2xl leading-relaxed mb-10">
+          The non-negotiable architectural tenets that govern every system I construct.
+        </p>
+
+        <div className="grid md:grid-cols-2 gap-5">
+          {MANIFESTO_PILLARS.map((pillar) => (
+            <div
+              key={pillar.code}
+              className="p-6 sm:p-8 rounded-3xl border border-white/10 bg-white/[0.02] backdrop-blur-xl space-y-4 hover:border-cyan-400/40 transition-colors"
+            >
+              <div className="flex items-center justify-between">
+                <span className="font-mono text-xs text-cyan-400 font-bold tracking-[0.2em]">
+                  [ PRINCIPLE {pillar.code} ]
+                </span>
+                <span className="w-1.5 h-1.5 rounded-full bg-cyan-400" />
+              </div>
+              <h3 className="text-lg sm:text-xl font-display font-black uppercase text-white">
+                {pillar.title}
+              </h3>
+              <p className="text-xs sm:text-sm font-mono text-white/70 leading-relaxed">
+                {pillar.desc}
+              </p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* ==================== COMPREHENSIVE TECH STACK ==================== */}
+      <section className="mb-20 pt-8 border-t border-white/10">
+        <div className="text-[10px] font-mono tracking-[0.25em] text-cyan-400 uppercase mb-2">
+          TOOLCHAINS // PRODUCTION STACK
+        </div>
+        <h2 className="text-3xl sm:text-5xl font-display font-black uppercase text-white mb-6">
+          <ScrambleText text="TECHNICAL MATRIX" />
+        </h2>
+        <p className="text-xs sm:text-sm font-mono text-white/60 max-w-2xl leading-relaxed mb-10">
+          Tools, libraries, and frameworks deployed across production pipelines and system kernels.
+        </p>
+
+        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          {STACK_MATRIX.map((stack) => (
+            <div
+              key={stack.domain}
+              className="p-6 rounded-3xl border border-white/10 bg-[#04050a]/70 backdrop-blur-md space-y-4"
+            >
+              <div className="text-xs font-mono font-bold text-cyan-300 tracking-wider">
+                {stack.domain}
+              </div>
+              <ul className="space-y-2 text-xs font-mono text-white/75">
+                {stack.tools.map((t) => (
+                  <li key={t} className="flex items-center gap-2">
+                    <span className="text-cyan-400 text-[10px]">✦</span>
+                    <span>{t}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
+      </section>
     </Layout>
   );
 };

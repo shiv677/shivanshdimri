@@ -30,8 +30,8 @@ export const ZONE_LABELS = [
   { index: 1, code: '01', short: 'AUDIO.DEDUP', full: 'AUDIO DUPLICACY CHECKER' },
   { index: 2, code: '02', short: 'T2NAS', full: 'T2NAS PARALLEL TRANSFER ENGINE' },
   { index: 3, code: '03', short: 'RSYNC', full: 'ENTERPRISE RSYNC PLATFORM' },
-  { index: 4, code: '04', short: 'WEB (4)', full: 'COMMERCIAL WEB ECOSYSTEMS' },
-  { index: 5, code: '05', short: 'MATRIX & EXP', full: 'CAPABILITIES & INFOBAY AI' },
+  { index: 4, code: '04', short: 'AI.HARNESS', full: 'AI & VLM EVALUATION HARNESS' },
+  { index: 5, code: '05', short: 'SKILLS & EXP', full: 'CAPABILITIES & INFOBAY AI' },
   { index: 6, code: '06', short: 'CONTACT', full: 'START A PROJECT // TRANSMIT' },
 ];
 
@@ -39,7 +39,7 @@ const QUICK_AI_PROMPTS = [
   { label: 'Show flagship Python systems', query: 'Show flagship Python systems' },
   { label: 'How does T2NAS scale?', query: 'How does T2NAS scale?' },
   { label: 'InfoBay AI role & experience', query: 'InfoBay AI role & experience' },
-  { label: 'Show live client websites', query: 'Show live client websites' },
+  { label: 'Autonomous AI & VLM Evaluation', query: 'Autonomous AI & VLM Evaluation' },
 ];
 
 export const ActiveTheoryHUD: React.FC<ActiveTheoryHUDProps> = ({

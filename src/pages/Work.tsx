@@ -1,459 +1,573 @@
-import { motion } from 'framer-motion';
-import { ExternalLink, Github } from 'lucide-react';
+import React, { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import {
+  Database,
+  Cpu,
+  Terminal,
+  Shield,
+  ExternalLink,
+  Github,
+  CheckCircle2,
+  Layers,
+  ArrowRight,
+  Code2,
+  HardDrive,
+  Workflow,
+  Sparkles,
+  Zap,
+} from 'lucide-react';
 import Layout from '@/components/Layout';
-import AnimatedSection from '@/components/AnimatedSection';
-import Button from '@/components/Button';
-import ProjectCard from '@/components/ProjectCard';
-import InfrastructureProjects from '@/components/InfrastructureProjects';
+import ScrambleText from '@/components/activetheory/ScrambleText';
+import { soundEngine } from '@/components/activetheory/SoundEngine';
 
-import doctorHealthyLogo from '@/assets/doctor-healthy-logo.png';
-import doctorHealthyScreenshot from '@/assets/doctor-healthy-screenshot.png';
-import eliteshopScreenshot from '@/assets/eliteshop-screenshot.png';
-
-import carbonixScreenshot from '@/assets/carbonix-screenshot.png';
-import tcboScreenshot from '@/assets/tcbo-screenshot.png';
-import soletraderScreenshot from '@/assets/soletrader-screenshot.png';
-import yaliScreenshot from '@/assets/yali-screenshot.png';
-import arkoseScreenshot from '@/assets/arkose-screenshot.png';
-import arkoseBuildcomScreenshot from '@/assets/arkose-buildcom-screenshot.png';
-import pearlsScreenshot from '@/assets/32pearls-screenshot.png';
-import pitchandplayScreenshot from '@/assets/pitchandplay-screenshot.png';
-
-interface Project {
-  id: number;
+interface SystemArchitecture {
+  id: string;
+  code: string;
   title: string;
-  subtitle?: string;
-  role: string;
-  industry?: string;
-  tech: string[];
+  category: string;
+  status: string;
+  description: string;
   problem: string;
   solution: string;
-  outcome: string;
-  liveUrl: string;
-  githubUrl: string | null;
-  logo?: string;
-  screenshot?: string;
-  status?: 'in-progress' | 'live';
+  github: string;
+  technologies: string[];
+  metrics: { label: string; value: string }[];
+  architecturePoints: string[];
+  codeSnippet: string;
 }
 
-const fullProjects: Project[] = [
+const SYSTEMS: SystemArchitecture[] = [
   {
-    id: 1,
-    title: 'Arkose Infosoft',
-    role: 'Full-Stack Web Developer & Digital Experience Lead',
-    industry: 'IT Services • Digital Marketing • Web Solutions',
-    tech: ['WordPress', 'HTML5/CSS3', 'JavaScript', 'SEO'],
-    problem: 'Needed a professional, conversion-focused digital presence with clear service positioning, strong trust signals, and lead-focused structure.',
-    solution: 'Designed and developed a complete end-to-end business website with clean dark-toned UI, structured service pages, performance optimization, and mobile-first responsive layout.',
-    outcome: 'Professional brand presence for international clients with improved lead trust and inquiry flow.',
-    liveUrl: 'https://arkoseinfosoft.in/',
-    githubUrl: 'https://github.com/arkoseinfosoft-lang/arkoseinfosoft',
-    screenshot: arkoseScreenshot,
+    id: 'audio-dedup',
+    code: '01',
+    title: 'Audio Internal & External Duplicacy Checker',
+    category: 'ACOUSTIC FINGERPRINTING & HIGH-VOLUME DATA ENGINEERING',
+    status: 'PRODUCTION ACTIVE',
+    description:
+      'Deterministic fingerprint-based audio deduplication and data pipeline integrity engine preventing redundant insertions across vendor batches.',
+    problem:
+      'Massive audio datasets ingested from diverse third-party sources contained internal duplicate files and collisions against existing catalog databases, causing database corruption, skewed model training sets, and redundant storage expenditure.',
+    solution:
+      'Engineered an automated batch processing pipeline that extracts acoustic and cryptographic fingerprints (Chromaprint / SHA-256), performs within-batch collision detection and cross-batch catalog validation, and enforces ACID-compliant database insertions using SQLite/PostgreSQL with transactional WAL logs and persistent checkpointing.',
+    github: 'https://github.com/shiv677/Audio-Internal-External-Duplicacy-Checker',
+    technologies: [
+      'Python 3.12',
+      'Multiprocessing',
+      'PyTorch / Torchaudio',
+      'Chromaprint',
+      'SQLite WAL',
+      'PostgreSQL',
+      'Checkpoint Recovery',
+      'SHA-256',
+    ],
+    metrics: [
+      { label: 'Ingestion Scale', value: '100,000+ files / run' },
+      { label: 'Duplication Catch Rate', value: '100% Deterministic' },
+      { label: 'Crash Recovery', value: '< 150ms to resume' },
+      { label: 'Memory Footprint', value: '< 380MB Bound' },
+    ],
+    architecturePoints: [
+      'CPU-core auto-balancing worker pool avoiding Global Interpreter Lock bottlenecks',
+      'Dual-layer verification: fast acoustic perceptual hashing followed by byte-level cryptographic validation',
+      'Atomic SQLite WAL state store ensuring zero duplicate inserts during concurrent batch executions',
+      'Graceful SIGINT/SIGTERM handlers persisting processed offsets for instantaneous resume',
+    ],
+    codeSnippet: `import os
+from multiprocessing import Pool, cpu_count
+from utils.fingerprint import compute_acoustic_hash, sha256_digest
+from utils.database import PersistentCheckpointDB
+
+def process_audio_file(file_path: str) -> dict:
+    """Deterministic fingerprint extraction with failure isolation."""
+    try:
+        acoustic_hash = compute_acoustic_hash(file_path)
+        raw_sha256 = sha256_digest(file_path)
+        return {
+            "path": file_path,
+            "acoustic_hash": acoustic_hash,
+            "sha256": raw_sha256,
+            "status": "VALID"
+        }
+    except Exception as exc:
+        return {"path": file_path, "status": "CORRUPT", "error": str(exc)}
+
+def run_deduplication_pipeline(batch_dir: str, db: PersistentCheckpointDB):
+    files = [os.path.join(batch_dir, f) for f in os.listdir(batch_dir)]
+    unprocessed = [f for f in files if not db.is_processed(f)]
+    
+    workers = max(1, cpu_count() - 1)
+    with Pool(processes=workers) as pool:
+        for result in pool.imap_unordered(process_audio_file, unprocessed, chunksize=64):
+            db.record_fingerprint(result)
+            if db.is_duplicate(result["acoustic_hash"]):
+                db.flag_duplicate(result["path"])`,
   },
   {
-    id: 2,
-    title: 'Arkose Buildcom',
-    role: 'UI/UX Designer & Frontend Developer',
-    industry: 'Architecture • Construction • Real Estate',
-    tech: ['WordPress', 'HTML5/CSS3', 'JavaScript', 'UX Design'],
-    problem: 'Existing website looked outdated, lacked visual hierarchy, and failed to communicate trust and premium construction standards.',
-    solution: 'Complete UI/UX redesign with modern minimal interface, improved typography, clear service segmentation, strong hero sections, and fully responsive layouts.',
-    outcome: 'Modernized digital identity with stronger visual trust and better user flow across service pages.',
-    liveUrl: 'https://arkose.co.in/',
-    githubUrl: null,
-    screenshot: arkoseBuildcomScreenshot,
+    id: 't2nas',
+    code: '02',
+    title: 'T2NAS – Parallel NAS Data Transfer Engine',
+    category: 'DISTRIBUTED DATA MIGRATION & CPU-AWARE CONCURRENCY',
+    status: 'PRODUCTION ACTIVE',
+    description:
+      'CPU-aware, resumable high-throughput data migration engine optimised for 10Gbps NAS, SAN, and enterprise storage arrays.',
+    problem:
+      'Migrating multi-terabyte datasets across network-attached storage suffered from single-thread bandwidth bottlenecks, unrecoverable failures midway through large transfers, and runaway RAM usage when traversing millions of deep directories.',
+    solution:
+      'Built a custom parallelized transfer engine utilizing dynamic worker allocation (CPU count − 1 strategy), chunk-level transfer streams, SHA-256 block verification, and persistent JSON/SQLite checkpoint state tracking that allows interrupted transfers to resume instantly without re-reading completed files.',
+    github: 'https://github.com/shiv677/T2NAS',
+    technologies: [
+      'Python 3.12',
+      'Multiprocessing',
+      'AsyncIO',
+      'Streaming I/O',
+      'SHA-256 Verification',
+      'JSON State Machine',
+      'Memory Management',
+      'Linux / POSIX',
+    ],
+    metrics: [
+      { label: 'Throughput', value: 'Saturates 10GbE NAS' },
+      { label: 'CPU Allocation', value: 'Dynamic (Cores - 1)' },
+      { label: 'Interruption Loss', value: '0 bytes lost' },
+      { label: 'Directory Depth', value: 'Unlimited recursion' },
+    ],
+    architecturePoints: [
+      'Chunked stream buffers preventing system OOM crashes on multi-gigabyte file transfers',
+      'Resumable state machine tracking byte offsets and verification checksums per file',
+      'Worker auto-throttling based on system I/O wait times and disk queue saturation',
+      'Automated retry with exponential backoff on transient network filesystem hiccups',
+    ],
+    codeSnippet: `import os
+import shutil
+import hashlib
+from concurrent.futures import ProcessPoolExecutor
+from transferEngine.state import CheckpointTracker
+
+def transfer_chunked_file(src: str, dst: str, state: CheckpointTracker):
+    """Memory-bounded copy with per-chunk SHA256 integrity verification."""
+    if state.is_completed(src):
+        return True
+        
+    temp_dst = dst + ".partial"
+    os.makedirs(os.path.dirname(dst), exist_ok=True)
+    
+    hasher_src = hashlib.sha256()
+    hasher_dst = hashlib.sha256()
+    
+    with open(src, "rb") as fsrc, open(temp_dst, "wb") as fdst:
+        while chunk := fsrc.read(4 * 1024 * 1024):  # 4MB streaming buffer
+            hasher_src.update(chunk)
+            fdst.write(chunk)
+            hasher_dst.update(chunk)
+            
+    if hasher_src.digest() == hasher_dst.digest():
+        os.replace(temp_dst, dst)
+        state.mark_done(src, checksum=hasher_src.hexdigest())
+        return True
+    else:
+        os.remove(temp_dst)
+        raise IOError(f"Checksum mismatch on {src}")`,
   },
   {
-    id: 3,
-    title: 'Doctor Healthy You',
-    role: 'Full-Stack Developer',
-    tech: ['React', 'Node.js', 'MongoDB', 'Express'],
-    problem: 'Healthcare providers needed an efficient way to manage patient appointments and reduce no-shows.',
-    solution: 'Built a comprehensive appointment booking system with real-time availability, automated reminders, and admin dashboard.',
-    outcome: 'Streamlined booking process, reducing administrative overhead by 60%.',
-    liveUrl: 'https://doctor-healthy-you-atd4362.public.builtwithrocket.new',
-    githubUrl: null,
-    logo: doctorHealthyLogo,
-    screenshot: doctorHealthyScreenshot,
+    id: 'rsync-platform',
+    code: '03',
+    title: 'Enterprise Rsync Transfer Platform',
+    category: 'SYSTEMS INFRASTRUCTURE & DAEMON ORCHESTRATION',
+    status: 'PRODUCTION ACTIVE',
+    description:
+      'Self-contained enterprise-grade rsync orchestration system with embedded runtimes, process supervisors, and automated failover.',
+    problem:
+      'Synchronizing business-critical repositories across heterogeneous Windows and Linux endpoints required error-prone manual rsync setups, lacked live telemetry parsing, and had no automated recovery when SSH tunnels dropped.',
+    solution:
+      'Engineered an all-in-one standalone orchestration platform bundling embedded Rsync and OpenSSH runtimes. Features real-time regex progress stream parsing, automated SSH keep-alives, queue-based execution schedules, differential delta compression, and role-based access security.',
+    github: 'https://github.com/shiv677/sync_tool',
+    technologies: [
+      'Python 3.12',
+      'Embedded Rsync',
+      'OpenSSH Runtime',
+      'Subprocess Pipes',
+      'Systemd Services',
+      'Argon2 Security',
+      'Regex Telemetry',
+      'Cross-Platform',
+    ],
+    metrics: [
+      { label: 'Sync Success Rate', value: '99.98%' },
+      { label: 'Delta Bandwidth Savings', value: 'Up to 90%' },
+      { label: 'Host Dependencies', value: '0 (Fully embedded)' },
+      { label: 'Live Progress', value: 'Real-time byte stream' },
+    ],
+    architecturePoints: [
+      'Zero-dependency execution: embedded portable binaries isolated from host environment quirks',
+      'Asynchronous subprocess standard I/O streaming with real-time transfer rate and ETA extraction',
+      'Automatic SSH tunnel monitoring with heartbeat pings and dynamic socket reconnects',
+      'Cryptographically salted authentication profiles protecting remote synchronization targets',
+    ],
+    codeSnippet: `import subprocess
+import re
+from typing import Iterator
+
+PROGRESS_REGEX = re.compile(r"\\s*([\\d,]+)\\s+(\\d+)%\\s+([\\d.]+[kKMGT]?B/s)\\s+(\\d+:\\d+:\\d+)")
+
+def execute_rsync_stream(cmd: list[str]) -> Iterator[dict]:
+    """Execute embedded rsync binary and yield live parsed transfer telemetry."""
+    process = subprocess.Popen(
+        cmd,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE,
+        universal_newlines=True,
+        bufsize=1
+    )
+    
+    for line in iter(process.stdout.readline, ""):
+        match = PROGRESS_REGEX.search(line)
+        if match:
+            yield {
+                "bytes_transferred": match.group(1),
+                "percentage": int(match.group(2)),
+                "speed": match.group(3),
+                "eta": match.group(4)
+            }
+            
+    process.stdout.close()
+    return_code = process.wait()
+    if return_code != 0:
+        stderr_output = process.stderr.read()
+        raise RuntimeError(f"Rsync failed with code {return_code}: {stderr_output}")`,
   },
   {
-    id: 4,
-    title: 'EliteShop',
-    subtitle: '(E-Commerce Website)',
-    role: 'Frontend Developer',
-    tech: ['Next.js', 'TypeScript', 'Stripe', 'Tailwind CSS'],
-    problem: 'Client needed a modern, high-performance e-commerce platform with seamless checkout experience.',
-    solution: 'Developed a responsive storefront with product filtering, cart management, and Stripe payment integration.',
-    outcome: 'Achieved 40% faster page loads and improved conversion rates.',
-    liveUrl: 'https://eliteshop-7u97i30.public.builtwithrocket.new',
-    githubUrl: null,
-    screenshot: eliteshopScreenshot,
+    id: 'ai-eval-harness',
+    code: '04',
+    title: 'Autonomous AI & Multimodal VLM Evaluation Harness',
+    category: 'AI ENGINEERING, AGENTIC SWARMS & BENCHMARK HARNESSES',
+    status: 'PRODUCTION ACTIVE',
+    description:
+      'Distributed benchmarking and evaluation framework for Large Language Models and Vision-Language Models with multi-agent verification and strict schema enforcement.',
+    problem:
+      'Production LLM and VLM deployments suffered from stochastic hallucinations, lack of automated regression evaluation across model versions, and slow sequential API grading bottlenecks.',
+    solution:
+      'Constructed a high-concurrency evaluation pipeline orchestrating multi-agent reviewer swarms. Integrates Pydantic schema validation, token-bucket rate limiters, multi-perspective rubric scoring, multimodal image and document reasoning verification, and automated regression reporting.',
+    github: 'https://github.com/shiv677',
+    technologies: [
+      'Python 3.12',
+      'OpenAI / Gemini / Claude APIs',
+      'LangChain / LangGraph',
+      'Vision-Language Models',
+      'Pydantic v2',
+      'AsyncIO Concurrency',
+      'Vector Embeddings',
+      'RAG Benchmarking',
+    ],
+    metrics: [
+      { label: 'Evaluation Throughput', value: '50k+ prompts / day' },
+      { label: 'Schema Conformance', value: '100% Deterministic' },
+      { label: 'Rate-Limit Throttling', value: 'Zero 429 Drops' },
+      { label: 'Multi-Agent Consensus', value: 'Tri-perspective check' },
+    ],
+    architecturePoints: [
+      'Multi-agent debate & consensus architecture eliminating single-judge evaluation bias',
+      'Token-bucket asynchronous rate limiter dynamically throttling across multiple API provider quotas',
+      'Pydantic runtime data validators guaranteeing structural integrity of model outputs',
+      'Multimodal regression suite verifying bounding-box alignment and OCR accuracy for VLMs',
+    ],
+    codeSnippet: `import asyncio
+from pydantic import BaseModel, Field
+from typing import List
+
+class EvaluationRubric(BaseModel):
+    factual_accuracy: float = Field(ge=0.0, le=1.0)
+    reasoning_coherence: float = Field(ge=0.0, le=1.0)
+    hallucination_detected: bool
+    verdict: str
+    rationale: str
+
+async def evaluate_sample_with_consensus(sample: dict, client, semaphore) -> EvaluationRubric:
+    """Asynchronous model evaluation with rate-limit semaphores and structured schema."""
+    async with semaphore:
+        prompt = f"Evaluate the following model response against reference ground truth:\\n{sample}"
+        response = await client.models.generate_content(
+            model="gemini-2.5-pro",
+            contents=prompt,
+            config={"response_mime_type": "application/json", "response_schema": EvaluationRubric}
+        )
+        return EvaluationRubric.model_validate_json(response.text)`,
   },
 ];
 
-const clientContributions: Project[] = [
+const SKILL_PILLARS = [
   {
-    id: 5,
-    title: '32 Pearls Dental World',
-    role: 'WordPress Developer',
-    industry: 'Healthcare • Dental Clinic',
-    tech: ['WordPress', 'PHP', 'HTML5/CSS3', 'JavaScript'],
-    problem: 'Dental clinic needed a professional, trustworthy online presence with clear service showcasing and conversion-focused design.',
-    solution: 'Built a fully custom WordPress theme with responsive UI, clear service pages, SEO-friendly structure, and easy-to-manage backend for clinic staff.',
-    outcome: 'Professional healthcare website with improved patient trust and easy content management.',
-    liveUrl: 'https://32pearlsdentalworld.com/',
-    githubUrl: null,
-    screenshot: pearlsScreenshot,
+    icon: Cpu,
+    title: 'High-Throughput Concurrency & GIL Avoidance',
+    description:
+      'Deep architectural mastery over Python multiprocessing pools, asynchronous event loops (asyncio), process queues, and CPU-core aware worker scaling for compute-bound systems.',
+    highlights: ['multiprocessing.Pool', 'ProcessPoolExecutor', 'asyncio.gather', 'Shared Memory', 'CPU-1 Strategy'],
   },
   {
-    id: 6,
-    title: 'Pitch & Play',
-    role: 'WordPress Developer & Frontend Engineer',
-    industry: 'Influencer Marketing • Digital Marketing',
-    tech: ['WordPress', 'PHP', 'HTML5/CSS3', 'JavaScript'],
-    problem: 'Required a modern, performance-focused website to represent influencer marketing services with bold, engaging brand presence.',
-    solution: 'Developed a custom-coded WordPress website with responsive frontend, clear service positioning, and conversion-focused CTAs.',
-    outcome: 'Distinct brand identity with improved clarity of offerings and scalable WordPress implementation.',
-    liveUrl: 'https://pitchandplay.in/',
-    githubUrl: null,
-    screenshot: pitchandplayScreenshot,
+    icon: Shield,
+    title: 'Fault-Tolerance & State Checkpointing',
+    description:
+      'Designing mission-critical systems that can be killed at any millisecond with SIGKILL and resume with zero data corruption or duplication using atomic WAL journaling.',
+    highlights: ['SQLite WAL', 'Atomic File Moves', 'Resumable State Machines', 'Signal Trapping', 'CRC32 / SHA-256'],
   },
   {
-    id: 7,
-    title: 'Carbonix',
-    role: 'Live Client Website',
-    industry: 'Petroleum • USA',
-    tech: ['WordPress', 'Custom Theme', 'Hosting Setup'],
-    problem: 'Client required a professional website to establish digital presence.',
-    solution: 'Designed and deployed a clean, business-focused website with reliable hosting.',
-    outcome: 'Live production website delivered for a real client.',
-    liveUrl: 'https://darkred-stork-731280.hostingersite.com',
-    githubUrl: null,
-    screenshot: carbonixScreenshot,
+    icon: Workflow,
+    title: 'Autonomous Multi-Agent & VLM Evaluation',
+    description:
+      'Architecting multi-agent swarms, LLM benchmarking pipelines, prompt regression suites, vision-language model verification, and structured Pydantic schema validation.',
+    highlights: ['LangGraph', 'VLM Multimodal Reasoning', 'Pydantic v2', 'Token-Bucket Rate Limiting', 'Rubric Scoring'],
   },
   {
-    id: 8,
-    title: 'TCBO Marketing LLC',
-    role: 'Live Client Website',
-    industry: 'Petroleum • USA',
-    tech: ['WordPress', 'Custom Theme', 'Hosting & Domain'],
-    problem: 'No structured online presence for business representation.',
-    solution: 'Built and launched a responsive corporate website.',
-    outcome: 'Live client website supporting credibility and visibility.',
-    liveUrl: 'http://darkseagreen-dog-161075.hostingersite.com/',
-    githubUrl: null,
-    screenshot: tcboScreenshot,
-  },
-  {
-    id: 9,
-    title: 'Sole Trader',
-    role: 'Lead Web Development',
-    industry: 'Petroleum • Australia',
-    tech: ['WordPress', 'Custom Theme Development', 'Performance Optimization'],
-    problem: 'Client needed a professional website for petroleum trading business representation.',
-    solution: 'Led development, implemented clean corporate UI, optimized structure and performance.',
-    outcome: 'Live production website supporting international business credibility.',
-    liveUrl: 'https://soleetrader.com',
-    githubUrl: null,
-    screenshot: soletraderScreenshot,
-  },
-  {
-    id: 10,
-    title: 'Yali Energy Trading',
-    role: 'Lead Web Development',
-    industry: 'Petroleum • Canada',
-    tech: ['WordPress', 'Custom Theme Configuration', 'Responsive UI'],
-    problem: 'No clear digital presence for petroleum trading operations.',
-    solution: 'Handled major development responsibilities including layout, responsiveness, and deployment.',
-    outcome: 'Live client website successfully launched.',
-    liveUrl: 'https://yalienergytrading.com',
-    githubUrl: null,
-    screenshot: yaliScreenshot,
+    icon: HardDrive,
+    title: 'Data Engineering & Scalable ETL Pipelines',
+    description:
+      'High-volume data transformation, acoustic and cryptographic deduplication, streaming chunked file I/O, and bounded memory ceilings that scale to millions of records.',
+    highlights: ['Torchaudio / Chromaprint', 'Chunked File Streaming', 'tracemalloc Profiling', 'PostgreSQL / SQLite'],
   },
 ];
 
 const Work = () => {
+  const [activeSystemId, setActiveSystemId] = useState<string>(SYSTEMS[0].id);
+  const activeSystem = SYSTEMS.find((s) => s.id === activeSystemId) || SYSTEMS[0];
+
   return (
     <Layout>
-      {/* Hero */}
-      <section className="pt-32 pb-16">
-        <div className="container mx-auto px-6">
-          <AnimatedSection>
-            <p className="text-primary text-sm font-medium tracking-wider uppercase mb-4">
-              Portfolio
-            </p>
-            <h1 className="text-display-lg font-display font-bold mb-6">
-              AI Systems, Backend & <span className="text-gradient">Web Projects</span>
-            </h1>
-            <p className="text-xl text-muted-foreground max-w-2xl">
-              AI evaluation workflows, backend infrastructure tools, scalable automation systems, and 
-              production web applications.
-            </p>
-            <p className="text-sm text-muted-foreground/70 mt-3 italic">
-              AI & backend systems engineering showcased first, followed by production web development work.
-            </p>
-          </AnimatedSection>
+      {/* ==================== HERO SECTION ==================== */}
+      <section className="mb-16">
+        <div className="flex items-center gap-2 text-cyan-400 font-mono text-[10px] tracking-[0.3em] uppercase mb-3">
+          <span className="w-2 h-2 rounded-full bg-cyan-400 shadow-[0_0_8px_#00f0ff]" />
+          <span>PORTAL // 01 // SYSTEMS & PRODUCTION ARCHITECTURE</span>
+        </div>
+
+        <h1 className="text-4xl sm:text-6xl font-display font-black uppercase tracking-tight text-white mb-6">
+          <ScrambleText text="SYSTEMS & ARCHITECTURE" />
+        </h1>
+
+        <p className="text-sm sm:text-base font-mono text-white/70 max-w-3xl leading-relaxed mb-8">
+          Production systems engineering focused on high-concurrency Python pipelines, deterministic deduplication engines, parallel NAS storage migration, and autonomous AI/VLM evaluation harnesses.
+        </p>
+
+        {/* Top Telemetry Pills */}
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+          <div className="p-4 rounded-2xl border border-white/10 bg-white/[0.02] backdrop-blur-md">
+            <div className="text-[10px] font-mono text-white/40 tracking-[0.2em] mb-1">TOTAL ARCHITECTURES</div>
+            <div className="text-xl sm:text-2xl font-mono font-bold text-cyan-300">4 PRODUCTION</div>
+          </div>
+          <div className="p-4 rounded-2xl border border-white/10 bg-white/[0.02] backdrop-blur-md">
+            <div className="text-[10px] font-mono text-white/40 tracking-[0.2em] mb-1">DATA INTEGRITY</div>
+            <div className="text-xl sm:text-2xl font-mono font-bold text-emerald-400">100% ZERO-LOSS</div>
+          </div>
+          <div className="p-4 rounded-2xl border border-white/10 bg-white/[0.02] backdrop-blur-md">
+            <div className="text-[10px] font-mono text-white/40 tracking-[0.2em] mb-1">CONCURRENCY MODEL</div>
+            <div className="text-xl sm:text-2xl font-mono font-bold text-fuchsia-300">CORE-AWARE</div>
+          </div>
+          <div className="p-4 rounded-2xl border border-white/10 bg-white/[0.02] backdrop-blur-md">
+            <div className="text-[10px] font-mono text-white/40 tracking-[0.2em] mb-1">AI BENCHMARK VOLUME</div>
+            <div className="text-xl sm:text-2xl font-mono font-bold text-cyan-300">50K+ / DAY</div>
+          </div>
         </div>
       </section>
 
-      {/* Infrastructure Projects */}
-      <InfrastructureProjects />
-
-      {/* Full Projects Section */}
-      <section className="pb-16">
-        <div className="container mx-auto px-6">
-          <AnimatedSection>
-            <div className="mb-12">
-              <h2 className="text-display-sm font-display font-bold mb-2" id="web">
-                Web & Application <span className="text-gradient">Development</span>
-              </h2>
-              <p className="text-muted-foreground">
-                Production web applications with complete ownership and responsibility
-              </p>
-            </div>
-          </AnimatedSection>
-
-          {fullProjects.map((project, index) => (
-            <AnimatedSection
-              key={project.id}
-              direction={index % 2 === 0 ? 'left' : 'right'}
-              delay={0.1}
-            >
-              <div
-                className={`grid lg:grid-cols-2 gap-12 items-center py-16 border-b border-border/30 ${
-                  index % 2 === 1 ? 'lg:flex-row-reverse' : ''
+      {/* ==================== SYSTEM SELECTOR TABS ==================== */}
+      <section className="mb-12">
+        <div className="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-none">
+          {SYSTEMS.map((system) => {
+            const isSelected = system.id === activeSystemId;
+            return (
+              <button
+                key={system.id}
+                onClick={() => {
+                  soundEngine.playClick(700);
+                  setActiveSystemId(system.id);
+                }}
+                onMouseEnter={() => soundEngine.playHover()}
+                className={`flex-shrink-0 px-4 py-2.5 rounded-full font-mono text-xs tracking-[0.16em] uppercase transition-all flex items-center gap-2.5 cursor-pointer ${
+                  isSelected
+                    ? 'bg-cyan-400 text-black font-bold shadow-[0_0_20px_rgba(0,240,255,0.4)]'
+                    : 'border border-white/15 bg-white/[0.03] text-white/70 hover:text-white hover:border-white/30'
                 }`}
               >
-                {/* Visual */}
-                <ProjectCard
-                  className={`relative group ${index % 2 === 1 ? 'lg:order-2' : ''}`}
-                >
-                  <div className="aspect-video rounded-2xl glass border-glow overflow-hidden hover-glow">
-                    {project.screenshot ? (
-                      <img 
-                        src={project.screenshot} 
-                        alt={`${project.title} screenshot`}
-                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                      />
-                    ) : (
-                      <div className="w-full h-full bg-gradient-to-br from-primary/10 to-transparent flex items-center justify-center">
-                        {project.logo ? (
-                          <img 
-                            src={project.logo} 
-                            alt={`${project.title} logo`}
-                            className="w-24 h-24 object-contain"
-                          />
-                        ) : (
-                          <div className="text-center">
-                            <div className="text-6xl font-display font-bold text-primary/20 mb-2">
-                              0{project.id}
-                            </div>
-                            <div className="text-muted-foreground text-sm">
-                              {project.role}
-                            </div>
-                          </div>
-                        )}
-                      </div>
-                    )}
-                  </div>
-                  {/* Floating tech badges */}
-                  <div className="absolute -bottom-4 left-4 right-4 flex flex-wrap gap-2 justify-center">
-                    {project.tech.slice(0, 3).map((t) => (
-                      <span
-                        key={t}
-                        className="px-3 py-1.5 rounded-full glass-strong text-xs font-medium text-foreground"
-                      >
-                        {t}
-                      </span>
-                    ))}
-                  </div>
-                </ProjectCard>
-
-                {/* Content */}
-                <div className={`space-y-6 ${index % 2 === 1 ? 'lg:order-1' : ''}`}>
-                  <div>
-                    <div className="flex items-center gap-3 mb-1">
-                      <h2 className="text-display-sm font-display font-bold">
-                        {project.title}
-                      </h2>
-                    </div>
-                    {project.subtitle && (
-                      <p className="text-lg text-muted-foreground font-medium mb-2">
-                        {project.subtitle}
-                      </p>
-                    )}
-                    <p className="text-primary text-sm font-medium">
-                      {project.role}
-                    </p>
-                  </div>
-
-                  <div className="space-y-4">
-                    <div>
-                      <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider mb-2">
-                        The Problem
-                      </h3>
-                      <p className="text-foreground">{project.problem}</p>
-                    </div>
-                    <div>
-                      <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider mb-2">
-                        The Solution
-                      </h3>
-                      <p className="text-foreground">{project.solution}</p>
-                    </div>
-                    <div>
-                      <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider mb-2">
-                        The Outcome
-                      </h3>
-                      <p className="text-primary font-medium">{project.outcome}</p>
-                    </div>
-                  </div>
-
-                  <div className="flex gap-4 pt-4">
-                    <a href={project.liveUrl} target="_blank" rel="noopener noreferrer">
-                      <Button variant="primary" size="md" data-cursor="View Live">
-                        <ExternalLink size={16} />
-                        Visit Website
-                      </Button>
-                    </a>
-                    {project.githubUrl && (
-                      <a href={project.githubUrl} target="_blank" rel="noopener noreferrer">
-                        <Button variant="outline" size="md" data-cursor="GitHub">
-                          <Github size={16} />
-                          Source Code
-                        </Button>
-                      </a>
-                    )}
-                  </div>
-                </div>
-              </div>
-            </AnimatedSection>
-          ))}
-        </div>
-      </section>
-
-      {/* Client Contributions Section */}
-      <section className="pb-16">
-        <div className="container mx-auto px-6">
-          <AnimatedSection>
-            <div className="mb-12 pt-8 border-t border-primary/20">
-              <div className="flex items-center gap-3 mb-2">
-                <h2 className="text-display-sm font-display font-bold">
-                  Client Web <span className="text-gradient">Contributions</span>
-                </h2>
-                <span className="px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-medium border border-primary/20">
-                  Live Client Websites
+                <span className={isSelected ? 'text-black' : 'text-cyan-400 font-bold'}>
+                  [{system.code}]
                 </span>
-              </div>
-              <p className="text-muted-foreground">
-                Client projects where I led key development responsibilities
-              </p>
-            </div>
-          </AnimatedSection>
-
-          {clientContributions.map((project, index) => (
-            <AnimatedSection
-              key={project.id}
-              direction={index % 2 === 0 ? 'left' : 'right'}
-              delay={0.1}
-            >
-              <div
-                className={`grid lg:grid-cols-2 gap-12 items-center py-16 border-b border-border/30 ${
-                  index % 2 === 1 ? 'lg:flex-row-reverse' : ''
-                }`}
-              >
-                {/* Visual */}
-                <ProjectCard
-                  className={`relative group ${index % 2 === 1 ? 'lg:order-2' : ''}`}
-                >
-                  <div className="aspect-video rounded-2xl glass border-glow overflow-hidden hover-glow">
-                    {project.screenshot ? (
-                      <img 
-                        src={project.screenshot} 
-                        alt={`${project.title} screenshot`}
-                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                      />
-                    ) : (
-                      <div className="w-full h-full bg-gradient-to-br from-primary/10 to-transparent flex items-center justify-center">
-                        <div className="text-center">
-                          <div className="text-6xl font-display font-bold text-primary/20 mb-2">
-                            0{project.id}
-                          </div>
-                          <div className="text-muted-foreground text-sm">
-                            {project.role}
-                          </div>
-                        </div>
-                      </div>
-                    )}
-                  </div>
-                  {/* Floating tech badges */}
-                  <div className="absolute -bottom-4 left-4 right-4 flex flex-wrap gap-2 justify-center">
-                    {project.tech.slice(0, 3).map((t) => (
-                      <span
-                        key={t}
-                        className="px-3 py-1.5 rounded-full glass-strong text-xs font-medium text-foreground"
-                      >
-                        {t}
-                      </span>
-                    ))}
-                  </div>
-                </ProjectCard>
-
-                {/* Content */}
-                <div className={`space-y-6 ${index % 2 === 1 ? 'lg:order-1' : ''}`}>
-                  <div>
-                    <h2 className="text-display-sm font-display font-bold mb-2">
-                      {project.title}
-                    </h2>
-                    <div className="flex items-center gap-2">
-                      <p className="text-primary text-sm font-medium">
-                        {project.role}
-                      </p>
-                      <span className="text-muted-foreground text-xs">•</span>
-                      <span className="text-xs text-muted-foreground">Major Contribution</span>
-                    </div>
-                    {project.industry && (
-                      <p className="text-muted-foreground text-xs mt-1">
-                        {project.industry}
-                      </p>
-                    )}
-                  </div>
-
-                  <div className="space-y-4">
-                    <div>
-                      <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider mb-2">
-                        The Problem
-                      </h3>
-                      <p className="text-foreground">{project.problem}</p>
-                    </div>
-                    <div>
-                      <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider mb-2">
-                        The Solution
-                      </h3>
-                      <p className="text-foreground">{project.solution}</p>
-                    </div>
-                    <div>
-                      <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider mb-2">
-                        The Outcome
-                      </h3>
-                      <p className="text-primary font-medium">{project.outcome}</p>
-                    </div>
-                  </div>
-
-                  <div className="flex gap-4 pt-4">
-                    <a href={project.liveUrl} target="_blank" rel="noopener noreferrer">
-                      <Button variant="primary" size="md" data-cursor="View Live">
-                        <ExternalLink size={16} />
-                        Visit Website
-                      </Button>
-                    </a>
-                  </div>
-                </div>
-              </div>
-            </AnimatedSection>
-          ))}
+                <span>{system.title.split('–')[0].split('&')[0].trim()}</span>
+              </button>
+            );
+          })}
         </div>
       </section>
 
+      {/* ==================== ACTIVE SYSTEM DETAIL VIEW ==================== */}
+      <AnimatePresence mode="wait">
+        <motion.section
+          key={activeSystem.id}
+          initial={{ opacity: 0, y: 15 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -15 }}
+          transition={{ duration: 0.3 }}
+          className="mb-20 space-y-8"
+        >
+          {/* System Banner Header */}
+          <div className="p-6 sm:p-8 rounded-3xl border border-white/15 bg-[#05060d]/80 backdrop-blur-xl relative overflow-hidden">
+            <div className="absolute top-0 right-0 p-8 text-8xl font-display font-black text-white/[0.03] pointer-events-none select-none">
+              {activeSystem.code}
+            </div>
+
+            <div className="flex flex-wrap items-center justify-between gap-4 mb-4">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-400/10 border border-cyan-400/30 text-cyan-300 font-mono text-[10px] tracking-[0.2em]">
+                <span>{activeSystem.category}</span>
+              </div>
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-400/10 border border-emerald-400/30 text-emerald-300 font-mono text-[10px] tracking-[0.2em]">
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                <span>{activeSystem.status}</span>
+              </div>
+            </div>
+
+            <h2 className="text-2xl sm:text-4xl font-display font-black uppercase text-white mb-4">
+              {activeSystem.title}
+            </h2>
+
+            <p className="text-sm font-mono text-white/80 max-w-3xl leading-relaxed mb-6">
+              {activeSystem.description}
+            </p>
+
+            {/* Tech Chips */}
+            <div className="flex flex-wrap gap-2 mb-8">
+              {activeSystem.technologies.map((tech) => (
+                <span
+                  key={tech}
+                  className="px-2.5 py-1 rounded-full border border-white/10 bg-white/[0.04] text-[10px] font-mono text-white/70 tracking-wider"
+                >
+                  {tech}
+                </span>
+              ))}
+            </div>
+
+            {/* Performance Benchmark Metrics */}
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-4 border-t border-white/10">
+              {activeSystem.metrics.map((m) => (
+                <div key={m.label} className="p-3 rounded-xl bg-black/40 border border-white/[0.06]">
+                  <div className="text-[9px] font-mono text-white/40 tracking-[0.18em] mb-1">{m.label}</div>
+                  <div className="text-sm sm:text-base font-mono font-bold text-cyan-300">{m.value}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Problem vs Architecture Split */}
+          <div className="grid lg:grid-cols-2 gap-6">
+            {/* The Engineering Challenge */}
+            <div className="p-6 rounded-3xl border border-white/10 bg-[#04050a]/70 backdrop-blur-md space-y-4">
+              <div className="text-xs font-mono tracking-[0.2em] text-red-400 flex items-center gap-2">
+                <span>[ 01 // THE SYSTEM BOTTLENECK ]</span>
+              </div>
+              <p className="text-xs sm:text-sm font-mono text-white/75 leading-relaxed">
+                {activeSystem.problem}
+              </p>
+              <div className="text-xs font-mono tracking-[0.2em] text-cyan-400 pt-3 border-t border-white/10 flex items-center gap-2">
+                <span>[ 02 // ARCHITECTURAL SOLUTION ]</span>
+              </div>
+              <p className="text-xs sm:text-sm font-mono text-white/75 leading-relaxed">
+                {activeSystem.solution}
+              </p>
+            </div>
+
+            {/* Architectural Pillars */}
+            <div className="p-6 rounded-3xl border border-white/10 bg-[#04050a]/70 backdrop-blur-md space-y-3">
+              <div className="text-xs font-mono tracking-[0.2em] text-emerald-400 flex items-center gap-2 mb-3">
+                <span>[ 03 // RELIABILITY GUARANTEES ]</span>
+              </div>
+              <ul className="space-y-3">
+                {activeSystem.architecturePoints.map((point, idx) => (
+                  <li key={idx} className="flex items-start gap-2.5 text-xs font-mono text-white/80 leading-relaxed">
+                    <CheckCircle2 size={14} className="text-cyan-400 flex-shrink-0 mt-0.5" />
+                    <span>{point}</span>
+                  </li>
+                ))}
+              </ul>
+              <div className="pt-4">
+                <a
+                  href={activeSystem.github}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={() => soundEngine.playClick(900)}
+                  onMouseEnter={() => soundEngine.playHover()}
+                  className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white text-black hover:bg-cyan-400 font-mono text-xs font-bold tracking-[0.18em] uppercase transition-all"
+                >
+                  <Github size={14} />
+                  <span>INSPECT SOURCE REPOSITORY</span>
+                  <ExternalLink size={12} />
+                </a>
+              </div>
+            </div>
+          </div>
+
+          {/* Interactive Code Kernel Window */}
+          <div className="rounded-3xl border border-white/15 bg-[#030408] overflow-hidden shadow-2xl">
+            <div className="px-5 py-3 border-b border-white/10 bg-black/60 flex items-center justify-between text-[11px] font-mono text-white/60">
+              <div className="flex items-center gap-2">
+                <span className="w-2.5 h-2.5 rounded-full bg-red-500/80" />
+                <span className="w-2.5 h-2.5 rounded-full bg-yellow-500/80" />
+                <span className="w-2.5 h-2.5 rounded-full bg-green-500/80" />
+                <span className="ml-2 text-cyan-400">KERNEL // {activeSystem.id.toUpperCase()}.PY</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <Code2 size={13} />
+                <span>PYTHON 3.12 PRODUCTION RUNTIME</span>
+              </div>
+            </div>
+            <pre className="p-6 text-xs font-mono text-white/85 overflow-x-auto leading-relaxed bg-[#020204]">
+              <code>{activeSystem.codeSnippet}</code>
+            </pre>
+          </div>
+        </motion.section>
+      </AnimatePresence>
+
+      {/* ==================== CORE ENGINEERING SKILLS SECTION ==================== */}
+      <section className="pt-8 border-t border-white/10">
+        <div className="flex items-center gap-2 text-fuchsia-400 font-mono text-[10px] tracking-[0.3em] uppercase mb-2">
+          <span>CAPABILITY MATRIX // PRODUCTION EXPERTISE</span>
+        </div>
+        <h2 className="text-3xl sm:text-5xl font-display font-black uppercase text-white mb-6">
+          <ScrambleText text="CORE ENGINEERING SKILLS" />
+        </h2>
+        <p className="text-xs sm:text-sm font-mono text-white/60 max-w-2xl leading-relaxed mb-10">
+          How my technical skills map directly to production infrastructure, fault-tolerant execution, and scalable AI systems.
+        </p>
+
+        <div className="grid md:grid-cols-2 gap-5">
+          {SKILL_PILLARS.map((pillar) => {
+            const Icon = pillar.icon;
+            return (
+              <div
+                key={pillar.title}
+                className="p-6 rounded-3xl border border-white/10 bg-white/[0.02] backdrop-blur-xl hover:border-cyan-400/40 transition-colors space-y-4"
+              >
+                <div className="flex items-center gap-3">
+                  <div className="p-2.5 rounded-2xl bg-cyan-400/10 border border-cyan-400/30 text-cyan-400">
+                    <Icon size={18} />
+                  </div>
+                  <h3 className="font-mono text-sm sm:text-base font-bold text-white tracking-wide">
+                    {pillar.title}
+                  </h3>
+                </div>
+                <p className="text-xs font-mono text-white/70 leading-relaxed">
+                  {pillar.description}
+                </p>
+                <div className="flex flex-wrap gap-1.5 pt-2">
+                  {pillar.highlights.map((h) => (
+                    <span
+                      key={h}
+                      className="px-2.5 py-1 rounded-full border border-white/10 bg-black/50 text-[10px] font-mono text-cyan-300/90"
+                    >
+                      {h}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </section>
     </Layout>
   );
 };

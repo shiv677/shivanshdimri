@@ -1,12 +1,7 @@
 import React, { useRef, useMemo } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
-import { MeshReflectorMaterial, useTexture } from '@react-three/drei';
+import { MeshReflectorMaterial } from '@react-three/drei';
 import * as THREE from 'three';
-
-import arkoseScreenshot from '@/assets/arkose-screenshot.png';
-import arkoseBuildcomScreenshot from '@/assets/arkose-buildcom-screenshot.png';
-import pearlsScreenshot from '@/assets/32pearls-screenshot.png';
-import pitchandplayScreenshot from '@/assets/pitchandplay-screenshot.png';
 
 export const ZONE_Z_POSITIONS = [0, -22, -44, -66, -88, -110, -132];
 
@@ -518,37 +513,58 @@ function FlagshipPortalMonoliths({
   );
 }
 
-// --- 5. Zone 4 (Z = -88): 3D Client Web Ecosystem Gallery ---
-function ClientWebGallery3D() {
-  const textures = useTexture([
-    arkoseScreenshot,
-    arkoseBuildcomScreenshot,
-    pearlsScreenshot,
-    pitchandplayScreenshot,
-  ]);
+// --- 5. Zone 4 (Z = -88): 3D AI Agent Swarm & Neural Lattice Core ---
+function AIAgentNeuralLattice3D() {
+  const groupRef = useRef<THREE.Group>(null);
+  const ring1Ref = useRef<THREE.Mesh>(null);
+  const ring2Ref = useRef<THREE.Mesh>(null);
 
-  const cards = [
-    { x: -3.2, y: 0.9, z: -0.5, rotY: 0.28, tex: textures[0], color: '#00f0ff' },
-    { x: -1.1, y: -0.35, z: -1.2, rotY: 0.1, tex: textures[1], color: '#a855f7' },
-    { x: 1.1, y: 0.85, z: -1.2, rotY: -0.1, tex: textures[2], color: '#00ffaa' },
-    { x: 3.2, y: -0.3, z: -0.5, rotY: -0.28, tex: textures[3], color: '#ff006a' },
-  ];
+  useFrame((state) => {
+    const t = state.clock.getElapsedTime();
+    if (groupRef.current) {
+      groupRef.current.rotation.y = t * 0.35;
+    }
+    if (ring1Ref.current) {
+      ring1Ref.current.rotation.x = t * 0.45;
+      ring1Ref.current.rotation.z = t * 0.25;
+    }
+    if (ring2Ref.current) {
+      ring2Ref.current.rotation.y = -t * 0.4;
+      ring2Ref.current.rotation.x = Math.sin(t * 0.5) * 0.4;
+    }
+  });
 
   return (
-    <group position={[0, 0.4, ZONE_Z_POSITIONS[4]]}>
-      {cards.map((c, i) => (
-        <group key={i} position={[c.x, c.y, c.z]} rotation={[0, c.rotY, 0]}>
-          <mesh>
-            <planeGeometry args={[2.1, 1.25]} />
-            <meshBasicMaterial map={c.tex} />
-          </mesh>
-          <mesh position={[0, 0, -0.02]}>
-            <planeGeometry args={[2.18, 1.33]} />
-            <meshBasicMaterial color={c.color} />
-          </mesh>
-        </group>
-      ))}
-      <pointLight position={[0, 1, 2]} color="#00f0ff" intensity={3} distance={12} />
+    <group position={[0, 0.5, ZONE_Z_POSITIONS[4]]}>
+      <group ref={groupRef}>
+        {/* Core Icosahedron Neural Lattice */}
+        <mesh>
+          <icosahedronGeometry args={[1.5, 1]} />
+          <meshStandardMaterial
+            color="#00f0ff"
+            wireframe
+            emissive="#00f0ff"
+            emissiveIntensity={0.7}
+            roughness={0.1}
+          />
+        </mesh>
+        <mesh>
+          <sphereGeometry args={[0.7, 16, 16]} />
+          <meshBasicMaterial color="#ffffff" />
+        </mesh>
+      </group>
+
+      {/* Orbiting Gyroscope Rings */}
+      <mesh ref={ring1Ref}>
+        <torusGeometry args={[2.5, 0.04, 16, 64]} />
+        <meshBasicMaterial color="#a855f7" wireframe />
+      </mesh>
+      <mesh ref={ring2Ref}>
+        <torusGeometry args={[3.0, 0.03, 16, 64]} />
+        <meshBasicMaterial color="#00ffaa" wireframe />
+      </mesh>
+
+      <pointLight position={[0, 1, 2]} color="#00f0ff" intensity={4} distance={15} />
     </group>
   );
 }
@@ -691,10 +707,8 @@ export const ActiveTheoryCanvas: React.FC<ActiveTheoryCanvasProps> = ({
         {/* Zones 1, 2, 3: 3D Flagship System Portals */}
         <FlagshipPortalMonoliths onOpenCaseStudy={onOpenCaseStudy} />
 
-        {/* Zone 4: 3D Textured Client Web Gallery */}
-        <React.Suspense fallback={null}>
-          <ClientWebGallery3D />
-        </React.Suspense>
+        {/* Zone 4: 3D AI Agent Swarm & Neural Lattice Core */}
+        <AIAgentNeuralLattice3D />
 
         {/* Zones 5 & 6: Astrolabe & Transmission Stargate */}
         <DeepZonesAstrolabeAndGate />

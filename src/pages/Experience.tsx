@@ -1,248 +1,473 @@
-import { useMemo } from 'react';
-import { motion } from 'framer-motion';
-import { Calendar, MapPin, Building2, Briefcase, Rocket } from 'lucide-react';
+import React, { useState, useMemo } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import {
+  Brain,
+  Cpu,
+  Database,
+  Terminal,
+  Shield,
+  Layers,
+  MapPin,
+  Calendar,
+  Building2,
+  CheckCircle2,
+  Sparkles,
+  Workflow,
+  GitBranch,
+  Server,
+  Code2,
+  Flame,
+  ArrowUpRight,
+} from 'lucide-react';
 import Layout from '@/components/Layout';
-import AnimatedSection from '@/components/AnimatedSection';
+import ScrambleText from '@/components/activetheory/ScrambleText';
+import { soundEngine } from '@/components/activetheory/SoundEngine';
 
-const experiences = [
+interface SkillCategory {
+  id: string;
+  name: string;
+  icon: typeof Brain;
+  tagline: string;
+  skills: {
+    name: string;
+    level: string;
+    desc: string;
+    tags: string[];
+  }[];
+}
+
+const SKILL_CATEGORIES: SkillCategory[] = [
   {
-    id: 1,
-    title: 'Associate AI Engineer',
-    company: 'InfoBay AI Limited',
-    location: 'On-site',
-    period: 'Oct 2026 – Present',
-    type: 'Professional',
-    responsibilities: [
-      'Contributing to AI-driven engineering systems, benchmark evaluation workflows, and intelligent automation solutions',
-      'Designing and implementing scalable data engineering and web extraction workflows with structured validation',
-      'Working with large language models, vision-language models, and AI agents for model evaluation and automation',
-      'Developing reliable Python-based automation systems with concurrency, fault tolerance, and process recovery',
-      'Driving technical documentation, workflow design, engineering standards, and automated quality assurance',
+    id: 'ai-engineering',
+    name: 'AI Engineering & LLM/VLM Systems',
+    icon: Brain,
+    tagline: 'Autonomous multi-agent architectures, model evaluation harnesses, and multimodal reasoning.',
+    skills: [
+      {
+        name: 'Autonomous Multi-Agent Swarms',
+        level: 'Advanced',
+        desc: 'Orchestrating collaborative agent networks with specialized roles, state machines, and consensus debate mechanisms using LangGraph and LangChain.',
+        tags: ['LangGraph', 'Multi-Agent', 'Agentic Workflows', 'Consensus Loops'],
+      },
+      {
+        name: 'VLM & Multimodal Model Evaluation',
+        level: 'Production',
+        desc: 'Constructing rigorous benchmark suites for Vision-Language Models evaluating OCR precision, document understanding, and spatial bounding boxes.',
+        tags: ['Vision-Language Models', 'Benchmarking', 'Grounding', 'Multimodal QA'],
+      },
+      {
+        name: 'Structured Schema Enforcement',
+        level: 'Expert',
+        desc: 'Guaranteeing 100% deterministic JSON outputs and strict model compliance using Pydantic v2 schemas and native function calling.',
+        tags: ['Pydantic v2', 'JSON Schema', 'Tool Calling', 'Grammar Constrained'],
+      },
+      {
+        name: 'RAG & Dense Semantic Retrieval',
+        level: 'Advanced',
+        desc: 'Designing retrieval-augmented generation architectures with chunking strategies, dense embeddings, re-ranking, and vector databases.',
+        tags: ['Vector Embeddings', 'RAG Pipelines', 'Hybrid Search', 'Re-ranking'],
+      },
+      {
+        name: 'Automated Regression Testing & Rubrics',
+        level: 'Production',
+        desc: 'Automating continuous evaluation harnesses across model releases to detect hallucination drift and reasoning degradation.',
+        tags: ['Automated Eval', 'Rubric Scoring', 'Hallucination Checks', 'MLOps'],
+      },
     ],
   },
   {
-    id: 2,
-    title: 'Vibe Coder',
-    company: 'InfoBay AI Limited',
-    location: 'On-site',
-    period: 'Feb 2026 – Oct 2026',
-    type: 'Professional',
-    responsibilities: [
-      'Contributed to AI-assisted software development, rapid prototyping, and automation-oriented development workflows',
-      'Utilized modern AI development tools to accelerate implementation, debugging, and delivery',
-      'Implemented automated scripts and rapid verification pipelines for production features',
+    id: 'python-concurrency',
+    name: 'High-Throughput Python & Concurrency',
+    icon: Cpu,
+    tagline: 'Multi-core processing, asynchronous I/O event loops, and low-level process supervisors.',
+    skills: [
+      {
+        name: 'Multiprocessing & GIL Avoidance',
+        level: 'Expert',
+        desc: 'Bypassing the CPython Global Interpreter Lock (GIL) via dynamic worker pool allocation (CPU count − 1 strategy) and inter-process queues.',
+        tags: ['multiprocessing.Pool', 'ProcessPoolExecutor', 'IPC Queues', 'Worker Scaling'],
+      },
+      {
+        name: 'Asynchronous I/O & Event Loops',
+        level: 'Advanced',
+        desc: 'Asynchronous network calls, token-bucket rate limiting semaphores, and non-blocking streaming data pipelines.',
+        tags: ['asyncio', 'Semaphores', 'Task Groups', 'aiohttp'],
+      },
+      {
+        name: 'Subprocess Pipelines & Stream Parsing',
+        level: 'Expert',
+        desc: 'Managing external binary runtimes with non-blocking stdout/stderr pipe streaming, regex progress extraction, and buffer control.',
+        tags: ['subprocess.Popen', 'Pipe Streaming', 'Regex Parsers', 'Daemon Control'],
+      },
+      {
+        name: 'Memory Ceiling & Resource Profiling',
+        level: 'Production',
+        desc: 'Preventing OOM errors on multi-gigabyte transfers using streaming file chunks, generator pipelines, and memory profiling.',
+        tags: ['tracemalloc', 'Memory Bounding', 'Generator Pipelines', 'Resource Limits'],
+      },
+      {
+        name: 'Signal Trapping & Clean Teardown',
+        level: 'Advanced',
+        desc: 'Trapping POSIX SIGINT/SIGTERM signals to execute safe state flushes, close database handles, and terminate child workers.',
+        tags: ['signal.signal', 'Graceful Shutdown', 'Atomic Cleanup', 'POSIX'],
+      },
     ],
   },
   {
-    id: 3,
-    title: 'Web Developer',
-    company: 'Global Connection 21',
-    location: 'Remote',
-    period: 'Jun 2025 – Dec 2025',
-    type: 'Professional',
-    responsibilities: [
-      'Developed and maintained client websites and e-commerce solutions using WordPress, Elementor, and WooCommerce',
-      'Worked on website integrations, workflow automation, deployment, debugging, and performance improvements',
-      'Delivered production-ready client solutions on tight deadlines',
+    id: 'data-engineering',
+    name: 'Fault-Tolerant Data Engineering',
+    icon: Database,
+    tagline: 'Deduplication, atomic state stores, and crash-resilient streaming data pipelines.',
+    skills: [
+      {
+        name: 'State Checkpointing & Resumability',
+        level: 'Expert',
+        desc: 'Zero-data-loss state machines persisting byte offsets and processed entity IDs to survive unannounced power loss or process kill.',
+        tags: ['Atomic Checkpointing', 'Resumable State', 'Zero Duplication', 'Crash Proof'],
+      },
+      {
+        name: 'Acoustic & Hash Deduplication',
+        level: 'Expert',
+        desc: 'Dual-phase deduplication pipelines combining perceptual acoustic hashing (Chromaprint) with cryptographic byte hashes (SHA-256).',
+        tags: ['Chromaprint', 'PyTorch Audio', 'SHA-256', 'Collision Detection'],
+      },
+      {
+        name: 'Transactional State Stores (SQLite WAL)',
+        level: 'Advanced',
+        desc: 'Configuring SQLite in Write-Ahead Logging (WAL) mode for concurrent high-speed reads and thread-safe batch transaction writes.',
+        tags: ['SQLite WAL', 'PostgreSQL', 'ACID Transactions', 'Concurrency Locks'],
+      },
+      {
+        name: 'High-Volume ETL & Data Validation',
+        level: 'Production',
+        desc: 'Batch processing 100k+ vendor datasets with schema validation, malformed file quarantine, and structured CSV/Parquet reporting.',
+        tags: ['ETL Pipelines', 'Schema Validation', 'Batch Processing', 'Quarantine Logic'],
+      },
     ],
   },
   {
-    id: 4,
-    title: 'Founder & Lead Developer',
-    company: 'Zynex Studio',
-    location: 'Remote',
-    period: '2025 – Present',
-    type: 'Entrepreneurial',
-    responsibilities: [
-      'Transitioned from freelance development to formally launching Zynex Studio',
-      'Building custom web applications using modern React and Next.js stacks',
-      'Managing client relationships, technical scoping, and end-to-end delivery',
+    id: 'systems-infrastructure',
+    name: 'Systems, Linux & Infrastructure',
+    icon: Server,
+    tagline: 'Linux systemd services, embedded network tooling, and automated deployment pipelines.',
+    skills: [
+      {
+        name: 'Linux Systemd Daemons & Automation',
+        level: 'Advanced',
+        desc: 'Authoring systemd unit files, background process supervisors, log rotation, and automated service recovery on failure.',
+        tags: ['Systemd Units', 'Linux Daemons', 'Journalctl', 'Bash Automation'],
+      },
+      {
+        name: 'Enterprise Rsync & Network Storage',
+        level: 'Expert',
+        desc: 'Packaging embedded portable rsync/OpenSSH runtimes, configuring NAS/SAN network mounts, and differential delta replication.',
+        tags: ['Rsync Core', 'OpenSSH Keys', 'NAS / SAN', 'Delta Compression'],
+      },
+      {
+        name: 'Containerization & CI/CD Pipelines',
+        level: 'Proficient',
+        desc: 'Docker container packaging for isolated worker execution and GitHub Actions workflows for automated linting and build validation.',
+        tags: ['Docker', 'GitHub Actions', 'CI/CD Automation', 'Environment Isolation'],
+      },
+      {
+        name: 'Modern Web Engineering',
+        level: 'Advanced',
+        desc: 'Building responsive, high-performance interfaces with React 18, TypeScript, Tailwind CSS, Three.js / WebGL, and Framer Motion.',
+        tags: ['React 18', 'TypeScript', 'Three.js / WebGL', 'Framer Motion', 'Tailwind CSS'],
+      },
     ],
   },
 ];
 
+const CAREER_TIMELINE = [
+  {
+    role: 'Associate AI Engineer',
+    company: 'InfoBay AI Limited',
+    location: 'Lucknow, India (On-site)',
+    period: 'Oct 2026 – Present',
+    status: 'ACTIVE ROLE',
+    highlights: [
+      'Architecting and scaling automated evaluation harnesses for Large Language Models & Vision-Language Models.',
+      'Developing distributed multi-agent swarm pipelines for complex reasoning, benchmark verification, and rubric scoring.',
+      'Engineering fault-tolerant Python multiprocessing pipelines handling 100,000+ data samples with zero data corruption.',
+      'Enforcing strict Pydantic v2 schema constraints and database-backed transactional integrity across AI output streams.',
+      'Leading engineering documentation, automated testing standards, and failure-resilient process recovery architecture.',
+    ],
+    tech: ['Python 3.12', 'Multiprocessing', 'LangGraph', 'VLMs', 'Pydantic v2', 'SQLite WAL', 'Docker'],
+  },
+  {
+    role: 'Vibe Coder / AI Systems Developer',
+    company: 'InfoBay AI Limited',
+    location: 'Lucknow, India (On-site)',
+    period: 'Feb 2026 – Oct 2026',
+    status: 'COMPLETED',
+    highlights: [
+      'Accelerated feature development using cutting-edge AI coding agents and LLM-assisted programming paradigms.',
+      'Engineered automated validation scripts and rapid prototyping workflows for core data engineering initiatives.',
+      'Assisted in model testing, benchmark dataset generation, and verification pipeline implementation.',
+    ],
+    tech: ['Python', 'AI-Assisted Dev', 'Prompt Engineering', 'Rapid Prototyping', 'Git'],
+  },
+  {
+    role: 'Lead Systems Developer & Open-Source Author',
+    company: 'Independent Systems Research',
+    location: 'Remote',
+    period: '2025 – Present',
+    status: 'CONTINUOUS',
+    highlights: [
+      'Authored T2NAS, a CPU-aware resumable parallel transfer engine for 10Gbps NAS network environments.',
+      'Developed Audio Internal & External Duplicacy Checker combining acoustic fingerprinting with atomic checkpointing.',
+      'Constructed Enterprise Rsync Transfer Platform with embedded runtimes and subprocess telemetry extraction.',
+    ],
+    tech: ['Python', 'Multiprocessing', 'Acoustic Fingerprinting', 'Rsync', 'OpenSSH', 'State Machines'],
+  },
+];
+
 const Experience = () => {
+  const [activeCategory, setActiveCategory] = useState<string>(SKILL_CATEGORIES[0].id);
+  const selectedCategory =
+    SKILL_CATEGORIES.find((c) => c.id === activeCategory) || SKILL_CATEGORIES[0];
+
   const experienceMonths = useMemo(() => {
     const start = new Date(2025, 5); // Jun 2025
     const now = new Date();
     return Math.max(1, (now.getFullYear() - start.getFullYear()) * 12 + (now.getMonth() - start.getMonth()));
   }, []);
 
-  const experienceLabel = experienceMonths >= 12
-    ? `${Math.floor(experienceMonths / 12)}+ Yr${Math.floor(experienceMonths / 12) > 1 ? 's' : ''}`
-    : `${experienceMonths}+`;
-
   return (
     <Layout>
-      {/* Hero */}
-      <section className="pt-32 pb-16">
-        <div className="container mx-auto px-6">
-          <AnimatedSection>
-            <p className="text-primary text-sm font-medium tracking-wider uppercase mb-4">
-              Experience
-            </p>
-            <h1 className="text-display-lg font-display font-bold mb-6">
-              Professional <span className="text-gradient">Journey</span>
-            </h1>
-            <p className="text-xl text-muted-foreground max-w-2xl">
-              From building client projects to founding my own studio—here's 
-              where I've been and what I've accomplished.
-            </p>
-          </AnimatedSection>
+      {/* ==================== HERO SECTION ==================== */}
+      <section className="mb-16">
+        <div className="flex items-center gap-2 text-cyan-400 font-mono text-[10px] tracking-[0.3em] uppercase mb-3">
+          <span className="w-2 h-2 rounded-full bg-cyan-400 shadow-[0_0_8px_#00f0ff]" />
+          <span>PORTAL // 02 // TECHNICAL MASTERY & CAREER PROVENANCE</span>
+        </div>
+
+        <h1 className="text-4xl sm:text-6xl font-display font-black uppercase tracking-tight text-white mb-6">
+          <ScrambleText text="SKILLS & EXPERIENCE" />
+        </h1>
+
+        <p className="text-sm sm:text-base font-mono text-white/70 max-w-3xl leading-relaxed mb-8">
+          Associate AI Engineer at InfoBay AI Limited. Specialising in high-concurrency Python systems, autonomous multi-agent evaluation suites, and fault-tolerant data pipelines.
+        </p>
+
+        {/* Dynamic Telemetry Stats */}
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+          <div className="p-4 rounded-2xl border border-white/10 bg-white/[0.02] backdrop-blur-md">
+            <div className="text-[10px] font-mono text-white/40 tracking-[0.2em] mb-1">CAREER TIMELINE</div>
+            <div className="text-xl sm:text-2xl font-mono font-bold text-cyan-300">
+              {experienceMonths}+ MONTHS
+            </div>
+          </div>
+          <div className="p-4 rounded-2xl border border-white/10 bg-white/[0.02] backdrop-blur-md">
+            <div className="text-[10px] font-mono text-white/40 tracking-[0.2em] mb-1">CORE ROLE</div>
+            <div className="text-xl sm:text-2xl font-mono font-bold text-emerald-400">
+              AI ENGINEER
+            </div>
+          </div>
+          <div className="p-4 rounded-2xl border border-white/10 bg-white/[0.02] backdrop-blur-md">
+            <div className="text-[10px] font-mono text-white/40 tracking-[0.2em] mb-1">LOCATION</div>
+            <div className="text-xl sm:text-2xl font-mono font-bold text-fuchsia-300">
+              LUCKNOW, IN
+            </div>
+          </div>
+          <div className="p-4 rounded-2xl border border-white/10 bg-white/[0.02] backdrop-blur-md">
+            <div className="text-[10px] font-mono text-white/40 tracking-[0.2em] mb-1">SYSTEMS VERIFIED</div>
+            <div className="text-xl sm:text-2xl font-mono font-bold text-cyan-300">
+              ZERO FAILURE
+            </div>
+          </div>
         </div>
       </section>
 
-      {/* Timeline */}
-      <section className="pb-24">
-        <div className="container mx-auto px-6">
-          <div className="relative">
-            {/* Timeline line */}
-            <div className="absolute left-0 md:left-1/2 top-0 bottom-0 w-px bg-border md:-translate-x-1/2" />
+      {/* ==================== COMPREHENSIVE SKILLS MATRIX ==================== */}
+      <section className="mb-20">
+        <div className="flex flex-wrap items-center justify-between gap-4 mb-6">
+          <div>
+            <div className="text-[10px] font-mono tracking-[0.25em] text-cyan-400 uppercase">
+              CAPABILITY MATRIX // 4 TECHNICAL DOMAINS
+            </div>
+            <h2 className="text-2xl sm:text-4xl font-display font-black uppercase text-white">
+              DEEP TECHNICAL SKILLS
+            </h2>
+          </div>
+          <div className="text-xs font-mono text-white/40">
+            CLICK DOMAIN TO INSPECT IMPLEMENTATION
+          </div>
+        </div>
 
-            {experiences.map((exp, index) => (
-              <AnimatedSection
-                key={exp.id}
-                direction={index % 2 === 0 ? 'left' : 'right'}
-                delay={index * 0.2}
+        {/* Domain Navigation Tabs */}
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-8">
+          {SKILL_CATEGORIES.map((cat) => {
+            const isSelected = cat.id === activeCategory;
+            const Icon = cat.icon;
+            return (
+              <button
+                key={cat.id}
+                onClick={() => {
+                  soundEngine.playClick(750);
+                  setActiveCategory(cat.id);
+                }}
+                onMouseEnter={() => soundEngine.playHover()}
+                className={`p-4 rounded-2xl border text-left transition-all cursor-pointer ${
+                  isSelected
+                    ? 'border-cyan-400/60 bg-cyan-400/10 text-white shadow-[0_0_25px_rgba(0,240,255,0.2)]'
+                    : 'border-white/10 bg-white/[0.02] text-white/60 hover:text-white hover:border-white/25'
+                }`}
               >
+                <div className="flex items-center gap-2 mb-2">
+                  <Icon size={16} className={isSelected ? 'text-cyan-400' : 'text-white/40'} />
+                  <span className="text-[10px] font-mono tracking-widest font-bold">
+                    {isSelected ? 'ACTIVE' : 'INSPECT'}
+                  </span>
+                </div>
+                <div className="font-mono text-xs sm:text-sm font-bold text-white mb-1">
+                  {cat.name}
+                </div>
+              </button>
+            );
+          })}
+        </div>
+
+        {/* Selected Domain Skills Grid */}
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={selectedCategory.id}
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -12 }}
+            transition={{ duration: 0.25 }}
+            className="p-6 sm:p-8 rounded-3xl border border-white/15 bg-[#05060d]/85 backdrop-blur-xl space-y-6"
+          >
+            <div className="border-b border-white/10 pb-4">
+              <div className="flex items-center gap-2 text-cyan-400 font-mono text-xs font-bold uppercase mb-1">
+                <span>{selectedCategory.name}</span>
+              </div>
+              <p className="text-xs sm:text-sm font-mono text-white/70">
+                {selectedCategory.tagline}
+              </p>
+            </div>
+
+            <div className="grid md:grid-cols-2 gap-4">
+              {selectedCategory.skills.map((skill) => (
                 <div
-                  className={`relative grid md:grid-cols-2 gap-8 mb-16 ${
-                    index % 2 === 1 ? 'md:flex-row-reverse' : ''
-                  }`}
+                  key={skill.name}
+                  className="p-5 rounded-2xl border border-white/10 bg-black/40 hover:border-cyan-400/30 transition-colors space-y-3"
                 >
-                  {/* Timeline dot */}
-                  <motion.div
-                    className="absolute left-0 md:left-1/2 w-4 h-4 rounded-full bg-primary border-4 border-background md:-translate-x-1/2 z-10"
-                    initial={{ scale: 0 }}
-                    whileInView={{ scale: 1 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.5, delay: 0.3 }}
-                  />
-
-                  {/* Content card */}
-                  <div
-                    className={`ml-8 md:ml-0 ${
-                      index % 2 === 0
-                        ? 'md:pr-16 md:text-right'
-                        : 'md:col-start-2 md:pl-16'
-                    }`}
-                  >
-                    <div
-                      className={`p-8 rounded-2xl glass border-glow hover-glow ${
-                        index % 2 === 0 ? 'md:ml-auto' : ''
-                      }`}
-                    >
-                      {/* Badge */}
-                      <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-medium mb-4">
-                        {exp.type === 'Professional' ? (
-                          <Briefcase size={12} />
-                        ) : (
-                          <Rocket size={12} />
-                        )}
-                        {exp.type}
-                      </span>
-
-                      {/* Title */}
-                      <h3 className="text-xl font-display font-bold text-foreground mb-2">
-                        {exp.title}
-                      </h3>
-
-                      {/* Company */}
-                      <div className="flex items-center gap-2 text-primary font-medium mb-4 flex-wrap">
-                        <Building2 size={16} />
-                        {exp.company}
-                      </div>
-
-                      {/* Meta */}
-                      <div
-                        className={`flex flex-wrap gap-4 text-sm text-muted-foreground mb-6 ${
-                          index % 2 === 0 ? 'md:justify-end' : ''
-                        }`}
-                      >
-                        <span className="flex items-center gap-1.5">
-                          <Calendar size={14} />
-                          {exp.period}
-                        </span>
-                        <span className="flex items-center gap-1.5">
-                          <MapPin size={14} />
-                          {exp.location}
-                        </span>
-                      </div>
-
-                      {/* Responsibilities */}
-                      <ul
-                        className={`space-y-3 ${
-                          index % 2 === 0 ? 'md:text-left' : ''
-                        }`}
-                      >
-                        {exp.responsibilities.map((resp, i) => (
-                          <motion.li
-                            key={i}
-                            className="flex items-start gap-3 text-sm text-muted-foreground"
-                            initial={{ opacity: 0, x: index % 2 === 0 ? 20 : -20 }}
-                            whileInView={{ opacity: 1, x: 0 }}
-                            viewport={{ once: true }}
-                            transition={{ duration: 0.5, delay: 0.4 + i * 0.1 }}
-                          >
-                            <span className="w-1.5 h-1.5 rounded-full bg-primary mt-2 flex-shrink-0" />
-                            {resp}
-                          </motion.li>
-                        ))}
-                      </ul>
-                    </div>
+                  <div className="flex items-center justify-between gap-2">
+                    <h4 className="font-mono text-sm font-bold text-white flex items-center gap-2">
+                      <span className="w-1.5 h-1.5 rounded-full bg-cyan-400" />
+                      {skill.name}
+                    </h4>
+                    <span className="px-2 py-0.5 rounded-md border border-cyan-400/30 bg-cyan-400/10 text-[9px] font-mono text-cyan-300 uppercase">
+                      {skill.level}
+                    </span>
                   </div>
 
-                  {/* Empty column for layout */}
-                  <div
-                    className={`hidden md:block ${
-                      index % 2 === 0 ? 'md:col-start-2' : ''
-                    }`}
-                  />
-                </div>
-              </AnimatedSection>
-            ))}
+                  <p className="text-xs font-mono text-white/70 leading-relaxed">
+                    {skill.desc}
+                  </p>
 
-            {/* Timeline end */}
-            <motion.div
-              className="absolute left-0 md:left-1/2 bottom-0 w-4 h-4 rounded-full bg-muted border-4 border-background md:-translate-x-1/2"
-              initial={{ scale: 0 }}
-              whileInView={{ scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.5 }}
-            />
-          </div>
-        </div>
+                  <div className="flex flex-wrap gap-1.5 pt-1">
+                    {skill.tags.map((tag) => (
+                      <span
+                        key={tag}
+                        className="px-2 py-0.5 rounded-full bg-white/[0.04] border border-white/[0.08] text-[9px] font-mono text-white/60"
+                      >
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </motion.div>
+        </AnimatePresence>
       </section>
 
-      {/* Summary Stats */}
-      <section className="py-24 border-t border-border/50">
-        <div className="container mx-auto px-6">
-          <div className="grid md:grid-cols-3 gap-8 text-center">
-            <AnimatedSection delay={0}>
-              <div className="p-8 rounded-2xl glass">
-                <div className="text-display-md font-display font-bold text-primary mb-2">
-                  {experienceLabel}
+      {/* ==================== CAREER PROVENANCE & TIMELINE ==================== */}
+      <section className="mb-20 pt-8 border-t border-white/10">
+        <div className="text-[10px] font-mono tracking-[0.25em] text-fuchsia-400 uppercase mb-2">
+          CHRONOLOGY // PROFESSIONAL ROLES
+        </div>
+        <h2 className="text-3xl sm:text-5xl font-display font-black uppercase text-white mb-6">
+          <ScrambleText text="CAREER PROVENANCE" />
+        </h2>
+        <p className="text-xs sm:text-sm font-mono text-white/60 max-w-2xl leading-relaxed mb-10">
+          Professional trajectory from systems experimentation to Associate AI Engineer leading model evaluation and high-concurrency infrastructure.
+        </p>
+
+        <div className="space-y-6">
+          {CAREER_TIMELINE.map((item, idx) => (
+            <div
+              key={idx}
+              className={`p-6 sm:p-8 rounded-3xl border backdrop-blur-xl relative transition-all ${
+                item.status === 'ACTIVE ROLE'
+                  ? 'border-cyan-400/40 bg-[#05060e]/90 shadow-[0_0_30px_rgba(0,240,255,0.1)]'
+                  : 'border-white/10 bg-[#030409]/70'
+              }`}
+            >
+              <div className="flex flex-wrap items-center justify-between gap-4 mb-4">
+                <div className="flex items-center gap-3">
+                  <span
+                    className={`w-2 h-2 rounded-full ${
+                      item.status === 'ACTIVE ROLE' ? 'bg-emerald-400 animate-pulse' : 'bg-white/40'
+                    }`}
+                  />
+                  <h3 className="text-xl sm:text-2xl font-display font-black uppercase text-white">
+                    {item.role}
+                  </h3>
                 </div>
-                <div className="text-muted-foreground">Months Experience</div>
-              </div>
-            </AnimatedSection>
-            <AnimatedSection delay={0.1}>
-              <div className="p-8 rounded-2xl glass">
-                <div className="text-display-md font-display font-bold text-primary mb-2">
-                  10+
+                <div className="flex items-center gap-2">
+                  <span className="px-3 py-1 rounded-full border border-white/10 bg-white/[0.03] text-[10px] font-mono text-white/70">
+                    <Calendar size={11} className="inline mr-1" />
+                    {item.period}
+                  </span>
+                  <span
+                    className={`px-3 py-1 rounded-full text-[10px] font-mono font-bold tracking-wider ${
+                      item.status === 'ACTIVE ROLE'
+                        ? 'bg-emerald-400/10 border border-emerald-400/30 text-emerald-300'
+                        : 'bg-white/5 border border-white/10 text-white/50'
+                    }`}
+                  >
+                    {item.status}
+                  </span>
                 </div>
-                <div className="text-muted-foreground">Projects Completed</div>
               </div>
-            </AnimatedSection>
-            <AnimatedSection delay={0.2}>
-              <div className="p-8 rounded-2xl glass">
-                <div className="text-display-md font-display font-bold text-primary mb-2">
-                  5+
-                </div>
-                <div className="text-muted-foreground">Happy Clients</div>
+
+              <div className="flex items-center gap-4 text-xs font-mono text-cyan-400 mb-6">
+                <span className="flex items-center gap-1.5">
+                  <Building2 size={13} />
+                  {item.company}
+                </span>
+                <span>&middot;</span>
+                <span className="flex items-center gap-1.5 text-white/50">
+                  <MapPin size={13} />
+                  {item.location}
+                </span>
               </div>
-            </AnimatedSection>
-          </div>
+
+              <ul className="space-y-2.5 mb-6">
+                {item.highlights.map((h, hIdx) => (
+                  <li key={hIdx} className="flex items-start gap-2.5 text-xs font-mono text-white/80 leading-relaxed">
+                    <CheckCircle2 size={13} className="text-cyan-400 flex-shrink-0 mt-0.5" />
+                    <span>{h}</span>
+                  </li>
+                ))}
+              </ul>
+
+              <div className="flex flex-wrap gap-2 pt-4 border-t border-white/[0.08]">
+                {item.tech.map((t) => (
+                  <span
+                    key={t}
+                    className="px-2.5 py-1 rounded-full border border-white/10 bg-black/40 text-[10px] font-mono text-white/70"
+                  >
+                    {t}
+                  </span>
+                ))}
+              </div>
+            </div>
+          ))}
         </div>
       </section>
     </Layout>
