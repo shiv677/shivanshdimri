@@ -517,4 +517,150 @@ async def extract_qa_candidates(session: aiohttp.ClientSession, url: str) -> Lis
     except (aiohttp.ClientError, asyncio.TimeoutError):
         return []`,
   },
+  {
+    id: 'vlm-grounding-evaluator',
+    index: '07',
+    code: '07',
+    zoneIndex: 4,
+    title: 'VLM Spatial Grounding & IoU Evaluator',
+    shortTitle: 'VLM.GROUNDING',
+    category: 'MULTIMODAL AI EVALUATION & SPATIAL LOCALIZATION',
+    accent: '#00f0ff',
+    status: 'PRODUCTION ACTIVE',
+    tagline: 'High-precision Vision-Language Model spatial grounding and IoU benchmarking.',
+    description:
+      'High-precision evaluation framework benchmarking Vision-Language Model spatial grounding predictions against ground-truth bounding box coordinates with Pydantic v2 schema constraints and normalized IoU matrices.',
+    problem:
+      'Evaluating multimodal Vision-Language Models on spatial document understanding and chart visual reasoning suffered from loose, unconstrained coordinates, zero-division bounding box bugs, and inconsistent evaluation rubrics.',
+    solution:
+      'Engineered a deterministic evaluation engine that strictly validates coordinate boundaries with Pydantic v2 invariants, computes exact 2D Intersection-over-Union (IoU) overlap metrics, and scores categorical classification matches alongside spatial localization.',
+    github: 'https://github.com/shiv677/vlm-grounding-evaluator',
+    pipeline: [
+      { step: '01', name: 'COORDINATE INGEST', spec: 'Normalized [ymin, xmin, ymax, xmax] parser' },
+      { step: '02', name: 'PYDANTIC V2 GUARD', spec: 'Strict boundary invariant verification' },
+      { step: '03', name: 'SPATIAL IOU', spec: 'Exact 2D intersection-over-union matrix' },
+      { step: '04', name: 'LABEL PARITY', spec: 'Categorical confidence alignment score' },
+      { step: '05', name: 'RUBRIC EXPORT', spec: 'Normalized evaluation rubric JSON' },
+    ],
+    telemetry: [
+      { label: 'COORDINATE LOCK', value: 'STRICT', sub: 'Pydantic v2 invariants' },
+      { label: 'IOU PRECISION', value: 'EXACT 2D', sub: 'Zero-division protection' },
+      { label: 'EVALUATION', value: 'MULTIMODAL', sub: 'Spatial + label alignment' },
+      { label: 'FAULT RECOVERY', value: 'ISOLATED', sub: 'Per-sample exception catch' },
+    ],
+    metrics: [
+      { label: 'Schema Enforcement', value: 'Strict Pydantic v2' },
+      { label: 'Spatial Metric', value: 'Exact 2D IoU' },
+      { label: 'Execution', value: 'Batch & Single Sample' },
+      { label: 'Localization Score', value: 'Normalized Rubric' },
+    ],
+    technologies: [
+      'Python 3.12',
+      'Pydantic v2',
+      'Vision-Language Models',
+      'Spatial IoU',
+      'BoundingBox2D',
+      'Pytest',
+    ],
+    stack: ['Python 3.12', 'Pydantic v2', 'VLM Spatial Grounding', 'IoU Metrics'],
+    architecturePoints: [
+      'Strict coordinate boundary validators ensuring ymin < ymax and xmin < xmax with normalized [0, 1] scaling',
+      'Exact 2D intersection-over-union calculation with epsilon guards against zero-area predictions',
+      'Compound rubric calculation weighting spatial localization (0.7) and categorical identification (0.3)',
+      'High-throughput batch CLI accepting JSON evaluation datasets and generating summarized accuracy reports',
+    ],
+    codeSnippet: `from pydantic import BaseModel, model_validator
+
+class BoundingBox2D(BaseModel):
+    ymin: float
+    xmin: float
+    ymax: float
+    xmax: float
+
+    @model_validator(mode="after")
+    def validate_bounds(self) -> "BoundingBox2D":
+        if self.ymin >= self.ymax or self.xmin >= self.xmax:
+            raise ValueError(f"Degenerate box: ymin={self.ymin} >= ymax={self.ymax}")
+        return self
+
+def calculate_iou(b1: BoundingBox2D, b2: BoundingBox2D) -> float:
+    inter_y1 = max(b1.ymin, b2.ymin)
+    inter_x1 = max(b1.xmin, b2.xmin)
+    inter_y2 = min(b1.ymax, b2.ymax)
+    inter_x2 = min(b1.xmax, b2.xmax)
+    inter_area = max(0.0, inter_y2 - inter_y1) * max(0.0, inter_x2 - inter_x1)
+    union_area = (b1.ymax - b1.ymin) * (b1.xmax - b1.xmin) + (b2.ymax - b2.ymin) * (b2.xmax - b2.xmin) - inter_area
+    return inter_area / union_area if union_area > 0 else 0.0`,
+  },
+  {
+    id: 'wal-checkpoint-streamer',
+    index: '08',
+    code: '08',
+    zoneIndex: 2,
+    title: 'High-Throughput SQLite WAL Checkpoint Streamer',
+    shortTitle: 'WAL.STREAMER',
+    category: 'DISTRIBUTED DATA ENGINEERING // CRASH RESILIENCE',
+    accent: '#00ffaa',
+    status: 'PRODUCTION ACTIVE',
+    tagline: 'Hardware-aware concurrency pool with SQLite WAL crash-recovery journaling.',
+    description:
+      'High-concurrency data streaming worker pool built for crash resilience. Implements SQLite Write-Ahead Logging (WAL) for atomic transaction commits, dynamic CPU-1 worker scaling, and bounded 4MB chunk streaming with an O(1) resident memory ceiling.',
+    problem:
+      'High-volume batch pipelines processing enterprise data suffered from memory bloat (OOM crashes) on large payloads and lost uncommitted progress when host machines restarted or killed processes.',
+    solution:
+      'Engineered a crash-proof streaming worker pool utilizing SQLite WAL mode for atomic offset commits. Interrupted pipelines resume instantaneously from the exact last committed offset with zero duplicated processing and constant memory consumption.',
+    github: 'https://github.com/shiv677/wal-checkpoint-streamer',
+    pipeline: [
+      { step: '01', name: 'MANIFEST INGEST', spec: 'Batch file partition indexing' },
+      { step: '02', name: 'WAL DB INIT', spec: 'PRAGMA journal_mode=WAL' },
+      { step: '03', name: 'CORE SCALING', spec: 'max(1, cpu_count() - 1) process pool' },
+      { step: '04', name: 'BOUNDED STREAM', spec: '4MB chunk streaming with O(1) RAM' },
+      { step: '05', name: 'ATOMIC CHECKPOINT', spec: 'Zero-loss state journal commit' },
+    ],
+    telemetry: [
+      { label: 'JOURNAL MODE', value: 'SQLITE WAL', sub: 'Non-blocking concurrent writes' },
+      { label: 'WORKER POOL', value: 'CPU - 1', sub: 'Hardware-aware scaling' },
+      { label: 'MEMORY FOOTPRINT', value: 'O(1)', sub: 'Bounded 4MB chunk buffers' },
+      { label: 'FAULT RECOVERY', value: 'ATOMIC', sub: 'Zero duplicate processing' },
+    ],
+    metrics: [
+      { label: 'Persistence Architecture', value: 'SQLite WAL Mode' },
+      { label: 'Worker Allocation', value: 'max(1, CPU - 1)' },
+      { label: 'Memory Ceiling', value: 'Bounded O(1) Buffer' },
+      { label: 'Crash Resilience', value: 'Zero-Loss Resume' },
+    ],
+    technologies: [
+      'Python 3.12',
+      'SQLite WAL Mode',
+      'Multiprocessing',
+      'Chunked Streaming',
+      'Crash Recovery',
+      'Signal Handling',
+    ],
+    stack: ['Python 3.12', 'SQLite WAL', 'Multiprocessing', 'Streaming I/O'],
+    architecturePoints: [
+      'SQLite WAL journaling enabling non-blocking concurrent readers alongside continuous writer commits',
+      'Automated SIGINT/SIGTERM handlers persisting processed batch offsets before process termination',
+      'Bounded 4MB chunk streaming ensuring strict O(1) resident memory regardless of gigabyte-scale datasets',
+      'Instantaneous checkpoint resume querying committed offsets to bypass already-processed items',
+    ],
+    codeSnippet: `import sqlite3
+import os
+from multiprocessing import Pool, cpu_count
+
+def init_wal_checkpoint_db(db_path: str) -> sqlite3.Connection:
+    """Enables Write-Ahead Logging for high-throughput crash resilience."""
+    conn = sqlite3.connect(db_path, timeout=30.0)
+    conn.execute("PRAGMA journal_mode=WAL;")
+    conn.execute("PRAGMA synchronous=NORMAL;")
+    conn.execute("""
+        CREATE TABLE IF NOT EXISTS checkpoints (
+            item_id TEXT PRIMARY KEY,
+            status TEXT NOT NULL,
+            checksum TEXT,
+            updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        );
+    """)
+    return conn`,
+  },
 ];

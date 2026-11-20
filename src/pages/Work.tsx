@@ -80,7 +80,7 @@ const Work = () => {
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
           <div className="p-4 rounded-2xl border border-white/10 bg-white/[0.02] backdrop-blur-md">
             <div className="text-[10px] font-mono text-white/40 tracking-[0.2em] mb-1">TOTAL ARCHITECTURES</div>
-            <div className="text-xl sm:text-2xl font-mono font-bold text-cyan-300">6 PRODUCTION</div>
+            <div className="text-xl sm:text-2xl font-mono font-bold text-cyan-300">{SYSTEMS.length} PRODUCTION</div>
           </div>
           <div className="p-4 rounded-2xl border border-white/10 bg-white/[0.02] backdrop-blur-md">
             <div className="text-[10px] font-mono text-white/40 tracking-[0.2em] mb-1">DATA INTEGRITY</div>
@@ -91,8 +91,8 @@ const Work = () => {
             <div className="text-xl sm:text-2xl font-mono font-bold text-fuchsia-300">CORE-AWARE</div>
           </div>
           <div className="p-4 rounded-2xl border border-white/10 bg-white/[0.02] backdrop-blur-md">
-            <div className="text-[10px] font-mono text-white/40 tracking-[0.2em] mb-1">AI BENCHMARK VOLUME</div>
-            <div className="text-xl sm:text-2xl font-mono font-bold text-cyan-300">50K+ / DAY</div>
+            <div className="text-[10px] font-mono text-white/40 tracking-[0.2em] mb-1">EVALUATION SCALE</div>
+            <div className="text-xl sm:text-2xl font-mono font-bold text-cyan-300">ASYNC SWARMS</div>
           </div>
         </div>
       </section>

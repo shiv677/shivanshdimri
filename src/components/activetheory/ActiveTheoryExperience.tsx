@@ -251,6 +251,83 @@ const FLAGSHIP_SYSTEMS: FlagshipSystem[] = [
     stack: ['Python 3.12', 'AsyncIO', 'Playwright', 'BeautifulSoup4', 'SQLite WAL'],
     github: 'https://github.com/shiv677',
   },
+  {
+    index: '07',
+    zoneIndex: 4,
+    id: 'vlm-grounding-evaluator',
+    title: 'VLM SPATIAL GROUNDING & IOU EVALUATOR',
+    shortTitle: 'VLM.GROUNDING',
+    category: 'MULTIMODAL AI EVALUATION & SPATIAL LOCALIZATION',
+    accent: '#00f0ff',
+    tagline: 'High-precision Vision-Language Model spatial grounding and IoU benchmarking.',
+    description:
+      'High-precision evaluation framework benchmarking Vision-Language Model spatial grounding predictions against ground-truth bounding box coordinates with Pydantic v2 schema constraints and normalized IoU matrices.',
+    pipeline: [
+      { step: '01', name: 'COORDINATE INGEST', spec: 'Normalized [ymin, xmin, ymax, xmax] parser' },
+      { step: '02', name: 'PYDANTIC V2 GUARD', spec: 'Strict boundary invariant verification' },
+      { step: '03', name: 'SPATIAL IOU', spec: 'Exact 2D intersection-over-union matrix' },
+      { step: '04', name: 'LABEL PARITY', spec: 'Categorical confidence alignment score' },
+      { step: '05', name: 'RUBRIC EXPORT', spec: 'Normalized evaluation rubric JSON' },
+    ],
+    telemetry: [
+      { label: 'COORDINATE LOCK', value: 'STRICT', sub: 'Pydantic v2 invariants' },
+      { label: 'IOU PRECISION', value: 'EXACT 2D', sub: 'Zero-division protection' },
+      { label: 'EVALUATION', value: 'MULTIMODAL', sub: 'Spatial + label alignment' },
+      { label: 'FAULT RECOVERY', value: 'ISOLATED', sub: 'Per-sample exception catch' },
+    ],
+    code: `def calculate_iou(b1: BoundingBox2D, b2: BoundingBox2D) -> float:
+    """Exact 2D intersection-over-union with zero-area division guards."""
+    inter_y1 = max(b1.ymin, b2.ymin)
+    inter_x1 = max(b1.xmin, b2.xmin)
+    inter_y2 = min(b1.ymax, b2.ymax)
+    inter_x2 = min(b1.xmax, b2.xmax)
+    inter_area = max(0.0, inter_y2 - inter_y1) * max(0.0, inter_x2 - inter_x1)
+    union_area = (b1.ymax - b1.ymin) * (b1.xmax - b1.xmin) + (b2.ymax - b2.ymin) * (b2.xmax - b2.xmin) - inter_area
+    return inter_area / union_area if union_area > 0 else 0.0`,
+    stack: ['Python 3.12', 'Pydantic v2', 'VLM Spatial Grounding', 'IoU Metrics'],
+    github: 'https://github.com/shiv677/vlm-grounding-evaluator',
+  },
+  {
+    index: '08',
+    zoneIndex: 2,
+    id: 'wal-checkpoint-streamer',
+    title: 'HIGH-THROUGHPUT SQLITE WAL CHECKPOINT STREAMER',
+    shortTitle: 'WAL.STREAMER',
+    category: 'DISTRIBUTED DATA ENGINEERING // CRASH RESILIENCE',
+    accent: '#00ffaa',
+    tagline: 'Hardware-aware concurrency pool with SQLite WAL crash-recovery journaling.',
+    description:
+      'High-concurrency data streaming worker pool built for crash resilience. Implements SQLite Write-Ahead Logging (WAL) for atomic transaction commits, dynamic CPU-1 worker scaling, and bounded 4MB chunk streaming with an O(1) resident memory ceiling.',
+    pipeline: [
+      { step: '01', name: 'MANIFEST INGEST', spec: 'Batch file partition indexing' },
+      { step: '02', name: 'WAL DB INIT', spec: 'PRAGMA journal_mode=WAL' },
+      { step: '03', name: 'CORE SCALING', spec: 'max(1, cpu_count() - 1) process pool' },
+      { step: '04', name: 'BOUNDED STREAM', spec: '4MB chunk streaming with O(1) RAM' },
+      { step: '05', name: 'ATOMIC CHECKPOINT', spec: 'Zero-loss state journal commit' },
+    ],
+    telemetry: [
+      { label: 'JOURNAL MODE', value: 'SQLITE WAL', sub: 'Non-blocking concurrent writes' },
+      { label: 'WORKER POOL', value: 'CPU - 1', sub: 'Hardware-aware scaling' },
+      { label: 'MEMORY FOOTPRINT', value: 'O(1)', sub: 'Bounded 4MB chunk buffers' },
+      { label: 'FAULT RECOVERY', value: 'ATOMIC', sub: 'Zero duplicate processing' },
+    ],
+    code: `def init_wal_checkpoint_db(db_path: str) -> sqlite3.Connection:
+    """Enables Write-Ahead Logging for high-throughput crash resilience."""
+    conn = sqlite3.connect(db_path, timeout=30.0)
+    conn.execute("PRAGMA journal_mode=WAL;")
+    conn.execute("PRAGMA synchronous=NORMAL;")
+    conn.execute("""
+        CREATE TABLE IF NOT EXISTS checkpoints (
+            item_id TEXT PRIMARY KEY,
+            status TEXT NOT NULL,
+            checksum TEXT,
+            updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        );
+    """)
+    return conn`,
+    stack: ['Python 3.12', 'SQLite WAL', 'Multiprocessing', 'Streaming I/O'],
+    github: 'https://github.com/shiv677/wal-checkpoint-streamer',
+  },
 ];
 
 const CAPABILITY_MATRIX = [
@@ -525,7 +602,7 @@ export const ActiveTheoryExperience: React.FC = () => {
               {/* Right Telemetry Panel */}
               <div className="pointer-events-auto grid grid-cols-2 gap-2.5 w-full lg:w-80">
                 {[
-                  { val: '6 CORE', label: 'FLAGSHIP ARCHITECTURES' },
+                  { val: '8 CORE', label: 'FLAGSHIP ARCHITECTURES' },
                   { val: 'PARITY', label: 'CHROMAPRINT + SHA-256' },
                   { val: 'CPU-1', label: 'WORKER SCALING' },
                   { val: 'INFOBAY', label: 'ASSOCIATE AI ENG' },
