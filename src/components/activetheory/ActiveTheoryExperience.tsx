@@ -18,6 +18,7 @@ import {
   X,
   ChevronRight,
   ChevronLeft,
+  RotateCcw,
 } from 'lucide-react';
 import ActiveTheoryCanvas, { ZONE_Z_POSITIONS } from './ActiveTheoryCanvas';
 import ActiveTheoryHUD, { ZONE_LABELS } from './ActiveTheoryHUD';
@@ -851,6 +852,17 @@ export const ActiveTheoryExperience: React.FC = () => {
                   <Download size={14} />
                   <span>CV.PDF</span>
                 </a>
+
+                <button
+                  onClick={() => {
+                    soundEngine.playClick(800);
+                    flyToZone(0);
+                  }}
+                  className="px-6 py-3.5 rounded-full border border-cyan-400/40 bg-cyan-400/10 hover:bg-cyan-400 hover:text-black font-mono text-xs tracking-[0.18em] uppercase text-cyan-300 flex items-center gap-2 cursor-pointer transition-all shadow-[0_0_20px_rgba(0,240,255,0.2)]"
+                >
+                  <RotateCcw size={14} />
+                  <span>RETURN TO GATEWAY [Z = 0m]</span>
+                </button>
               </div>
             </motion.div>
           )}

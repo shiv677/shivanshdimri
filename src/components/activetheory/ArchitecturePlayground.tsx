@@ -20,10 +20,157 @@ import {
   Scan,
   Eye,
   SlidersHorizontal,
+  ShieldCheck,
+  FileCheck,
+  FileX,
+  Filter,
 } from 'lucide-react';
 import { soundEngine } from './SoundEngine';
 
-type SimulatorTab = 't2nas' | 'audio-dedup' | 'multi-agent' | 'vlm-grounding';
+type SimulatorTab = 't2nas' | 'audio-dedup' | 'multi-agent' | 'vlm-grounding' | 'dataset-sentinel';
+
+interface SentinelRecord {
+  id: string;
+  rawText: string;
+  normalizedText: string;
+  status: 'CLEAN' | 'QUARANTINE';
+  step1Result: string;
+  step2Result: string;
+  step3Result: string;
+  reason?: string;
+  provenance: string;
+  sha256Prefix: string;
+  simhash: string;
+  hammingDistance?: number;
+  duplicateOf?: string;
+  anomalyType?: string;
+}
+
+const SENTINEL_RECORDS: SentinelRecord[] = [
+  {
+    id: 'doc_001',
+    rawText: 'High performance distributed stream processing architecture enables reliable AI telemetry ingestion, validation, and analytics across scalable edge cloud nodes and real-time inference clusters.',
+    normalizedText: 'High performance distributed stream processing architecture enables reliable AI telemetry ingestion, validation, and analytics across scalable edge cloud nodes and real-time inference clusters.',
+    status: 'CLEAN',
+    step1Result: 'Clean text (0 ligatures)',
+    step2Result: 'Unique Base (Hash: 7f8c2e...)',
+    step3Result: 'Zero corruption flags',
+    provenance: 'Primary canonical entry',
+    sha256Prefix: '7f8c2e64a1...',
+    simhash: '0x9e4a11b8',
+  },
+  {
+    id: 'doc_002',
+    rawText: 'High performance distributed stream processing architecture enables reliable AI telemetry ingestion, validation, and analytics across scalable edge cloud nodes and real-time inference clusters.',
+    normalizedText: 'High performance distributed stream processing architecture enables reliable AI telemetry ingestion, validation, and analytics across scalable edge cloud nodes and real-time inference clusters.',
+    status: 'QUARANTINE',
+    step1Result: 'Clean text',
+    step2Result: 'SHA-256 Collision (Exact Dup)',
+    step3Result: 'N/A (quarantined in Step 2)',
+    reason: 'EXACT_DUPLICATE_SHA256',
+    provenance: 'Matches doc_001 (100% byte identical)',
+    sha256Prefix: '7f8c2e64a1...',
+    simhash: '0x9e4a11b8',
+    duplicateOf: 'doc_001',
+    anomalyType: 'SHA-256 Collision',
+  },
+  {
+    id: 'doc_003',
+    rawText: 'High performance distributed stream processing architecture enables reliable AI telemetry ingestion, validation, and fast analytics across scalable edge cloud nodes and real-time inference clusters.',
+    normalizedText: 'High performance distributed stream processing architecture enables reliable AI telemetry ingestion, validation, and fast analytics across scalable edge cloud nodes and real-time inference clusters.',
+    status: 'QUARANTINE',
+    step1Result: 'Clean text',
+    step2Result: 'SimHash Hamming dist = 2 (<= 3)',
+    step3Result: 'N/A (quarantined in Step 2)',
+    reason: 'SIMHASH_NEAR_DUPLICATE',
+    provenance: 'Hamming distance: 2 <= 3 vs doc_001 ("...and fast analytics...")',
+    sha256Prefix: '3b9d0f11ac...',
+    simhash: '0x9e4a11ba',
+    hammingDistance: 2,
+    duplicateOf: 'doc_001',
+    anomalyType: 'SimHash Near-Dup (dist 2)',
+  },
+  {
+    id: 'doc_004',
+    rawText: 'The ﬂight oﬃce deployed ＡＩ systems for canonical multi-lingual dataset normalization.',
+    normalizedText: 'The flight office deployed AI systems for canonical multi-lingual dataset normalization.',
+    status: 'CLEAN',
+    step1Result: "NFKC resolved 'ﬂ'→'fl', 'ﬃ'→'ffi', 'ＡＩ'→'AI'",
+    step2Result: 'Unique fingerprint (SimHash: 0x4f12)',
+    step3Result: 'Zero corruption flags post-normalization',
+    provenance: "NFKC converted 'ﬂ', 'oﬃce', 'ＡＩ' to standard ASCII/Unicode",
+    sha256Prefix: 'b281f6cc90...',
+    simhash: '0x4f1288c1',
+  },
+  {
+    id: 'doc_005',
+    rawText: 'Corrupted telemetry payload with \\x00 null byte injection.',
+    normalizedText: 'Corrupted telemetry payload with \\x00 null byte injection.',
+    status: 'QUARANTINE',
+    step1Result: 'Preserved raw byte literal',
+    step2Result: 'Unique fingerprint',
+    step3Result: 'Null-byte \\x00 detected',
+    reason: 'CONTAINS_NULL_BYTES',
+    provenance: 'Literal / escaped \\x00 byte in buffer payload',
+    sha256Prefix: 'c819da4320...',
+    simhash: '0x12a9bc44',
+    anomalyType: 'Null-Byte Injection (\\x00)',
+  },
+  {
+    id: 'doc_006',
+    rawText: '   ',
+    normalizedText: '',
+    status: 'QUARANTINE',
+    step1Result: 'Trimmed to 0 characters',
+    step2Result: 'Bypassed (0 tokens)',
+    step3Result: 'Empty text / zero tokens',
+    reason: 'EMPTY_TEXT',
+    provenance: 'Payload length: 0 characters (whitespace-only payload)',
+    sha256Prefix: 'e3b0c44298...',
+    simhash: '0x00000000',
+    anomalyType: 'Zero-Length / Whitespace',
+  },
+  {
+    id: 'doc_007',
+    rawText: 'Runaway corrupted memory buffer dump with a_token_without_spaces_exceeding_eighty_characters_in_length_123456789012345678901234567890',
+    normalizedText: 'Runaway corrupted memory buffer dump with a_token_without_spaces_exceeding_eighty_characters_in_length_123456789012345678901234567890',
+    status: 'QUARANTINE',
+    step1Result: 'Unicode normalized',
+    step2Result: 'Unique fingerprint',
+    step3Result: 'Token length anomaly: 94 chars (>80 max)',
+    reason: 'TOKEN_LENGTH_ANOMALY',
+    provenance: 'Unspaced token exceeds max length limit (94 chars > 80 chars)',
+    sha256Prefix: '51ad98ef41...',
+    simhash: '0x88f1cc34',
+    anomalyType: 'Runaway Token (>80 chars)',
+  },
+  {
+    id: 'doc_008',
+    rawText: 'Data corruption artifact with â€™ mojibake characters.',
+    normalizedText: 'Data corruption artifact with â€™ mojibake characters.',
+    status: 'QUARANTINE',
+    step1Result: 'NFKC cannot resolve mis-decoded UTF-8 sequence',
+    step2Result: 'Unique fingerprint',
+    step3Result: "Mojibake regex pattern 'â€[™œ˜]' detected",
+    reason: 'MOJIBAKE_ENCODING_ARTIFACT',
+    provenance: "Mis-decoded UTF-8 sequence 'â€™' (Windows-1252 artifact)",
+    sha256Prefix: 'fa8201cd99...',
+    simhash: '0x3344cc90',
+    anomalyType: 'Mojibake Artifact (â€™)',
+  },
+  {
+    id: 'doc_009',
+    rawText: 'Vision-language models require rigorous spatial bounding box grounding across diverse evaluation benchmarks.',
+    normalizedText: 'Vision-language models require rigorous spatial bounding box grounding across diverse evaluation benchmarks.',
+    status: 'CLEAN',
+    step1Result: 'Clean text (0 ligatures)',
+    step2Result: 'Unique fingerprint (SimHash: 0xaa21)',
+    step3Result: 'Zero corruption flags',
+    provenance: 'Primary canonical entry',
+    sha256Prefix: '190cdbe473...',
+    simhash: '0xaa217590',
+  },
+];
 
 interface VlmDetection {
   id: string;
@@ -214,6 +361,9 @@ export const ArchitecturePlayground: React.FC = () => {
   const [confidenceThreshold, setConfidenceThreshold] = useState<number>(0.85);
   const [selectedBoxId, setSelectedBoxId] = useState<string>('bearing_b4');
   const [isScanningLaser, setIsScanningLaser] = useState<boolean>(false);
+  const [iouThreshold, setIouThreshold] = useState<number>(0.5);
+  const [predOffsetX, setPredOffsetX] = useState<number>(3);
+  const [predOffsetY, setPredOffsetY] = useState<number>(2);
 
   const handleTriggerVlmScan = () => {
     soundEngine.playClick(940);
@@ -230,6 +380,67 @@ export const ArchitecturePlayground: React.FC = () => {
     (d) => d.confidence >= confidenceThreshold
   );
 
+  // Exact 2D IoU calculation for Ground Truth vs Predicted Box
+  const gtX1 = selectedDetection.coords.x;
+  const gtY1 = selectedDetection.coords.y;
+  const gtX2 = selectedDetection.coords.x + selectedDetection.coords.w;
+  const gtY2 = selectedDetection.coords.y + selectedDetection.coords.h;
+  const gtArea = selectedDetection.coords.w * selectedDetection.coords.h;
+
+  const predX1 = gtX1 + predOffsetX;
+  const predY1 = gtY1 + predOffsetY;
+  const predX2 = gtX2 + predOffsetX;
+  const predY2 = gtY2 + predOffsetY;
+  const predArea = selectedDetection.coords.w * selectedDetection.coords.h;
+
+  const interX1 = Math.max(gtX1, predX1);
+  const interY1 = Math.max(gtY1, predY1);
+  const interX2 = Math.min(gtX2, predX2);
+  const interY2 = Math.min(gtY2, predY2);
+
+  const interW = Math.max(0, interX2 - interX1);
+  const interH = Math.max(0, interY2 - interY1);
+  const interArea = interW * interH;
+
+  const unionArea = gtArea + predArea - interArea;
+  const currentIoU = unionArea > 0 ? interArea / unionArea : 0;
+  const isIoUPass = currentIoU >= iouThreshold;
+
+  // --- Dataset Sentinel State ---
+  const [sentinelState, setSentinelState] = useState<'idle' | 'running' | 'completed'>('idle');
+  const [sentinelStep, setSentinelStep] = useState<number>(0);
+  const [selectedSentinelDoc, setSelectedSentinelDoc] = useState<string | null>(null);
+
+  const handleRunSentinel = () => {
+    soundEngine.playClick(750);
+    setSentinelState('running');
+    setSentinelStep(1);
+    setSelectedSentinelDoc(null);
+
+    setTimeout(() => {
+      soundEngine.playClick(850);
+      setSentinelStep(2);
+    }, 650);
+
+    setTimeout(() => {
+      soundEngine.playClick(950);
+      setSentinelStep(3);
+    }, 1300);
+
+    setTimeout(() => {
+      soundEngine.playClick(1100);
+      setSentinelStep(4);
+      setSentinelState('completed');
+    }, 1950);
+  };
+
+  const handleResetSentinel = () => {
+    soundEngine.playClick(600);
+    setSentinelState('idle');
+    setSentinelStep(0);
+    setSelectedSentinelDoc(null);
+  };
+
   return (
     <div className="rounded-3xl border border-cyan-400/30 bg-[#04050b]/90 backdrop-blur-2xl p-6 sm:p-8 relative overflow-hidden shadow-[0_0_50px_rgba(0,240,255,0.08)]">
       {/* Top Header */}
@@ -243,19 +454,19 @@ export const ArchitecturePlayground: React.FC = () => {
             HANDS-ON SYSTEMS EXPERIMENTATION
           </h3>
           <p className="text-xs font-mono text-white/60 mt-1 max-w-xl">
-            Test real-world concurrency allocation, fault-tolerant crash recovery, and multi-agent VLM evaluation in real time.
+            Test real-world concurrency allocation, fault-tolerant crash recovery, multi-agent VLM evaluation, and dataset quality sentinels in real time.
           </p>
         </div>
 
         {/* Tab Switcher */}
-        <div className="flex items-center gap-1.5 p-1 rounded-full border border-white/15 bg-black/60">
+        <div className="flex flex-wrap items-center gap-1.5 p-1 rounded-2xl sm:rounded-full border border-white/15 bg-black/60 overflow-x-auto max-w-full">
           <button
             onClick={() => {
               soundEngine.playClick(720);
               setActiveTab('t2nas');
             }}
             onMouseEnter={() => soundEngine.playHover()}
-            className={`px-3.5 py-1.5 rounded-full font-mono text-[10px] tracking-wider uppercase transition-all cursor-pointer ${
+            className={`px-3.5 py-1.5 rounded-full font-mono text-[10px] tracking-wider uppercase transition-all cursor-pointer whitespace-nowrap ${
               activeTab === 't2nas'
                 ? 'bg-cyan-400 text-black font-bold shadow-[0_0_15px_rgba(0,240,255,0.4)]'
                 : 'text-white/60 hover:text-white'
@@ -269,7 +480,7 @@ export const ArchitecturePlayground: React.FC = () => {
               setActiveTab('audio-dedup');
             }}
             onMouseEnter={() => soundEngine.playHover()}
-            className={`px-3.5 py-1.5 rounded-full font-mono text-[10px] tracking-wider uppercase transition-all cursor-pointer ${
+            className={`px-3.5 py-1.5 rounded-full font-mono text-[10px] tracking-wider uppercase transition-all cursor-pointer whitespace-nowrap ${
               activeTab === 'audio-dedup'
                 ? 'bg-cyan-400 text-black font-bold shadow-[0_0_15px_rgba(0,240,255,0.4)]'
                 : 'text-white/60 hover:text-white'
@@ -283,7 +494,7 @@ export const ArchitecturePlayground: React.FC = () => {
               setActiveTab('multi-agent');
             }}
             onMouseEnter={() => soundEngine.playHover()}
-            className={`px-3.5 py-1.5 rounded-full font-mono text-[10px] tracking-wider uppercase transition-all cursor-pointer ${
+            className={`px-3.5 py-1.5 rounded-full font-mono text-[10px] tracking-wider uppercase transition-all cursor-pointer whitespace-nowrap ${
               activeTab === 'multi-agent'
                 ? 'bg-cyan-400 text-black font-bold shadow-[0_0_15px_rgba(0,240,255,0.4)]'
                 : 'text-white/60 hover:text-white'
@@ -297,13 +508,27 @@ export const ArchitecturePlayground: React.FC = () => {
               setActiveTab('vlm-grounding');
             }}
             onMouseEnter={() => soundEngine.playHover()}
-            className={`px-3.5 py-1.5 rounded-full font-mono text-[10px] tracking-wider uppercase transition-all cursor-pointer ${
+            className={`px-3.5 py-1.5 rounded-full font-mono text-[10px] tracking-wider uppercase transition-all cursor-pointer whitespace-nowrap ${
               activeTab === 'vlm-grounding'
                 ? 'bg-cyan-400 text-black font-bold shadow-[0_0_15px_rgba(0,240,255,0.4)]'
                 : 'text-white/60 hover:text-white'
             }`}
           >
             04 // VLM GROUNDING
+          </button>
+          <button
+            onClick={() => {
+              soundEngine.playClick(880);
+              setActiveTab('dataset-sentinel');
+            }}
+            onMouseEnter={() => soundEngine.playHover()}
+            className={`px-3.5 py-1.5 rounded-full font-mono text-[10px] tracking-wider uppercase transition-all cursor-pointer whitespace-nowrap ${
+              activeTab === 'dataset-sentinel'
+                ? 'bg-cyan-400 text-black font-bold shadow-[0_0_15px_rgba(0,240,255,0.4)]'
+                : 'text-white/60 hover:text-white'
+            }`}
+          >
+            05 // DATASET SENTINEL
           </button>
         </div>
       </div>
@@ -750,41 +975,78 @@ export const ArchitecturePlayground: React.FC = () => {
                         : '#fbbf24';
 
                     return (
-                      <div
-                        key={d.id}
-                        onClick={() => {
-                          soundEngine.playClick(880);
-                          setSelectedBoxId(d.id);
-                        }}
-                        style={{
-                          left: `${d.coords.x}%`,
-                          top: `${d.coords.y}%`,
-                          width: `${d.coords.w}%`,
-                          height: `${d.coords.h}%`,
-                          borderColor: borderColor,
-                        }}
-                        className={`absolute border-2 transition-all cursor-pointer group ${
-                          isSelected
-                            ? 'bg-cyan-400/15 shadow-[0_0_20px_rgba(0,240,255,0.35)] ring-2 ring-white/50 z-10'
-                            : 'bg-black/30 hover:bg-white/10'
-                        }`}
-                      >
-                        {/* Corner brackets */}
-                        <span className="absolute -top-1 -left-1 w-2 h-2 border-t-2 border-l-2 border-white" />
-                        <span className="absolute -top-1 -right-1 w-2 h-2 border-t-2 border-r-2 border-white" />
-                        <span className="absolute -bottom-1 -left-1 w-2 h-2 border-b-2 border-l-2 border-white" />
-                        <span className="absolute -bottom-1 -right-1 w-2 h-2 border-b-2 border-r-2 border-white" />
-
-                        {/* Tag Badge */}
+                      <React.Fragment key={d.id}>
+                        {/* Ground Truth Bounding Box */}
                         <div
-                          style={{ backgroundColor: borderColor }}
-                          className="absolute -top-5 left-0 px-1.5 py-0.5 text-black font-mono font-bold text-[8px] tracking-wider uppercase rounded flex items-center gap-1 shadow-sm whitespace-nowrap"
+                          onClick={() => {
+                            soundEngine.playClick(880);
+                            setSelectedBoxId(d.id);
+                          }}
+                          style={{
+                            left: `${d.coords.x}%`,
+                            top: `${d.coords.y}%`,
+                            width: `${d.coords.w}%`,
+                            height: `${d.coords.h}%`,
+                            borderColor: borderColor,
+                          }}
+                          className={`absolute border-2 transition-all cursor-pointer group ${
+                            isSelected
+                              ? 'bg-cyan-400/15 shadow-[0_0_20px_rgba(0,240,255,0.35)] ring-2 ring-white/60 z-10'
+                              : 'bg-black/30 hover:bg-white/10'
+                          }`}
                         >
-                          <Crosshair size={9} />
-                          <span>{d.label}</span>
-                          <span className="opacity-75">{(d.confidence * 100).toFixed(1)}%</span>
+                          {/* Corner brackets */}
+                          <span className="absolute -top-1 -left-1 w-2 h-2 border-t-2 border-l-2 border-white" />
+                          <span className="absolute -top-1 -right-1 w-2 h-2 border-t-2 border-r-2 border-white" />
+                          <span className="absolute -bottom-1 -left-1 w-2 h-2 border-b-2 border-l-2 border-white" />
+                          <span className="absolute -bottom-1 -right-1 w-2 h-2 border-b-2 border-r-2 border-white" />
+
+                          {/* Tag Badge */}
+                          <div
+                            style={{ backgroundColor: borderColor }}
+                            className="absolute -top-5 left-0 px-1.5 py-0.5 text-black font-mono font-bold text-[8px] tracking-wider uppercase rounded flex items-center gap-1 shadow-sm whitespace-nowrap"
+                          >
+                            <Crosshair size={9} />
+                            <span>GT: {d.label}</span>
+                            <span className="opacity-75">{(d.confidence * 100).toFixed(1)}%</span>
+                          </div>
                         </div>
-                      </div>
+
+                        {/* Selected Box: Intersection Overlap Area & Predicted Box */}
+                        {isSelected && (
+                          <>
+                            {/* 2D Intersection Overlap Area */}
+                            {interArea > 0 && (
+                              <div
+                                style={{
+                                  left: `${interX1}%`,
+                                  top: `${interY1}%`,
+                                  width: `${interW}%`,
+                                  height: `${interH}%`,
+                                }}
+                                className="absolute bg-emerald-400/30 border border-emerald-300/50 pointer-events-none z-15 shadow-[0_0_10px_rgba(52,211,153,0.3)]"
+                              />
+                            )}
+
+                            {/* Predicted Bounding Box */}
+                            <div
+                              style={{
+                                left: `${predX1}%`,
+                                top: `${predY1}%`,
+                                width: `${d.coords.w}%`,
+                                height: `${d.coords.h}%`,
+                              }}
+                              className="absolute border-2 border-dashed border-fuchsia-400 bg-fuchsia-400/10 pointer-events-none z-20"
+                            >
+                              <div className="absolute -bottom-5 left-0 px-1.5 py-0.5 bg-fuchsia-400 text-black font-mono font-bold text-[8px] tracking-wider uppercase rounded flex items-center gap-1 shadow-sm whitespace-nowrap">
+                                <Crosshair size={9} />
+                                <span>PRED BOX</span>
+                                <span className="opacity-80">({(currentIoU * 100).toFixed(1)}% IoU)</span>
+                              </div>
+                            </div>
+                          </>
+                        )}
+                      </React.Fragment>
                     );
                   })}
               </div>
@@ -800,6 +1062,194 @@ export const ArchitecturePlayground: React.FC = () => {
 
             {/* Right Column: VLM Inspector & Filter Controls */}
             <div className="lg:col-span-5 space-y-4">
+              {/* Interactive Ground-Truth vs Predicted Box IoU Evaluator */}
+              <div className="p-4 rounded-2xl border border-white/10 bg-[#03040a] space-y-3 font-mono">
+                <div className="flex items-center justify-between pb-2 border-b border-white/[0.08]">
+                  <div className="flex items-center gap-2">
+                    <SlidersHorizontal size={13} className="text-cyan-400" />
+                    <span className="text-xs text-white/90 font-bold uppercase tracking-wider">
+                      GT VS PREDICTED IoU EVALUATOR
+                    </span>
+                  </div>
+                  {/* Visual Pass/Fail Indicator */}
+                  <div
+                    className={`px-2 py-0.5 rounded text-[10px] font-bold flex items-center gap-1 ${
+                      isIoUPass
+                        ? 'bg-emerald-400/15 border border-emerald-400/40 text-emerald-300'
+                        : 'bg-red-400/15 border border-red-400/40 text-red-300'
+                    }`}
+                  >
+                    {isIoUPass ? <CheckCircle2 size={11} /> : <AlertTriangle size={11} />}
+                    <span>
+                      {isIoUPass ? 'PASS' : 'FAIL'} // IoU {(currentIoU * 100).toFixed(1)}% {isIoUPass ? '≥' : '<'} {(iouThreshold * 100).toFixed(0)}%
+                    </span>
+                  </div>
+                </div>
+
+                {/* Real-Time IoU Progress Meter */}
+                <div className="space-y-1">
+                  <div className="flex items-center justify-between text-[10px] text-white/50">
+                    <span>
+                      IoU SCORE:{' '}
+                      <strong className={isIoUPass ? 'text-emerald-300' : 'text-red-400'}>
+                        {(currentIoU).toFixed(3)}
+                      </strong>
+                    </span>
+                    <span>THRESHOLD (&tau;): {(iouThreshold).toFixed(2)}</span>
+                  </div>
+                  <div className="relative w-full h-2 bg-white/10 rounded-full overflow-hidden">
+                    <div
+                      className={`h-full transition-all duration-150 ${
+                        isIoUPass ? 'bg-emerald-400' : 'bg-red-500'
+                      }`}
+                      style={{ width: `${Math.min(100, Math.max(0, currentIoU * 100))}%` }}
+                    />
+                    {/* Threshold marker line */}
+                    <div
+                      className="absolute top-0 bottom-0 w-0.5 bg-white shadow-[0_0_4px_#fff]"
+                      style={{ left: `${iouThreshold * 100}%` }}
+                    />
+                  </div>
+                </div>
+
+                {/* IoU Threshold Slider */}
+                <div className="space-y-1 pt-1">
+                  <div className="flex items-center justify-between text-[10px]">
+                    <span className="text-white/60">IoU ACCEPTANCE THRESHOLD:</span>
+                    <span className="text-cyan-300 font-bold">{(iouThreshold * 100).toFixed(0)}%</span>
+                  </div>
+                  <input
+                    type="range"
+                    min="0.0"
+                    max="1.0"
+                    step="0.05"
+                    value={iouThreshold}
+                    onChange={(e) => {
+                      setIouThreshold(parseFloat(e.target.value));
+                      soundEngine.playHover();
+                    }}
+                    className="w-full h-1.5 bg-white/20 rounded-lg appearance-none cursor-pointer accent-cyan-400"
+                  />
+                  <div className="flex justify-between text-[8px] text-white/40">
+                    <span>0.0 (LOOSE)</span>
+                    <span>0.50 (PASCAL VOC)</span>
+                    <span>0.75 (STRICT)</span>
+                    <span>1.0 (EXACT)</span>
+                  </div>
+                </div>
+
+                {/* Predicted Box Spatial Offset Sliders */}
+                <div className="space-y-2 pt-1 border-t border-white/[0.08]">
+                  <div className="flex items-center justify-between text-[10px]">
+                    <span className="text-white/60">PREDICTED SPATIAL OFFSET:</span>
+                    <span className="text-fuchsia-300 font-bold">
+                      X: {predOffsetX >= 0 ? `+${predOffsetX}` : predOffsetX}% | Y: {predOffsetY >= 0 ? `+${predOffsetY}` : predOffsetY}%
+                    </span>
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-3">
+                    <div>
+                      <div className="flex justify-between text-[9px] text-white/50 mb-0.5">
+                        <span>OFFSET X</span>
+                        <span>{predOffsetX}%</span>
+                      </div>
+                      <input
+                        type="range"
+                        min="-15"
+                        max="15"
+                        step="1"
+                        value={predOffsetX}
+                        onChange={(e) => {
+                          setPredOffsetX(parseInt(e.target.value));
+                          soundEngine.playHover();
+                        }}
+                        className="w-full h-1.5 bg-white/20 rounded-lg appearance-none cursor-pointer accent-fuchsia-400"
+                      />
+                    </div>
+                    <div>
+                      <div className="flex justify-between text-[9px] text-white/50 mb-0.5">
+                        <span>OFFSET Y</span>
+                        <span>{predOffsetY}%</span>
+                      </div>
+                      <input
+                        type="range"
+                        min="-15"
+                        max="15"
+                        step="1"
+                        value={predOffsetY}
+                        onChange={(e) => {
+                          setPredOffsetY(parseInt(e.target.value));
+                          soundEngine.playHover();
+                        }}
+                        className="w-full h-1.5 bg-white/20 rounded-lg appearance-none cursor-pointer accent-fuchsia-400"
+                      />
+                    </div>
+                  </div>
+
+                  {/* Quick Drift Presets */}
+                  <div className="flex flex-wrap gap-1 pt-1">
+                    <button
+                      onClick={() => {
+                        soundEngine.playClick(750);
+                        setPredOffsetX(0);
+                        setPredOffsetY(0);
+                      }}
+                      className="px-2 py-0.5 rounded bg-white/5 hover:bg-white/10 text-[8px] text-white/70 hover:text-white transition-all cursor-pointer"
+                    >
+                      EXACT (0, 0)
+                    </button>
+                    <button
+                      onClick={() => {
+                        soundEngine.playClick(780);
+                        setPredOffsetX(2);
+                        setPredOffsetY(1);
+                      }}
+                      className="px-2 py-0.5 rounded bg-white/5 hover:bg-white/10 text-[8px] text-white/70 hover:text-white transition-all cursor-pointer"
+                    >
+                      SLIGHT (+2, +1)
+                    </button>
+                    <button
+                      onClick={() => {
+                        soundEngine.playClick(820);
+                        setPredOffsetX(5);
+                        setPredOffsetY(4);
+                      }}
+                      className="px-2 py-0.5 rounded bg-white/5 hover:bg-white/10 text-[8px] text-white/70 hover:text-white transition-all cursor-pointer"
+                    >
+                      DRIFT (+5, +4)
+                    </button>
+                    <button
+                      onClick={() => {
+                        soundEngine.playClick(860);
+                        setPredOffsetX(14);
+                        setPredOffsetY(12);
+                      }}
+                      className="px-2 py-0.5 rounded bg-white/5 hover:bg-white/10 text-[8px] text-white/70 hover:text-white transition-all cursor-pointer"
+                    >
+                      FAIL (+14, +12)
+                    </button>
+                  </div>
+                </div>
+
+                {/* Exact Math Metric Breakdown */}
+                <div className="p-2 rounded-lg bg-black/60 border border-white/5 text-[9px] text-white/60 space-y-0.5">
+                  <div className="flex justify-between">
+                    <span>INTERSECTION AREA:</span>
+                    <span className="text-emerald-300 font-bold">{interArea.toFixed(1)} px²</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span>UNION AREA:</span>
+                    <span className="text-cyan-300 font-bold">{unionArea.toFixed(1)} px²</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span>EXACT 2D IoU:</span>
+                    <span className={`font-bold ${isIoUPass ? 'text-emerald-300' : 'text-red-400'}`}>
+                      {(currentIoU).toFixed(4)} ({isIoUPass ? 'PASS' : 'FAIL'})
+                    </span>
+                  </div>
+                </div>
+              </div>
+
               {/* Confidence Threshold Slider */}
               <div className="p-4 rounded-2xl border border-white/10 bg-black/50 backdrop-blur-md space-y-2.5">
                 <div className="flex items-center justify-between font-mono text-xs">
@@ -905,11 +1355,18 @@ export const ArchitecturePlayground: React.FC = () => {
       Math.round((selectedDetection.coords.y + selectedDetection.coords.h) * 10),
       Math.round((selectedDetection.coords.x + selectedDetection.coords.w) * 10),
     ],
+    pred_box_2d: [
+      Math.round(predY1 * 10),
+      Math.round(predX1 * 10),
+      Math.round(predY2 * 10),
+      Math.round(predX2 * 10),
+    ],
+    iou: parseFloat(currentIoU.toFixed(4)),
+    iou_verdict: isIoUPass ? 'PASS' : 'FAIL',
     label: selectedDetection.label,
     category: selectedDetection.category,
     confidence: selectedDetection.confidence,
     ocr_payload: selectedDetection.ocrText,
-    verdict: 'GROUNDED_VERIFIED',
   },
   null,
   2
@@ -920,6 +1377,360 @@ export const ArchitecturePlayground: React.FC = () => {
               </div>
             </div>
           </div>
+        </div>
+      )}
+
+      {/* ==================== SIMULATOR 5: DATASET SENTINEL ==================== */}
+      {activeTab === 'dataset-sentinel' && (
+        <div className="space-y-6">
+          {/* Header & Controls */}
+          <div className="flex flex-wrap items-center justify-between gap-4 p-4 rounded-2xl border border-white/10 bg-black/40">
+            <div>
+              <div className="text-xs font-mono text-cyan-400 font-bold uppercase tracking-wider flex items-center gap-2">
+                <ShieldCheck size={14} />
+                <span>05 // DATASET INTEGRITY & AUTOMATED QUARANTINE SENTINEL</span>
+              </div>
+              <p className="text-[11px] font-mono text-white/60 mt-0.5 max-w-2xl">
+                Simulates real-time Unicode NFKC canonical normalization, 64-bit SimHash near-duplicate isolation (Hamming distance &le; 3), and corruption quarantining.
+              </p>
+            </div>
+
+            <div className="flex items-center gap-2">
+              <button
+                onClick={handleRunSentinel}
+                disabled={sentinelState === 'running'}
+                className="px-4 py-2.5 rounded-full bg-cyan-400 text-black hover:bg-white font-mono text-xs font-bold tracking-wider uppercase transition-all flex items-center gap-2 cursor-pointer shadow-[0_0_15px_rgba(0,240,255,0.3)] disabled:opacity-50"
+              >
+                <Play size={12} className={sentinelState === 'running' ? 'animate-spin' : ''} />
+                <span>
+                  {sentinelState === 'running'
+                    ? 'PROCESSING PIPELINE...'
+                    : 'INJECT DIRTY BATCH (9 RECORDS)'}
+                </span>
+              </button>
+
+              <button
+                onClick={handleResetSentinel}
+                disabled={sentinelState === 'running' || sentinelState === 'idle'}
+                className="px-3 py-2.5 rounded-full border border-white/20 bg-black/60 hover:bg-white/10 text-white/70 hover:text-white font-mono text-xs tracking-wider uppercase transition-all flex items-center gap-1.5 cursor-pointer disabled:opacity-30 disabled:cursor-not-allowed"
+              >
+                <RotateCcw size={12} />
+                <span>RESET BATCH</span>
+              </button>
+            </div>
+          </div>
+
+          {/* 3 Real-time Pipeline Progress Steps */}
+          <div className="grid md:grid-cols-3 gap-3 font-mono text-xs">
+            {/* Step 1 */}
+            <div
+              className={`p-3.5 rounded-xl border transition-all ${
+                sentinelStep === 1
+                  ? 'border-cyan-400 bg-cyan-400/10 shadow-[0_0_15px_rgba(0,240,255,0.2)]'
+                  : sentinelStep > 1
+                  ? 'border-emerald-400/40 bg-emerald-400/5 text-emerald-300'
+                  : 'border-white/10 bg-black/40 text-white/50'
+              }`}
+            >
+              <div className="flex items-center justify-between pb-1.5 border-b border-white/10 text-[9px]">
+                <span className="uppercase text-cyan-300 font-bold">STEP 01</span>
+                <span>
+                  {sentinelStep === 1
+                    ? 'PROCESSING...'
+                    : sentinelStep > 1
+                    ? 'COMPLETE'
+                    : 'STANDBY'}
+                </span>
+              </div>
+              <div className="font-bold text-[11px] text-white mt-1.5">
+                CANONICAL UNICODE NFKC
+              </div>
+              <p className="text-[10px] text-white/60 mt-1 leading-relaxed">
+                Cleans ligatures ('ﬀ', 'ﬁ', 'ﬂ'), full-width 'ＡＩ', and combining diacritics.
+              </p>
+              <div className="mt-2 text-[9px] text-cyan-300">
+                {sentinelStep >= 1 ? 'Resolved 3 ligatures (doc_004)' : 'Awaiting batch payload'}
+              </div>
+            </div>
+
+            {/* Step 2 */}
+            <div
+              className={`p-3.5 rounded-xl border transition-all ${
+                sentinelStep === 2
+                  ? 'border-cyan-400 bg-cyan-400/10 shadow-[0_0_15px_rgba(0,240,255,0.2)]'
+                  : sentinelStep > 2
+                  ? 'border-emerald-400/40 bg-emerald-400/5 text-emerald-300'
+                  : 'border-white/10 bg-black/40 text-white/50'
+              }`}
+            >
+              <div className="flex items-center justify-between pb-1.5 border-b border-white/10 text-[9px]">
+                <span className="uppercase text-cyan-300 font-bold">STEP 02</span>
+                <span>
+                  {sentinelStep === 2
+                    ? 'PROCESSING...'
+                    : sentinelStep > 2
+                    ? 'COMPLETE'
+                    : 'STANDBY'}
+                </span>
+              </div>
+              <div className="font-bold text-[11px] text-white mt-1.5">
+                64-BIT SIMHASH DEDUP
+              </div>
+              <p className="text-[10px] text-white/60 mt-1 leading-relaxed">
+                Groups rows with Hamming distance &le; 3 and checks exact SHA-256 collisions.
+              </p>
+              <div className="mt-2 text-[9px] text-cyan-300">
+                {sentinelStep >= 2
+                  ? 'Caught 1 exact + 1 near-dup (doc_002, doc_003)'
+                  : 'Awaiting normalized text'}
+              </div>
+            </div>
+
+            {/* Step 3 */}
+            <div
+              className={`p-3.5 rounded-xl border transition-all ${
+                sentinelStep === 3
+                  ? 'border-cyan-400 bg-cyan-400/10 shadow-[0_0_15px_rgba(0,240,255,0.2)]'
+                  : sentinelStep > 3
+                  ? 'border-emerald-400/40 bg-emerald-400/5 text-emerald-300'
+                  : 'border-white/10 bg-black/40 text-white/50'
+              }`}
+            >
+              <div className="flex items-center justify-between pb-1.5 border-b border-white/10 text-[9px]">
+                <span className="uppercase text-cyan-300 font-bold">STEP 03</span>
+                <span>
+                  {sentinelStep === 3
+                    ? 'PROCESSING...'
+                    : sentinelStep > 3
+                    ? 'COMPLETE'
+                    : 'STANDBY'}
+                </span>
+              </div>
+              <div className="font-bold text-[11px] text-white mt-1.5">
+                CORRUPTION QUARANTINER
+              </div>
+              <p className="text-[10px] text-white/60 mt-1 leading-relaxed">
+                Isolates null-byte \x00, mojibake â€™, empty strings, and runaway tokens &gt;80 chars.
+              </p>
+              <div className="mt-2 text-[9px] text-cyan-300">
+                {sentinelStep >= 3
+                  ? 'Quarantined 4 corrupted payloads (doc_005-doc_008)'
+                  : 'Awaiting deduplicated rows'}
+              </div>
+            </div>
+          </div>
+
+          {/* Interactive Ledgers Container */}
+          {sentinelState === 'idle' ? (
+            <div className="p-8 rounded-2xl border border-white/10 bg-black/40 text-center font-mono space-y-3">
+              <Database size={28} className="mx-auto text-cyan-400/60" />
+              <div className="text-sm font-bold text-white">DIRTY BATCH STANDBY // 9 TEST RECORDS READY</div>
+              <p className="text-xs text-white/50 max-w-lg mx-auto leading-relaxed">
+                The test batch contains 3 valid records (including multi-lingual OCR ligatures &amp; full-width ASCII) and 6 corrupted payloads (SHA-256 duplicates, SimHash distance 2 near-duplicates, null-byte injections, empty strings, runaway tokens &gt;80 chars, and mojibake).
+              </p>
+              <button
+                onClick={handleRunSentinel}
+                className="mt-2 px-5 py-2.5 rounded-full bg-cyan-400 text-black hover:bg-white font-mono text-xs font-bold tracking-wider uppercase transition-all cursor-pointer shadow-[0_0_20px_rgba(0,240,255,0.3)]"
+              >
+                INJECT DIRTY BATCH (9 RECORDS)
+              </button>
+            </div>
+          ) : (
+            <div className="space-y-6">
+              {/* Telemetry Summary Cards */}
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 font-mono text-xs">
+                <div className="p-3 rounded-xl bg-black/60 border border-white/10">
+                  <div className="text-[9px] text-white/40 uppercase">BATCH SIZE</div>
+                  <div className="text-base font-bold text-white">9 RECORDS</div>
+                  <div className="text-[9px] text-white/50">RAW INGESTION</div>
+                </div>
+                <div className="p-3 rounded-xl bg-emerald-400/10 border border-emerald-400/30">
+                  <div className="text-[9px] text-emerald-400 uppercase">CLEAN INGESTED</div>
+                  <div className="text-base font-bold text-emerald-300">3 RECORDS (33%)</div>
+                  <div className="text-[9px] text-emerald-400/70">PASSED ALL CHECKS</div>
+                </div>
+                <div className="p-3 rounded-xl bg-red-400/10 border border-red-400/30">
+                  <div className="text-[9px] text-red-400 uppercase">QUARANTINED</div>
+                  <div className="text-base font-bold text-red-300">6 RECORDS (67%)</div>
+                  <div className="text-[9px] text-red-400/70">ISOLATED BY AUDIT</div>
+                </div>
+                <div className="p-3 rounded-xl bg-black/60 border border-white/10">
+                  <div className="text-[9px] text-cyan-400 uppercase">HASH GUARANTEE</div>
+                  <div className="text-base font-bold text-cyan-300">64-BIT SIMHASH</div>
+                  <div className="text-[9px] text-white/50">&le; 3 BIT HAMMING DIST</div>
+                </div>
+              </div>
+
+              {/* TABLE A: Clean Ingestion Ledger (3 records) */}
+              <div className="rounded-2xl border border-emerald-400/30 bg-black/80 p-4 font-mono space-y-3">
+                <div className="flex flex-wrap items-center justify-between gap-2 pb-2 border-b border-emerald-400/20">
+                  <div className="flex items-center gap-2">
+                    <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+                    <span className="text-xs font-bold text-white uppercase tracking-wider">
+                      TABLE A: CLEAN INGESTION LEDGER (3 RECORDS)
+                    </span>
+                  </div>
+                  <span className="px-2.5 py-0.5 rounded-full bg-emerald-400/20 border border-emerald-400/40 text-emerald-300 text-[10px] font-bold">
+                    PRODUCTION-READY // ATOMIC WAL INSERTION APPROVED
+                  </span>
+                </div>
+
+                <div className="overflow-x-auto">
+                  <table className="w-full text-left text-xs">
+                    <thead>
+                      <tr className="border-b border-white/10 text-[9px] text-white/40 uppercase">
+                        <th className="py-2 px-3">RECORD ID</th>
+                        <th className="py-2 px-3">NORMALIZED INGESTION PAYLOAD</th>
+                        <th className="py-2 px-3">NORMALIZATION PROVENANCE</th>
+                        <th className="py-2 px-3 text-right">AUDIT VERDICT</th>
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-white/5 text-[11px]">
+                      {SENTINEL_RECORDS.filter((r) => r.status === 'CLEAN').map((rec) => (
+                        <tr
+                          key={rec.id}
+                          onClick={() => {
+                            soundEngine.playClick(840);
+                            setSelectedSentinelDoc(rec.id);
+                          }}
+                          className={`hover:bg-white/[0.04] transition-colors cursor-pointer ${
+                            selectedSentinelDoc === rec.id ? 'bg-emerald-400/10' : ''
+                          }`}
+                        >
+                          <td className="py-2.5 px-3 font-bold text-emerald-300 whitespace-nowrap">
+                            {rec.id}
+                          </td>
+                          <td className="py-2.5 px-3 text-white/80 max-w-md">
+                            <div className="line-clamp-2 leading-relaxed">{rec.normalizedText}</div>
+                          </td>
+                          <td className="py-2.5 px-3 text-white/60 text-[10px] whitespace-nowrap">
+                            {rec.provenance}
+                          </td>
+                          <td className="py-2.5 px-3 text-right whitespace-nowrap">
+                            <span className="px-2 py-0.5 rounded bg-emerald-400/15 border border-emerald-400/30 text-emerald-300 text-[9px] font-bold">
+                              CLEAN INGESTION
+                            </span>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+
+              {/* TABLE B: Quarantine Ledger (6 records) */}
+              <div className="rounded-2xl border border-red-500/30 bg-black/80 p-4 font-mono space-y-3">
+                <div className="flex flex-wrap items-center justify-between gap-2 pb-2 border-b border-red-500/20">
+                  <div className="flex items-center gap-2">
+                    <AlertTriangle size={14} className="text-red-400" />
+                    <span className="text-xs font-bold text-white uppercase tracking-wider">
+                      TABLE B: QUARANTINE LEDGER (6 RECORDS)
+                    </span>
+                  </div>
+                  <span className="px-2.5 py-0.5 rounded-full bg-red-500/20 border border-red-500/40 text-red-300 text-[10px] font-bold">
+                    ISOLATED FROM TRAINING SET // QUARANTINE LEDGER EXPORTED
+                  </span>
+                </div>
+
+                <div className="overflow-x-auto">
+                  <table className="w-full text-left text-xs">
+                    <thead>
+                      <tr className="border-b border-white/10 text-[9px] text-white/40 uppercase">
+                        <th className="py-2 px-3">RECORD ID</th>
+                        <th className="py-2 px-3">RAW INGESTION PAYLOAD</th>
+                        <th className="py-2 px-3">QUARANTINE REASON</th>
+                        <th className="py-2 px-3">MATCH PROVENANCE / ANOMALY DETAIL</th>
+                        <th className="py-2 px-3 text-right">ACTION</th>
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-white/5 text-[11px]">
+                      {SENTINEL_RECORDS.filter((r) => r.status === 'QUARANTINE').map((rec) => {
+                        const reasonColor =
+                          rec.reason === 'EXACT_DUPLICATE_SHA256'
+                            ? 'bg-rose-500/15 border-rose-500/40 text-rose-300'
+                            : rec.reason === 'SIMHASH_NEAR_DUPLICATE'
+                            ? 'bg-amber-500/15 border-amber-500/40 text-amber-300'
+                            : rec.reason === 'CONTAINS_NULL_BYTES'
+                            ? 'bg-purple-500/15 border-purple-500/40 text-purple-300'
+                            : rec.reason === 'EMPTY_TEXT'
+                            ? 'bg-zinc-500/15 border-zinc-500/40 text-zinc-300'
+                            : rec.reason === 'TOKEN_LENGTH_ANOMALY'
+                            ? 'bg-orange-500/15 border-orange-500/40 text-orange-300'
+                            : 'bg-fuchsia-500/15 border-fuchsia-500/40 text-fuchsia-300';
+
+                        return (
+                          <tr
+                            key={rec.id}
+                            onClick={() => {
+                              soundEngine.playClick(840);
+                              setSelectedSentinelDoc(rec.id);
+                            }}
+                            className={`hover:bg-white/[0.04] transition-colors cursor-pointer ${
+                              selectedSentinelDoc === rec.id ? 'bg-red-500/10' : ''
+                            }`}
+                          >
+                            <td className="py-2.5 px-3 font-bold text-red-400 whitespace-nowrap">
+                              {rec.id}
+                            </td>
+                            <td className="py-2.5 px-3 text-white/70 max-w-xs">
+                              <div className="line-clamp-2 text-[10px] font-mono leading-relaxed">
+                                {rec.rawText.trim() === '' ? (
+                                  <span className="italic text-white/30">[EMPTY / 3 SPACES]</span>
+                                ) : (
+                                  rec.rawText
+                                )}
+                              </div>
+                            </td>
+                            <td className="py-2.5 px-3 whitespace-nowrap">
+                              <span
+                                className={`px-2 py-0.5 rounded border text-[9px] font-bold ${reasonColor}`}
+                              >
+                                {rec.reason}
+                              </span>
+                            </td>
+                            <td className="py-2.5 px-3 text-white/60 text-[10px] leading-relaxed">
+                              {rec.provenance}
+                            </td>
+                            <td className="py-2.5 px-3 text-right whitespace-nowrap">
+                              <span className="px-2 py-0.5 rounded bg-red-400/10 border border-red-400/20 text-red-300 text-[9px]">
+                                QUARANTINED
+                              </span>
+                            </td>
+                          </tr>
+                        );
+                      })}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+
+              {/* Selected Record Structured Audit Inspector */}
+              {selectedSentinelDoc && (
+                <div className="p-4 rounded-xl border border-white/15 bg-[#020205] font-mono text-xs space-y-2">
+                  <div className="flex items-center justify-between text-[10px] text-white/50 border-b border-white/10 pb-1.5">
+                    <span className="text-cyan-400 font-bold">
+                      INSPECTOR: AUDIT_RECORD_{selectedSentinelDoc}.JSON
+                    </span>
+                    <button
+                      onClick={() => setSelectedSentinelDoc(null)}
+                      className="text-white/40 hover:text-white text-[9px] cursor-pointer"
+                    >
+                      [CLOSE]
+                    </button>
+                  </div>
+                  <pre className="text-[10px] text-white/80 overflow-x-auto leading-relaxed">
+                    <code>
+                      {JSON.stringify(
+                        SENTINEL_RECORDS.find((r) => r.id === selectedSentinelDoc),
+                        null,
+                        2
+                      )}
+                    </code>
+                  </pre>
+                </div>
+              )}
+            </div>
+          )}
         </div>
       )}
     </div>
