@@ -298,7 +298,7 @@ export const TerminalPortfolio: React.FC<TerminalPortfolioProps> = ({ onSwitchTo
       case 'history':
         output = (
           <div className="space-y-4 font-mono text-xs sm:text-sm">
-            <p className={`${t.highlight} font-bold`}>=== PROFESSIONAL EXPERIENCE TIMELINE ===</p>
+            <p className={`${t.highlight} font-bold`}>=== PROFESSIONAL EXPERIENCE (2+ YEARS // RAPID ADVANCES) ===</p>
 
             <div className="space-y-3">
               <div className="border-l-2 border-primary/60 pl-3">

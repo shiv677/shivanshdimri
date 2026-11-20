@@ -404,7 +404,7 @@ export const ActiveTheoryExperience: React.FC = () => {
                 </h1>
 
                 <p className="max-w-md text-xs sm:text-sm font-mono text-white/75 leading-relaxed bg-black/55 backdrop-blur-md p-3.5 border-l-2 border-cyan-400">
-                  Associate AI Engineer crafting autonomous multi-agent pipelines, VLM evaluation suites, and high-concurrency Python systems.
+                  Associate AI Engineer with 2+ years of systems engineering track record, crafting autonomous multi-agent pipelines, VLM evaluation suites, and high-concurrency Python architectures.
                 </p>
 
                 <div className="flex flex-wrap items-center gap-2.5 pt-1">
@@ -578,14 +578,20 @@ export const ActiveTheoryExperience: React.FC = () => {
               {/* InfoBay AI Limited Career Card */}
               <div className="lg:col-span-5 p-6 rounded-3xl border border-cyan-400/35 bg-[#05060d]/90 backdrop-blur-2xl space-y-4">
                 <div className="inline-flex items-center gap-2 px-2.5 py-1 rounded-full bg-emerald-400/10 border border-emerald-400/30 text-[10px] font-mono text-emerald-300">
-                  <span>ACTIVE ROLE // JUN 2025 – PRESENT</span>
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                  <span>2+ YEARS EXP // PROMOTED TO ASSOCIATE AI ENG</span>
                 </div>
-                <h2 className="text-2xl sm:text-3xl font-display font-black uppercase text-white">
-                  ASSOCIATE AI ENGINEER
-                </h2>
-                <div className="text-xs font-mono text-cyan-400 flex items-center gap-2">
-                  <MapPin size={13} />
-                  <span>INFOBAY AI LIMITED &middot; LUCKNOW, INDIA</span>
+                <div>
+                  <h2 className="text-2xl sm:text-3xl font-display font-black uppercase text-white">
+                    ASSOCIATE AI ENGINEER
+                  </h2>
+                  <div className="text-xs font-mono text-cyan-400 flex items-center gap-2 mt-1">
+                    <MapPin size={13} />
+                    <span>INFOBAY AI LIMITED &middot; LUCKNOW, INDIA</span>
+                  </div>
+                  <div className="text-[10px] font-mono text-white/50 mt-1">
+                    CURRENT ROLE: OCT 2026 – PRESENT &middot; RAPID ADVANCEMENT FROM VIBE CODER (2+ YEARS TOTAL)
+                  </div>
                 </div>
                 <p className="text-xs font-mono text-white/75 leading-relaxed">
                   Architecting autonomous multi-agent workflows, multimodal VLM benchmark suites, RAG retrieval pipelines, and fault-tolerant Python multiprocessing engines with 100% deterministic ownership.

@@ -185,8 +185,9 @@ const CAREER_TIMELINE = [
     company: 'InfoBay AI Limited',
     location: 'Lucknow, India (On-site)',
     period: 'Oct 2026 – Present',
-    status: 'ACTIVE ROLE',
+    status: 'PROMOTED // ACTIVE ROLE',
     highlights: [
+      'Promoted rapidly to Associate AI Engineer following demonstrated impact in autonomous evaluation systems and model verification.',
       'Architecting and scaling automated evaluation harnesses for Large Language Models & Vision-Language Models.',
       'Developing distributed multi-agent swarm pipelines for complex reasoning, benchmark verification, and rubric scoring.',
       'Engineering fault-tolerant Python multiprocessing pipelines handling 100,000+ data samples with zero data corruption.',
@@ -196,11 +197,11 @@ const CAREER_TIMELINE = [
     tech: ['Python 3.12', 'Multiprocessing', 'LangGraph', 'VLMs', 'Pydantic v2', 'SQLite WAL', 'Docker'],
   },
   {
-    role: 'Vibe Coder / AI Systems Developer',
+    role: 'AI Systems Developer / Vibe Coder',
     company: 'InfoBay AI Limited',
     location: 'Lucknow, India (On-site)',
     period: 'Feb 2026 – Oct 2026',
-    status: 'COMPLETED',
+    status: 'PROMOTED TO ASSOCIATE AI ENG',
     highlights: [
       'Accelerated feature development using cutting-edge AI coding agents and LLM-assisted programming paradigms.',
       'Engineered automated validation scripts and rapid prototyping workflows for core data engineering initiatives.',
@@ -210,16 +211,17 @@ const CAREER_TIMELINE = [
   },
   {
     role: 'Lead Systems Developer & Open-Source Author',
-    company: 'Independent Systems Research',
+    company: 'Zynex Studio / Independent Systems Research',
     location: 'Remote',
-    period: '2025 – Present',
-    status: 'CONTINUOUS',
+    period: '2024 – Present',
+    status: 'CONTINUOUS (2+ YEARS TOTAL)',
     highlights: [
       'Authored T2NAS, a CPU-aware resumable parallel transfer engine for 10Gbps NAS network environments.',
       'Developed Audio Internal & External Duplicacy Checker combining acoustic fingerprinting with atomic checkpointing.',
       'Constructed Enterprise Rsync Transfer Platform with embedded runtimes and subprocess telemetry extraction.',
+      'Engineered production web apps, automation pipelines, and custom API integrations across client and open-source ecosystems.',
     ],
-    tech: ['Python', 'Multiprocessing', 'Acoustic Fingerprinting', 'Rsync', 'OpenSSH', 'State Machines'],
+    tech: ['Python', 'Multiprocessing', 'Acoustic Fingerprinting', 'Rsync', 'OpenSSH', 'React', 'TypeScript'],
   },
 ];
 
@@ -248,27 +250,27 @@ const Experience = () => {
         </h1>
 
         <p className="text-sm sm:text-base font-mono text-white/70 max-w-3xl leading-relaxed mb-8">
-          Associate AI Engineer at InfoBay AI Limited. Specialising in high-concurrency Python systems, autonomous multi-agent evaluation suites, and fault-tolerant data pipelines.
+          2+ years of professional engineering experience with considerable advances—advancing rapidly from systems programming to Associate AI Engineer at InfoBay AI Limited. Specialising in high-concurrency Python architectures, autonomous multi-agent evaluation suites, and fault-tolerant data infrastructure.
         </p>
 
         {/* Dynamic Telemetry Stats */}
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
           <div className="p-4 rounded-2xl border border-white/10 bg-white/[0.02] backdrop-blur-md">
-            <div className="text-[10px] font-mono text-white/40 tracking-[0.2em] mb-1">CAREER TIMELINE</div>
+            <div className="text-[10px] font-mono text-white/40 tracking-[0.2em] mb-1">TOTAL EXPERIENCE</div>
             <div className="text-xl sm:text-2xl font-mono font-bold text-cyan-300">
-              {experienceMonths}+ MONTHS
+              2+ YEARS
             </div>
           </div>
           <div className="p-4 rounded-2xl border border-white/10 bg-white/[0.02] backdrop-blur-md">
-            <div className="text-[10px] font-mono text-white/40 tracking-[0.2em] mb-1">CORE ROLE</div>
+            <div className="text-[10px] font-mono text-white/40 tracking-[0.2em] mb-1">CURRENT RANK</div>
             <div className="text-xl sm:text-2xl font-mono font-bold text-emerald-400">
               AI ENGINEER
             </div>
           </div>
           <div className="p-4 rounded-2xl border border-white/10 bg-white/[0.02] backdrop-blur-md">
-            <div className="text-[10px] font-mono text-white/40 tracking-[0.2em] mb-1">LOCATION</div>
+            <div className="text-[10px] font-mono text-white/40 tracking-[0.2em] mb-1">CAREER VELOCITY</div>
             <div className="text-xl sm:text-2xl font-mono font-bold text-fuchsia-300">
-              LUCKNOW, IN
+              PROMOTED
             </div>
           </div>
           <div className="p-4 rounded-2xl border border-white/10 bg-white/[0.02] backdrop-blur-md">

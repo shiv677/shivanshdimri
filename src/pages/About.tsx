@@ -77,22 +77,22 @@ const About = () => {
         </h1>
 
         <p className="text-sm sm:text-base font-mono text-white/70 max-w-3xl leading-relaxed mb-8">
-          Shivansh Dimri is an Associate AI Engineer at InfoBay AI Limited (Lucknow, India). He designs high-throughput Python concurrency architectures, autonomous multi-agent evaluation suites, and fault-tolerant data infrastructure.
+          Shivansh Dimri is an Associate AI Engineer at InfoBay AI Limited (Lucknow, India) with 2+ years of professional engineering experience marked by rapid technical advances. He designs high-throughput Python concurrency architectures, autonomous multi-agent evaluation suites, and fault-tolerant data infrastructure.
         </p>
 
         {/* Telemetry Bar */}
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
           <div className="p-4 rounded-2xl border border-white/10 bg-white/[0.02] backdrop-blur-md">
-            <div className="text-[10px] font-mono text-white/40 tracking-[0.2em] mb-1">CORE DISCIPLINE</div>
-            <div className="text-xl sm:text-2xl font-mono font-bold text-cyan-300">AI & SYSTEMS</div>
+            <div className="text-[10px] font-mono text-white/40 tracking-[0.2em] mb-1">TOTAL TRACK RECORD</div>
+            <div className="text-xl sm:text-2xl font-mono font-bold text-cyan-300">2+ YEARS</div>
           </div>
           <div className="p-4 rounded-2xl border border-white/10 bg-white/[0.02] backdrop-blur-md">
             <div className="text-[10px] font-mono text-white/40 tracking-[0.2em] mb-1">CURRENT FIRM</div>
             <div className="text-xl sm:text-2xl font-mono font-bold text-emerald-400">INFOBAY AI</div>
           </div>
           <div className="p-4 rounded-2xl border border-white/10 bg-white/[0.02] backdrop-blur-md">
-            <div className="text-[10px] font-mono text-white/40 tracking-[0.2em] mb-1">DESIGN CODE</div>
-            <div className="text-xl sm:text-2xl font-mono font-bold text-fuchsia-300">ACTIVE THEORY</div>
+            <div className="text-[10px] font-mono text-white/40 tracking-[0.2em] mb-1">CAREER VELOCITY</div>
+            <div className="text-xl sm:text-2xl font-mono font-bold text-fuchsia-300">PROMOTED</div>
           </div>
           <div className="p-4 rounded-2xl border border-white/10 bg-white/[0.02] backdrop-blur-md">
             <div className="text-[10px] font-mono text-white/40 tracking-[0.2em] mb-1">LOCATION</div>
