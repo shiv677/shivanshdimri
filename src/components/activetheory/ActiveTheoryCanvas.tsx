@@ -515,7 +515,7 @@ function FlagshipPortalMonoliths({
 }
 
 // --- 5. Zone 4 (Z = -88): 3D AI Agent Swarm & Neural Lattice Core ---
-function AIAgentNeuralLattice3D() {
+function AIAgentNeuralLattice3D({ onOpenCaseStudy }: { onOpenCaseStudy: (sysIdx: number) => void }) {
   const groupRef = useRef<THREE.Group>(null);
   const ring1Ref = useRef<THREE.Mesh>(null);
   const ring2Ref = useRef<THREE.Mesh>(null);
@@ -537,7 +537,14 @@ function AIAgentNeuralLattice3D() {
 
   return (
     <group position={[0, 0.5, ZONE_Z_POSITIONS[4]]}>
-      <group ref={groupRef}>
+      <group
+        ref={groupRef}
+        onClick={(e) => {
+          e.stopPropagation();
+          onOpenCaseStudy(3);
+        }}
+        className="cursor-pointer"
+      >
         {/* Core Icosahedron Neural Lattice */}
         <mesh>
           <icosahedronGeometry args={[1.5, 1]} />
@@ -712,7 +719,7 @@ export const ActiveTheoryCanvas: React.FC<ActiveTheoryCanvasProps> = ({
         <FlagshipPortalMonoliths onOpenCaseStudy={onOpenCaseStudy} />
 
         {/* Zone 4: 3D AI Agent Swarm & Neural Lattice Core */}
-        <AIAgentNeuralLattice3D />
+        <AIAgentNeuralLattice3D onOpenCaseStudy={onOpenCaseStudy} />
 
         {/* Zones 5 & 6: Astrolabe & Transmission Stargate */}
         <DeepZonesAstrolabeAndGate />

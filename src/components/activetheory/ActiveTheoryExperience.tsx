@@ -152,10 +152,10 @@ const FLAGSHIP_SYSTEMS: FlagshipSystem[] = [
     shortTitle: 'AI.HARNESS',
     category: 'DISTRIBUTED AI BENCHMARKING & MULTI-AGENT SWARMS',
     accent: '#00f0ff',
-    metrics: '50K+ PROMPTS/DAY // ZERO 429 DROPS // 100% SCHEMA CONFORMANCE',
-    summary:
-      'High-throughput evaluation framework distributing Vision-Language Model and multi-turn agent benchmarks across concurrent worker pools with Pydantic v2 schema validation and automated regression detection.',
-    architecture: [
+    tagline: 'High-throughput VLM & multi-agent evaluation framework with Pydantic v2 schema enforcement.',
+    description:
+      'High-throughput evaluation framework distributing Vision-Language Model and multi-turn agent benchmarks across concurrent worker pools with Pydantic v2 schema validation, token-bucket rate limiting, and continuous regression drift detection.',
+    pipeline: [
       { step: '01', name: 'TASK DISPATCH', spec: 'Token-bucket async semaphore' },
       { step: '02', name: 'AGENT DEBATE', spec: 'Multi-perspective consensus scoring' },
       { step: '03', name: 'VLM GROUNDING', spec: 'OCR & bounding-box verification' },
@@ -485,7 +485,7 @@ export const ActiveTheoryExperience: React.FC = () => {
                 </p>
 
                 <div className="grid grid-cols-2 gap-2">
-                  {currentSystem.telemetry.map((t) => (
+                  {(currentSystem.telemetry || []).map((t) => (
                     <div key={t.label} className="p-2.5 rounded-xl border border-white/10 bg-white/[0.03]">
                       <div className="text-[9px] font-mono text-white/45">{t.label}</div>
                       <div className="text-base font-display font-black text-cyan-300">{t.value}</div>
@@ -539,7 +539,7 @@ export const ActiveTheoryExperience: React.FC = () => {
                 </div>
 
                 <div className="space-y-1.5">
-                  {currentSystem.pipeline.map((st) => (
+                  {(currentSystem.pipeline || []).map((st) => (
                     <div
                       key={st.step}
                       className="px-3 py-2 rounded-xl border border-white/10 bg-white/[0.02] flex items-center justify-between text-xs font-mono"
