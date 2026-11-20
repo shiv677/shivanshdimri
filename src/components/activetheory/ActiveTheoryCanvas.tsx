@@ -11,6 +11,7 @@ interface ActiveTheoryCanvasProps {
   mousePos: { x: number; y: number };
   onSelectZone: (zoneIndex: number) => void;
   onOpenCaseStudy: (systemIndex: number) => void;
+  qualityMode?: 'ultra' | 'eco';
 }
 
 const PORTAL_PALETTES = [
@@ -677,13 +678,16 @@ export const ActiveTheoryCanvas: React.FC<ActiveTheoryCanvasProps> = ({
   activeZone,
   mousePos,
   onOpenCaseStudy,
+  qualityMode = 'ultra',
 }) => {
+  const isEco = qualityMode === 'eco';
+
   return (
     <div className="fixed inset-0 z-0 bg-[#020205]">
       <Canvas
-        dpr={[1, 1.5]}
+        dpr={isEco ? [0.8, 1.0] : [1.0, 1.5]}
         camera={{ position: [0, 0.4, 7.2], fov: 50, near: 0.1, far: 120 }}
-        gl={{ antialias: true, powerPreference: 'high-performance' }}
+        gl={{ antialias: !isEco, powerPreference: isEco ? 'low-power' : 'high-performance' }}
       >
         <color attach="background" args={['#020205']} />
         <fog attach="fog" args={['#020205', 8, 42]} />
@@ -720,8 +724,8 @@ export const ActiveTheoryCanvas: React.FC<ActiveTheoryCanvasProps> = ({
         <mesh position={[0, -2.0, -65]} rotation={[-Math.PI / 2, 0, 0]}>
           <planeGeometry args={[28, 175]} />
           <MeshReflectorMaterial
-            blur={[300, 90]}
-            resolution={512}
+            blur={isEco ? [100, 30] : [300, 90]}
+            resolution={isEco ? 256 : 512}
             mixBlur={1}
             mixStrength={45}
             roughness={0.35}

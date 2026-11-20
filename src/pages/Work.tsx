@@ -19,6 +19,7 @@ import {
 import Layout from '@/components/Layout';
 import ScrambleText from '@/components/activetheory/ScrambleText';
 import { soundEngine } from '@/components/activetheory/SoundEngine';
+import ArchitecturePlayground from '@/components/activetheory/ArchitecturePlayground';
 
 interface SystemArchitecture {
   id: string;
@@ -521,6 +522,11 @@ const Work = () => {
           </div>
         </motion.section>
       </AnimatePresence>
+
+      {/* ==================== INTERACTIVE ARCHITECTURE PLAYGROUND ==================== */}
+      <section className="mb-20">
+        <ArchitecturePlayground />
+      </section>
 
       {/* ==================== CORE ENGINEERING SKILLS SECTION ==================== */}
       <section className="pt-8 border-t border-white/10">

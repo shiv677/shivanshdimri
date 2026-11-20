@@ -219,6 +219,17 @@ export const ActiveTheoryExperience: React.FC = () => {
   const [showTerminal, setShowTerminal] = useState(false);
   const [copiedEmail, setCopiedEmail] = useState(false);
   const [aiMessage, setAiMessage] = useState<string | null>(null);
+  const [qualityMode, setQualityMode] = useState<'ultra' | 'eco'>(() => {
+    return (localStorage.getItem('at_quality_mode') as 'ultra' | 'eco') || 'ultra';
+  });
+
+  const toggleQuality = () => {
+    setQualityMode((prev) => {
+      const next = prev === 'ultra' ? 'eco' : 'ultra';
+      localStorage.setItem('at_quality_mode', next);
+      return next;
+    });
+  };
 
   const flyToZone = useCallback((zoneIdx: number) => {
     const clamped = Math.max(0, Math.min(ZONE_Z_POSITIONS.length - 1, zoneIdx));
@@ -344,6 +355,7 @@ export const ActiveTheoryExperience: React.FC = () => {
           soundEngine.playClick(880);
           setModalSystem(FLAGSHIP_SYSTEMS[sysIdx]);
         }}
+        qualityMode={qualityMode}
       />
 
       {/* 2. Active Theory Top Bar, Right Minimap & Bottom Pillbox + AI Guide */}
@@ -357,6 +369,8 @@ export const ActiveTheoryExperience: React.FC = () => {
         onAIQuery={handleAIQuery}
         aiMessage={aiMessage}
         onClearAIMessage={() => setAiMessage(null)}
+        qualityMode={qualityMode}
+        onToggleQuality={toggleQuality}
       />
 
       {/* 3. Spatial Zone Stage HUD (Synchronized with 3D Tunnel Depth) */}

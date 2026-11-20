@@ -15,6 +15,7 @@ import {
   Cpu,
   Layers,
   TerminalSquare,
+  Zap,
 } from 'lucide-react';
 import { soundEngine } from './SoundEngine';
 import ScrambleText from './ScrambleText';
@@ -34,11 +35,23 @@ const NAV_ITEMS = [
 export const ActiveTheoryLayout: React.FC<ActiveTheoryLayoutProps> = ({ children }) => {
   const [soundOn, setSoundOn] = useState(soundEngine.active);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [qualityMode, setQualityMode] = useState<'ultra' | 'eco'>(() => {
+    return (localStorage.getItem('at_quality_mode') as 'ultra' | 'eco') || 'ultra';
+  });
   const location = useLocation();
 
   const handleToggleSound = () => {
     const active = soundEngine.toggleAudio();
     setSoundOn(active);
+  };
+
+  const handleToggleQuality = () => {
+    soundEngine.playClick(940);
+    setQualityMode((prev) => {
+      const next = prev === 'ultra' ? 'eco' : 'ultra';
+      localStorage.setItem('at_quality_mode', next);
+      return next;
+    });
   };
 
   return (
@@ -122,8 +135,23 @@ export const ActiveTheoryLayout: React.FC<ActiveTheoryLayoutProps> = ({ children
           })}
         </nav>
 
-        {/* Right Controls: Audio Synth, CV.PDF, Mobile Menu */}
+        {/* Right Controls: Audio Synth, GPU Quality, CV.PDF, Mobile Menu */}
         <div className="flex items-center gap-2">
+          {/* Quality Mode Switcher */}
+          <button
+            onClick={handleToggleQuality}
+            onMouseEnter={() => soundEngine.playHover()}
+            className={`hidden sm:flex px-2.5 py-1.5 rounded-full border text-[10px] font-mono tracking-[0.16em] items-center gap-1.5 transition-all cursor-pointer backdrop-blur-md ${
+              qualityMode === 'ultra'
+                ? 'border-cyan-400/50 bg-cyan-400/10 text-cyan-300 shadow-[0_0_12px_rgba(0,240,255,0.2)]'
+                : 'border-emerald-400/50 bg-emerald-400/10 text-emerald-300 shadow-[0_0_12px_rgba(52,211,153,0.2)]'
+            }`}
+            title="Toggle GPU Shader Quality Mode"
+          >
+            <Zap size={11} className={qualityMode === 'ultra' ? 'text-cyan-400' : 'text-emerald-400'} />
+            <span>{qualityMode === 'ultra' ? 'ULTRA' : 'ECO 60FPS'}</span>
+          </button>
+
           {/* Status badge */}
           <div className="hidden xl:flex items-center gap-1.5 px-3 py-1 rounded-full border border-white/10 bg-black/40 text-[9px] font-mono tracking-[0.2em] text-white/50">
             <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />

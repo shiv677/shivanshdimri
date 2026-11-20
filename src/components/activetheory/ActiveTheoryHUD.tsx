@@ -9,6 +9,7 @@ import {
   Layers,
   ChevronUp,
   ChevronDown,
+  Zap,
 } from 'lucide-react';
 import { soundEngine } from './SoundEngine';
 import ScrambleText from './ScrambleText';
@@ -23,6 +24,8 @@ interface ActiveTheoryHUDProps {
   onAIQuery: (query: string) => void;
   aiMessage: string | null;
   onClearAIMessage: () => void;
+  qualityMode?: 'ultra' | 'eco';
+  onToggleQuality?: () => void;
 }
 
 export const ZONE_LABELS = [
@@ -52,6 +55,8 @@ export const ActiveTheoryHUD: React.FC<ActiveTheoryHUDProps> = ({
   onAIQuery,
   aiMessage,
   onClearAIMessage,
+  qualityMode = 'ultra',
+  onToggleQuality,
 }) => {
   const [soundOn, setSoundOn] = useState(false);
   const [aiExpanded, setAiExpanded] = useState(false);
@@ -121,8 +126,28 @@ export const ActiveTheoryHUD: React.FC<ActiveTheoryHUDProps> = ({
           </span>
         </div>
 
-        {/* Right: Audio Synth, CV, CLI, and All-Work Index Trigger */}
+        {/* Right: Audio Synth, GPU Quality Toggle, CV, CLI, and All-Work Index Trigger */}
         <div className="flex items-center gap-2">
+          {/* Quality Mode Switcher */}
+          {onToggleQuality && (
+            <button
+              onClick={() => {
+                soundEngine.playClick(940);
+                onToggleQuality();
+              }}
+              onMouseEnter={() => soundEngine.playHover()}
+              className={`hidden sm:flex px-2.5 py-1.5 rounded-full border text-[10px] font-mono tracking-[0.16em] items-center gap-1.5 transition-all cursor-pointer backdrop-blur-md ${
+                qualityMode === 'ultra'
+                  ? 'border-cyan-400/50 bg-cyan-400/10 text-cyan-300 shadow-[0_0_12px_rgba(0,240,255,0.2)]'
+                  : 'border-emerald-400/50 bg-emerald-400/10 text-emerald-300 shadow-[0_0_12px_rgba(52,211,153,0.2)]'
+              }`}
+              title="Toggle GPU Shader Quality Mode"
+            >
+              <Zap size={11} className={qualityMode === 'ultra' ? 'text-cyan-400' : 'text-emerald-400'} />
+              <span>{qualityMode === 'ultra' ? 'ULTRA' : 'ECO 60FPS'}</span>
+            </button>
+          )}
+
           <button
             onClick={handleToggleSound}
             onMouseEnter={() => soundEngine.playHover()}
