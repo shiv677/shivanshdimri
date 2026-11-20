@@ -465,11 +465,22 @@ export const TerminalPortfolio: React.FC<TerminalPortfolioProps> = ({ onSwitchTo
                 </div>
               </div>
 
-              <div className="p-3 rounded-lg bg-card/20 border border-border/30">
-                <span className="font-bold text-foreground">Production Client Web Applications:</span>
+              <div className="p-3 rounded-lg bg-card/40 border border-border/40 hover:border-primary/50 transition-colors">
+                <div className="flex flex-wrap items-center justify-between gap-2">
+                  <span className="font-bold text-foreground">4. Autonomous AI & Multimodal VLM Evaluation Harness</span>
+                  <a href="https://github.com/shiv677" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 text-xs text-primary hover:underline">
+                    <Github size={12} /> repo <ExternalLink size={10} />
+                  </a>
+                </div>
                 <p className="text-xs text-muted-foreground mt-1">
-                  Arkose Infosoft (IT Services), Arkose Buildcom (Architecture), Doctor Healthy You (Healthcare App), EliteShop (Next.js E-Commerce), 32 Pearls Dental, Pitch & Play, Carbonix (USA), TCBO Marketing (USA), Sole Trader (Australia), Yali Energy (Canada).
+                  Distributed model benchmarking framework orchestrating multi-agent consensus swarms, Pydantic v2 schema constraints, and multimodal VLM regression suites.
                 </p>
+                <div className="flex flex-wrap gap-1.5 mt-2">
+                  <span className="px-2 py-0.5 rounded bg-primary/10 text-primary text-[10px]">Python 3.12</span>
+                  <span className="px-2 py-0.5 rounded bg-primary/10 text-primary text-[10px]">LangGraph</span>
+                  <span className="px-2 py-0.5 rounded bg-primary/10 text-primary text-[10px]">Pydantic v2</span>
+                  <span className="px-2 py-0.5 rounded bg-primary/10 text-primary text-[10px]">VLM Reasoning</span>
+                </div>
               </div>
             </div>
           </div>
@@ -531,10 +542,28 @@ export const TerminalPortfolio: React.FC<TerminalPortfolioProps> = ({ onSwitchTo
               </a>
             </div>
           );
+        } else if (args.includes('ai') || args.includes('vlm') || args.includes('eval') || args.includes('harness')) {
+          output = (
+            <div className="space-y-3 font-mono text-xs sm:text-sm">
+              <p className={`${t.highlight} font-bold`}>=== Autonomous AI & Multimodal VLM Evaluation Harness ===</p>
+              <p className="text-foreground/90">
+                Distributed benchmarking framework distributing multimodal vision-language model and agentic evaluations with 100% Pydantic schema validation.
+              </p>
+              <div className="bg-card/50 p-3 rounded font-mono text-xs space-y-1">
+                <div>&bull; Multi-agent consensus debate scoring eliminating evaluator bias</div>
+                <div>&bull; Asynchronous token-bucket rate limiter with zero dropped 429 requests</div>
+                <div>&bull; Pydantic v2 runtime schema enforcement for guaranteed structured output</div>
+                <div>&bull; Multimodal bounding-box, OCR, and reasoning regression verification</div>
+              </div>
+              <a href="https://github.com/shiv677" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 text-xs text-primary hover:underline">
+                <Github size={14} /> Open Repository <ExternalLink size={12} />
+              </a>
+            </div>
+          );
         } else {
           output = (
             <div className="text-xs text-muted-foreground font-mono">
-              Project not found. Available names: <span className="text-foreground">audio</span>, <span className="text-foreground">t2nas</span>, <span className="text-foreground">rsync</span>.
+              Project not found. Available names: <span className="text-foreground">audio</span>, <span className="text-foreground">t2nas</span>, <span className="text-foreground">rsync</span>, <span className="text-foreground">ai</span>.
             </div>
           );
         }
