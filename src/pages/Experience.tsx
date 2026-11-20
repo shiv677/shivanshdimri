@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   Brain,
@@ -30,7 +30,7 @@ interface SkillCategory {
   tagline: string;
   skills: {
     name: string;
-    level: string;
+    implementation: string;
     desc: string;
     tags: string[];
   }[];
@@ -45,31 +45,31 @@ const SKILL_CATEGORIES: SkillCategory[] = [
     skills: [
       {
         name: 'Autonomous Multi-Agent Swarms',
-        level: 'Advanced',
+        implementation: 'Multi-Agent Consensus Swarm',
         desc: 'Orchestrating collaborative agent networks with specialized roles, state machines, and consensus debate mechanisms using LangGraph and LangChain.',
         tags: ['LangGraph', 'Multi-Agent', 'Agentic Workflows', 'Consensus Loops'],
       },
       {
         name: 'VLM & Multimodal Model Evaluation',
-        level: 'Production',
+        implementation: 'InfoBay VLM Suite',
         desc: 'Constructing rigorous benchmark suites for Vision-Language Models evaluating OCR precision, document understanding, and spatial bounding boxes.',
         tags: ['Vision-Language Models', 'Benchmarking', 'Grounding', 'Multimodal QA'],
       },
       {
         name: 'Structured Schema Enforcement',
-        level: 'Expert',
+        implementation: 'Pydantic v2 Schema Guard',
         desc: 'Guaranteeing 100% deterministic JSON outputs and strict model compliance using Pydantic v2 schemas and native function calling.',
         tags: ['Pydantic v2', 'JSON Schema', 'Tool Calling', 'Grammar Constrained'],
       },
       {
         name: 'RAG & Dense Semantic Retrieval',
-        level: 'Advanced',
+        implementation: 'Hybrid Dense Vector RAG',
         desc: 'Designing retrieval-augmented generation architectures with chunking strategies, dense embeddings, re-ranking, and vector databases.',
         tags: ['Vector Embeddings', 'RAG Pipelines', 'Hybrid Search', 'Re-ranking'],
       },
       {
         name: 'Automated Regression Testing & Rubrics',
-        level: 'Production',
+        implementation: 'Continuous Drift Harness',
         desc: 'Automating continuous evaluation harnesses across model releases to detect hallucination drift and reasoning degradation.',
         tags: ['Automated Eval', 'Rubric Scoring', 'Hallucination Checks', 'MLOps'],
       },
@@ -83,31 +83,31 @@ const SKILL_CATEGORIES: SkillCategory[] = [
     skills: [
       {
         name: 'Multiprocessing & GIL Avoidance',
-        level: 'Expert',
+        implementation: 'T2NAS CPU-1 Worker Pool',
         desc: 'Bypassing the CPython Global Interpreter Lock (GIL) via dynamic worker pool allocation (CPU count − 1 strategy) and inter-process queues.',
         tags: ['multiprocessing.Pool', 'ProcessPoolExecutor', 'IPC Queues', 'Worker Scaling'],
       },
       {
         name: 'Asynchronous I/O & Event Loops',
-        level: 'Advanced',
+        implementation: 'AsyncIO Discovery Scraper',
         desc: 'Asynchronous network calls, token-bucket rate limiting semaphores, and non-blocking streaming data pipelines.',
         tags: ['asyncio', 'Semaphores', 'Task Groups', 'aiohttp'],
       },
       {
         name: 'Subprocess Pipelines & Stream Parsing',
-        level: 'Expert',
+        implementation: 'Enterprise Rsync Platform',
         desc: 'Managing external binary runtimes with non-blocking stdout/stderr pipe streaming, regex progress extraction, and buffer control.',
         tags: ['subprocess.Popen', 'Pipe Streaming', 'Regex Parsers', 'Daemon Control'],
       },
       {
         name: 'Memory Ceiling & Resource Profiling',
-        level: 'Production',
+        implementation: 'O(1) Bounded Chunk Stream',
         desc: 'Preventing OOM errors on multi-gigabyte transfers using streaming file chunks, generator pipelines, and memory profiling.',
         tags: ['tracemalloc', 'Memory Bounding', 'Generator Pipelines', 'Resource Limits'],
       },
       {
         name: 'Signal Trapping & Clean Teardown',
-        level: 'Advanced',
+        implementation: 'Atomic Teardown Handlers',
         desc: 'Trapping POSIX SIGINT/SIGTERM signals to execute safe state flushes, close database handles, and terminate child workers.',
         tags: ['signal.signal', 'Graceful Shutdown', 'Atomic Cleanup', 'POSIX'],
       },
@@ -121,25 +121,25 @@ const SKILL_CATEGORIES: SkillCategory[] = [
     skills: [
       {
         name: 'State Checkpointing & Resumability',
-        level: 'Expert',
+        implementation: 'T2NAS State Ledger',
         desc: 'Zero-data-loss state machines persisting byte offsets and processed entity IDs to survive unannounced power loss or process kill.',
         tags: ['Atomic Checkpointing', 'Resumable State', 'Zero Duplication', 'Crash Proof'],
       },
       {
         name: 'Acoustic & Hash Deduplication',
-        level: 'Expert',
+        implementation: 'Audio Duplicacy Checker',
         desc: 'Dual-phase deduplication pipelines combining perceptual acoustic hashing (Chromaprint) with cryptographic byte hashes (SHA-256).',
         tags: ['Chromaprint', 'PyTorch Audio', 'SHA-256', 'Collision Detection'],
       },
       {
         name: 'Transactional State Stores (SQLite WAL)',
-        level: 'Advanced',
+        implementation: 'SQLite WAL State Store',
         desc: 'Configuring SQLite in Write-Ahead Logging (WAL) mode for concurrent high-speed reads and thread-safe batch transaction writes.',
         tags: ['SQLite WAL', 'PostgreSQL', 'ACID Transactions', 'Concurrency Locks'],
       },
       {
         name: 'High-Volume ETL & Data Validation',
-        level: 'Production',
+        implementation: 'Large-Scale Dataset QA',
         desc: 'Batch processing 100k+ vendor datasets with schema validation, malformed file quarantine, and structured CSV/Parquet reporting.',
         tags: ['ETL Pipelines', 'Schema Validation', 'Batch Processing', 'Quarantine Logic'],
       },
@@ -153,25 +153,25 @@ const SKILL_CATEGORIES: SkillCategory[] = [
     skills: [
       {
         name: 'Linux Systemd Daemons & Automation',
-        level: 'Advanced',
+        implementation: 'Systemd Service Supervisors',
         desc: 'Authoring systemd unit files, background process supervisors, log rotation, and automated service recovery on failure.',
         tags: ['Systemd Units', 'Linux Daemons', 'Journalctl', 'Bash Automation'],
       },
       {
         name: 'Enterprise Rsync & Network Storage',
-        level: 'Expert',
+        implementation: 'Embedded Rsync Runtimes',
         desc: 'Packaging embedded portable rsync/OpenSSH runtimes, configuring NAS/SAN network mounts, and differential delta replication.',
         tags: ['Rsync Core', 'OpenSSH Keys', 'NAS / SAN', 'Delta Compression'],
       },
       {
         name: 'Containerization & CI/CD Pipelines',
-        level: 'Proficient',
+        implementation: 'Docker & CI/CD Isolation',
         desc: 'Docker container packaging for isolated worker execution and GitHub Actions workflows for automated linting and build validation.',
         tags: ['Docker', 'GitHub Actions', 'CI/CD Automation', 'Environment Isolation'],
       },
       {
         name: 'Modern Web Engineering',
-        level: 'Advanced',
+        implementation: 'ActiveTheory Systems UI',
         desc: 'Building responsive, high-performance interfaces with React 18, TypeScript, Tailwind CSS, Three.js / WebGL, and Framer Motion.',
         tags: ['React 18', 'TypeScript', 'Three.js / WebGL', 'Framer Motion', 'Tailwind CSS'],
       },
@@ -184,8 +184,9 @@ const CAREER_TIMELINE = [
     role: 'Associate AI Engineer',
     company: 'InfoBay AI Limited',
     location: 'Lucknow, India (On-site)',
-    period: 'Feb 2026 – Present',
+    period: 'February 2026 – Present',
     status: 'ACTIVE ROLE // PROMOTED',
+    isCurrent: true,
     highlights: [
       'Developing Python automation and high-throughput data-processing systems for enterprise operations.',
       'Building AI/LLM evaluation and benchmarking workflows with automated scoring and structured schema validation.',
@@ -202,6 +203,7 @@ const CAREER_TIMELINE = [
     location: 'Remote',
     period: '2024 – 2026',
     status: 'CONTINUOUS (2+ YEARS TOTAL)',
+    isCurrent: false,
     highlights: [
       'Authored T2NAS, a CPU-aware resumable parallel transfer engine for 10Gbps NAS network environments.',
       'Developed Audio Internal & External Duplicacy Checker combining acoustic fingerprinting with atomic checkpointing.',
@@ -217,12 +219,6 @@ const Experience = () => {
   const selectedCategory =
     SKILL_CATEGORIES.find((c) => c.id === activeCategory) || SKILL_CATEGORIES[0];
 
-  const experienceMonths = useMemo(() => {
-    const start = new Date(2025, 5); // Jun 2025
-    const now = new Date();
-    return Math.max(1, (now.getFullYear() - start.getFullYear()) * 12 + (now.getMonth() - start.getMonth()));
-  }, []);
-
   return (
     <Layout>
       {/* ==================== HERO SECTION ==================== */}
@@ -237,7 +233,7 @@ const Experience = () => {
         </h1>
 
         <p className="text-sm sm:text-base font-mono text-white/70 max-w-3xl leading-relaxed mb-8">
-          Associate AI Engineer at InfoBay AI Limited (Feb 2026 – Present). I build reliable Python systems, AI evaluation workflows, data-processing pipelines, and automation infrastructure for complex engineering problems.
+          Associate AI Engineer at InfoBay AI Limited (February 2026 – Present). I build reliable Python systems, AI evaluation workflows, data-processing pipelines, and automation infrastructure for complex engineering problems.
         </p>
 
         {/* Dynamic Telemetry Stats */}
@@ -349,7 +345,7 @@ const Experience = () => {
                       {skill.name}
                     </h4>
                     <span className="px-2 py-0.5 rounded-md border border-cyan-400/30 bg-cyan-400/10 text-[9px] font-mono text-cyan-300 uppercase">
-                      {skill.level}
+                      {skill.implementation}
                     </span>
                   </div>
 
@@ -391,7 +387,7 @@ const Experience = () => {
             <div
               key={idx}
               className={`p-6 sm:p-8 rounded-3xl border backdrop-blur-xl relative transition-all ${
-                item.status === 'ACTIVE ROLE'
+                item.isCurrent
                   ? 'border-cyan-400/40 bg-[#05060e]/90 shadow-[0_0_30px_rgba(0,240,255,0.1)]'
                   : 'border-white/10 bg-[#030409]/70'
               }`}
@@ -400,7 +396,7 @@ const Experience = () => {
                 <div className="flex items-center gap-3">
                   <span
                     className={`w-2 h-2 rounded-full ${
-                      item.status === 'ACTIVE ROLE' ? 'bg-emerald-400 animate-pulse' : 'bg-white/40'
+                      item.isCurrent ? 'bg-emerald-400 animate-pulse' : 'bg-white/40'
                     }`}
                   />
                   <h3 className="text-xl sm:text-2xl font-display font-black uppercase text-white">
@@ -414,7 +410,7 @@ const Experience = () => {
                   </span>
                   <span
                     className={`px-3 py-1 rounded-full text-[10px] font-mono font-bold tracking-wider ${
-                      item.status === 'ACTIVE ROLE'
+                      item.isCurrent
                         ? 'bg-emerald-400/10 border border-emerald-400/30 text-emerald-300'
                         : 'bg-white/5 border border-white/10 text-white/50'
                     }`}

@@ -1,0 +1,7 @@
+id,status,flags,duplicate_of,match_type,raw_text
+doc_002,EXACT_DUPLICATE,EXACT_MATCH_OF_doc_001,doc_001,EXACT,"High performance distributed stream processing architecture enables reliable AI telemetry ingestion, validation, and analytics across scalable edge cloud nodes and real-time inference clusters."
+doc_003,NEAR_DUPLICATE,NEAR_MATCH_OF_doc_001_DIST_2,doc_001,NEAR,"High performance distributed stream processing architecture enables reliable AI telemetry ingestion, validation, and fast analytics across scalable edge cloud nodes and real-time inference clusters."
+doc_005,CORRUPT,CONTAINS_NULL_BYTES,,,Corrupted telemetry payload with \x00 null byte injection.
+doc_006,CORRUPT,EMPTY_TEXT,,,   
+doc_007,CORRUPT,TOKEN_LENGTH_ANOMALY:token_exceeds_80_chars,,,Runaway corrupted memory buffer dump with a_token_without_spaces_exceeding_eighty_characters_in_length_123456789012345678901234567890
+doc_008,CORRUPT,MOJIBAKE_ENCODING_ARTIFACT;UNNORMALIZED_UNICODE,,,Data corruption artifact with â€™ mojibake characters.

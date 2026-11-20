@@ -1,0 +1,4 @@
+id,normalized_text,sha256,simhash
+doc_001,"High performance distributed stream processing architecture enables reliable AI telemetry ingestion, validation, and analytics across scalable edge cloud nodes and real-time inference clusters.",9875ed95d23c0e3d8945b02fb0ca8d98c9f7378522e97256d405f3c3f3783ae9,8b155c335124623e
+doc_004,The flight office deployed AI systems for canonical multi-lingual dataset normalization.,be3345999c0d6d4c94ecf33a273d3d7ed92e4645642c83c17ec2381b29d1f835,8f2d4025eb00c29e
+doc_009,Vision-language models require rigorous spatial bounding box grounding across diverse evaluation benchmarks.,14aa7c9b7def45d4e3b9ece0f162eeef9113873de14cfe292175dd32a4735791,c4378027cb164bf2

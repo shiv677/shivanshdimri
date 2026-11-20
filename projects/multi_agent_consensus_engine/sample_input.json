@@ -1,0 +1,32 @@
+[
+  {
+    "task_id": "consensus_demo_01_accept",
+    "prompt": "Summarize the primary benefits of SQLite WAL mode in data pipelines.",
+    "context": "SQLite WAL (Write-Ahead Logging) mode separates reads and writes. Readers do not block writers, and writers do not block readers. It improves concurrency and write throughput while ensuring atomic durability across checkpoint intervals.",
+    "response": "SQLite WAL mode provides two primary advantages: first, readers do not block writers and writers do not block readers, enabling high-concurrency throughput. Second, it maintains atomic commits through periodic checkpoints, ensuring strict durability without corruption.",
+    "required_format": "text",
+    "required_keys": null
+  },
+  {
+    "task_id": "consensus_demo_02_disagreement_escalate",
+    "prompt": "Evaluate node synchronization metrics.",
+    "context": "Node 1 replica lag is 12ms. Cluster heartbeat is healthy at 1.0 interval.",
+    "response": "Node 1 replica lag is 12ms. This heartbeat status is true across all monitors, yet is false under identical settings; therefore, total failure occurred.",
+    "required_format": "text",
+    "required_keys": null
+  },
+  {
+    "task_id": "consensus_demo_03_schema_fail",
+    "prompt": "Return transaction throughput and p99 latency in strict JSON format.",
+    "context": "System sustained 5,400 ops/sec with 12ms p99 latency.",
+    "response": "Output payload: {ops: 5400, latency_ms: 'twelve'}",
+    "required_format": "json",
+    "expected_schema": {
+      "properties": {
+        "ops": {"type": "integer"},
+        "latency_ms": {"type": "integer"}
+      },
+      "required": ["ops", "latency_ms"]
+    }
+  }
+]

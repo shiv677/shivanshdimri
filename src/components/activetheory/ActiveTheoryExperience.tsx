@@ -181,6 +181,76 @@ const FLAGSHIP_SYSTEMS: FlagshipSystem[] = [
     stack: ['Python 3.12', 'LangGraph', 'Vision-Language Models', 'Pydantic v2', 'AsyncIO'],
     github: 'https://github.com/shiv677',
   },
+  {
+    index: '05',
+    zoneIndex: 4,
+    id: 'dataset-quality-engineering',
+    title: 'DATASET QUALITY & INTEGRITY PIPELINE',
+    shortTitle: 'DATA.SENTINEL',
+    category: 'DATA INTEGRITY // DEDUPLICATION // CORRUPTION AUDIT',
+    accent: '#10b981',
+    tagline: 'Multi-pass normalization, semantic deduplication, and corruption quarantine.',
+    description:
+      'High-reliability dataset quality-control pipeline with Unicode NFKC normalization, SimHash 64-bit near-duplicate detection, and atomic SQLite WAL checkpoints for zero-loss batch processing.',
+    pipeline: [
+      { step: '01', name: 'CANONICAL NORM', spec: 'Unicode NFKC normalization' },
+      { step: '02', name: 'EXACT HASH', spec: 'SHA-256 collision index' },
+      { step: '03', name: 'SIMHASH DEDUP', spec: 'Hamming distance near-dedup' },
+      { step: '04', name: 'CORRUPTION GUARD', spec: 'Null-byte & schema validation' },
+      { step: '05', name: 'AUDIT LEDGER', spec: 'Quarantine & clean CSV ledger' },
+    ],
+    telemetry: [
+      { label: 'SCHEMA LOCK', value: 'STRICT', sub: 'Pydantic v2 validation' },
+      { label: 'DEDUP PASS', value: 'DUAL', sub: 'Exact hash + SimHash' },
+      { label: 'CORRUPTION', value: 'QUARANTINE', sub: 'Null-byte & encoding catch' },
+      { label: 'FAULT RECOVERY', value: 'ATOMIC', sub: 'WAL checkpoint resume' },
+    ],
+    code: `def normalize_and_audit_record(row: dict) -> RecordAudit:
+    """Normalizes Unicode NFKC text and computes 64-bit SimHash for near-duplicate quarantine."""
+    text = unicodedata.normalize("NFKC", row.get("text", "").strip())
+    digest = hashlib.sha256(text.encode("utf-8")).hexdigest()
+    sim = compute_simhash64(text)
+    return RecordAudit(raw_id=row["id"], clean_text=text, sha256=digest, simhash=sim)`,
+    stack: ['Python 3.12', 'Pydantic v2', 'Unicode NFKC', 'SimHash', 'SQLite WAL'],
+    github: 'https://github.com/shiv677',
+  },
+  {
+    index: '06',
+    zoneIndex: 4,
+    id: 'research-discovery-pipeline',
+    title: 'RESEARCH & WEBSITE DISCOVERY ENGINE',
+    shortTitle: 'DISCOVERY.STREAM',
+    category: 'ASYNC WEB SCRAPING // RESEARCH AUTOMATION',
+    accent: '#f59e0b',
+    tagline: 'Asynchronous target discovery and structured QA harvesting pipeline.',
+    description:
+      'Automated source discovery and web harvesting pipeline targeting domain-specialized question datasets with rate-limiting queues, headless browser automation, and structured extraction.',
+    pipeline: [
+      { step: '01', name: 'DOMAIN SHORTLIST', spec: 'Relevance & question density' },
+      { step: '02', name: 'RATE SHIELD', spec: 'Async token-bucket queues' },
+      { step: '03', name: 'HEADLESS BROWSER', spec: 'Dynamic DOM rendering' },
+      { step: '04', name: 'QA EXTRACTION', spec: 'Structured container harvest' },
+      { step: '05', name: 'PROVENANCE LOG', spec: 'Transactional SQLite store' },
+    ],
+    telemetry: [
+      { label: 'DISCOVERY', value: 'TARGETED', sub: 'Domain relevance heuristic' },
+      { label: 'THROTTLING', value: 'ADAPTIVE', sub: 'Token-bucket rate limit' },
+      { label: 'RECOVERY', value: 'EXPONENTIAL', sub: 'Backoff & auto-retry' },
+      { label: 'STORAGE', value: 'RESUMABLE', sub: 'SQLite WAL checkpoint' },
+    ],
+    code: `async def harvest_qa_stream(session: aiohttp.ClientSession, url: str) -> list[dict]:
+    """Asynchronous question harvesting with token-bucket rate limiter and resilient DOM parsing."""
+    async with session.get(url, timeout=aiohttp.ClientTimeout(total=15)) as response:
+        if response.status != 200:
+            return []
+        soup = BeautifulSoup(await response.text(), "html.parser")
+        return [
+            {"url": url, "qa": item.get_text(strip=True)}
+            for item in soup.select(".question-block, .qa-item")
+        ]`,
+    stack: ['Python 3.12', 'AsyncIO', 'Playwright', 'BeautifulSoup4', 'SQLite WAL'],
+    github: 'https://github.com/shiv677',
+  },
 ];
 
 const CAPABILITY_MATRIX = [
@@ -455,8 +525,8 @@ export const ActiveTheoryExperience: React.FC = () => {
               {/* Right Telemetry Panel */}
               <div className="pointer-events-auto grid grid-cols-2 gap-2.5 w-full lg:w-80">
                 {[
-                  { val: '20+', label: 'SYSTEMS DELIVERED' },
-                  { val: '100%', label: 'HASH DETERMINISM' },
+                  { val: '6 CORE', label: 'FLAGSHIP ARCHITECTURES' },
+                  { val: 'PARITY', label: 'CHROMAPRINT + SHA-256' },
                   { val: 'CPU-1', label: 'WORKER SCALING' },
                   { val: 'INFOBAY', label: 'ASSOCIATE AI ENG' },
                 ].map((m) => (

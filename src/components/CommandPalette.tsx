@@ -61,8 +61,8 @@ const CommandPalette = () => {
     { icon: <FileText size={16} />, label: 'Download Resume', action: () => { window.open('/SHIVANSH_DIMRI_CV.pdf', '_blank'); setOpen(false); }, group: 'Actions' },
     
     // Links
-    { icon: <Github size={16} />, label: 'GitHub Profile', action: () => { window.open('https://github.com/shivanshdimri', '_blank'); setOpen(false); }, group: 'Links' },
-    { icon: <Linkedin size={16} />, label: 'LinkedIn Profile', action: () => { window.open('https://linkedin.com/in/shivanshdimri', '_blank'); setOpen(false); }, group: 'Links' },
+    { icon: <Github size={16} />, label: 'GitHub Profile', action: () => { window.open('https://github.com/shiv677', '_blank'); setOpen(false); }, group: 'Links' },
+    { icon: <Linkedin size={16} />, label: 'LinkedIn Profile', action: () => { window.open('https://linkedin.com/in/shivansh-dimri-27820b268', '_blank'); setOpen(false); }, group: 'Links' },
   ];
 
   useEffect(() => {

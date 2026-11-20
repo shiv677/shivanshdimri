@@ -339,7 +339,7 @@ export const ActiveTheoryLayout: React.FC<ActiveTheoryLayoutProps> = ({ children
           </div>
           <div className="flex items-center gap-4">
             <span>CORE: PYTHON 3.12 // PYTORCH // REACT 18 // THREE.JS</span>
-            <span className="text-emerald-400">STATUS: ZERO FAILURE</span>
+            <span className="text-emerald-400">STATUS: SYSTEM NOMINAL</span>
           </div>
         </div>
       </footer>
