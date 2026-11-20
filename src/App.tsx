@@ -6,6 +6,7 @@ import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { AnimatePresence } from "framer-motion";
 import { ThemeProvider } from "./components/ThemeProvider";
 import CommandPalette from "./components/CommandPalette";
+import GlobalQuakeTerminal from "./components/terminal/GlobalQuakeTerminal";
 import Home from "./pages/Home";
 import Work from "./pages/Work";
 import ArchitectureDocs from "./pages/ArchitectureDocs";
@@ -50,6 +51,7 @@ const App = () => (
         <BrowserRouter>
           <ScrollToTop />
           <CommandPalette />
+          <GlobalQuakeTerminal />
           <AnimatedRoutes />
         </BrowserRouter>
       </TooltipProvider>

@@ -2,8 +2,6 @@ import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
-  Volume2,
-  VolumeX,
   Download,
   Menu,
   X,
@@ -19,7 +17,7 @@ import {
 } from 'lucide-react';
 import { soundEngine } from './SoundEngine';
 import ScrambleText from './ScrambleText';
-import AudioOscilloscope from './AudioOscilloscope';
+import AudioVisualizerHUD from './AudioVisualizerHUD';
 import TelemetryTicker from './TelemetryTicker';
 
 interface ActiveTheoryLayoutProps {
@@ -36,17 +34,11 @@ const NAV_ITEMS = [
 ];
 
 export const ActiveTheoryLayout: React.FC<ActiveTheoryLayoutProps> = ({ children }) => {
-  const [soundOn, setSoundOn] = useState(soundEngine.active);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [qualityMode, setQualityMode] = useState<'ultra' | 'eco'>(() => {
     return (localStorage.getItem('at_quality_mode') as 'ultra' | 'eco') || 'ultra';
   });
   const location = useLocation();
-
-  const handleToggleSound = () => {
-    const active = soundEngine.toggleAudio();
-    setSoundOn(active);
-  };
 
   const handleToggleQuality = () => {
     soundEngine.playClick(940);
@@ -161,29 +153,8 @@ export const ActiveTheoryLayout: React.FC<ActiveTheoryLayoutProps> = ({ children
             <span>ONLINE // SYS: ACTIVE</span>
           </div>
 
-          {/* Sound Toggle */}
-          <button
-            onClick={handleToggleSound}
-            onMouseEnter={() => soundEngine.playHover()}
-            className={`px-3 py-1.5 rounded-full border text-[10px] font-mono tracking-[0.18em] flex items-center gap-2 transition-all cursor-pointer backdrop-blur-md ${
-              soundOn
-                ? 'border-cyan-400/60 bg-cyan-400/15 text-cyan-300 shadow-[0_0_15px_rgba(0,240,255,0.25)]'
-                : 'border-white/15 bg-black/60 text-white/60 hover:text-white hover:border-white/35'
-            }`}
-            title="Toggle Procedural Audio Synth"
-          >
-            {soundOn ? <Volume2 size={12} className="text-cyan-400" /> : <VolumeX size={12} />}
-            <AudioOscilloscope active={soundOn} width={38} height={12} className="hidden sm:inline-block" />
-            <div className="flex items-end gap-0.5 h-2.5">
-              {[0.5, 1.0, 0.6, 0.9].map((h, i) => (
-                <span
-                  key={i}
-                  className={`w-0.5 bg-current ${soundOn ? 'animate-pulse' : 'opacity-35'}`}
-                  style={{ height: soundOn ? `${h * 100}%` : '30%' }}
-                />
-              ))}
-            </div>
-          </button>
+          {/* Audio Visualizer HUD */}
+          <AudioVisualizerHUD />
 
           {/* CV Download */}
           <a
@@ -196,6 +167,20 @@ export const ActiveTheoryLayout: React.FC<ActiveTheoryLayoutProps> = ({ children
             <Download size={11} />
             <span>CV.PDF</span>
           </a>
+
+          {/* CLI Quake Terminal Trigger */}
+          <button
+            onClick={() => {
+              soundEngine.playClick(640);
+              window.dispatchEvent(new CustomEvent('open-terminal'));
+            }}
+            onMouseEnter={() => soundEngine.playHover()}
+            className="px-3 py-1.5 rounded-full border border-fuchsia-500/40 bg-fuchsia-500/10 hover:bg-fuchsia-500/25 text-[10px] font-mono tracking-[0.18em] text-fuchsia-300 transition-all flex items-center gap-1.5 cursor-pointer backdrop-blur-md"
+            title="Open Quake CLI Terminal [ ` ]"
+          >
+            <TerminalSquare size={12} />
+            <span className="hidden sm:inline">CLI</span>
+          </button>
 
           {/* Mobile menu toggle */}
           <button
@@ -240,14 +225,25 @@ export const ActiveTheoryLayout: React.FC<ActiveTheoryLayoutProps> = ({ children
                 <ArrowUpRight size={14} className="opacity-60" />
               </Link>
             ))}
-            <div className="pt-2 border-t border-white/10 flex items-center justify-between">
+            <div className="pt-2 border-t border-white/10 flex flex-wrap items-center justify-between gap-2">
+              <button
+                onClick={() => {
+                  soundEngine.playClick(640);
+                  setMobileMenuOpen(false);
+                  window.dispatchEvent(new CustomEvent('open-terminal'));
+                }}
+                className="py-2 px-3 rounded-xl border border-fuchsia-500/40 bg-fuchsia-500/10 font-mono text-xs text-fuchsia-300 flex items-center gap-1.5 cursor-pointer"
+              >
+                <TerminalSquare size={13} />
+                <span>CLI TERMINAL [`]</span>
+              </button>
               <a
                 href="/SHIVANSH_DIMRI_CV.pdf"
                 download
-                className="py-2 px-4 rounded-xl border border-white/20 bg-white/5 font-mono text-xs text-white flex items-center gap-2"
+                className="py-2 px-3 rounded-xl border border-white/20 bg-white/5 font-mono text-xs text-white flex items-center gap-1.5"
               >
                 <Download size={13} />
-                <span>DOWNLOAD CV.PDF</span>
+                <span>CV.PDF</span>
               </a>
               <div className="text-[10px] font-mono text-white/40">v2.4 // LUCKNOW, IN</div>
             </div>

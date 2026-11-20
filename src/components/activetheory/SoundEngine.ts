@@ -3,6 +3,7 @@
 class ActiveSoundEngine {
   private ctx: AudioContext | null = null;
   private isMuted: boolean = true;
+  private volume: number = 1.0;
   private droneOsc1: OscillatorNode | null = null;
   private droneOsc2: OscillatorNode | null = null;
   private droneGain: GainNode | null = null;
@@ -15,7 +16,7 @@ class ActiveSoundEngine {
       this.ctx = new AudioCtx();
 
       this.masterGain = this.ctx.createGain();
-      this.masterGain.gain.setValueAtTime(1.0, this.ctx.currentTime);
+      this.masterGain.gain.setValueAtTime(this.volume, this.ctx.currentTime);
 
       this.analyser = this.ctx.createAnalyser();
       this.analyser.fftSize = 64;
@@ -132,6 +133,25 @@ class ActiveSoundEngine {
     } else {
       buffer.fill(128);
     }
+  }
+
+  public getFrequencyData(buffer: Uint8Array): void {
+    if (this.analyser && !this.isMuted) {
+      this.analyser.getByteFrequencyData(buffer);
+    } else {
+      buffer.fill(0);
+    }
+  }
+
+  public setVolume(level: number): void {
+    this.volume = Math.max(0, Math.min(1, level));
+    if (this.ctx && this.masterGain) {
+      this.masterGain.gain.setValueAtTime(this.volume, this.ctx.currentTime);
+    }
+  }
+
+  public getVolume(): number {
+    return this.volume;
   }
 
   public get active(): boolean {

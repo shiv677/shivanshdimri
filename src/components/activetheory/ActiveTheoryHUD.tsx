@@ -2,8 +2,6 @@ import React, { useState } from 'react';
 import {
   Download,
   TerminalSquare,
-  Volume2,
-  VolumeX,
   Sparkles,
   Send,
   Layers,
@@ -13,7 +11,7 @@ import {
 } from 'lucide-react';
 import { soundEngine } from './SoundEngine';
 import ScrambleText from './ScrambleText';
-import AudioOscilloscope from './AudioOscilloscope';
+import AudioVisualizerHUD from './AudioVisualizerHUD';
 
 interface ActiveTheoryHUDProps {
   activeZone: number;
@@ -59,14 +57,8 @@ export const ActiveTheoryHUD: React.FC<ActiveTheoryHUDProps> = ({
   qualityMode = 'ultra',
   onToggleQuality,
 }) => {
-  const [soundOn, setSoundOn] = useState(false);
   const [aiExpanded, setAiExpanded] = useState(false);
   const [inputVal, setInputVal] = useState('');
-
-  const handleToggleSound = () => {
-    const active = soundEngine.toggleAudio();
-    setSoundOn(active);
-  };
 
   const handlePromptSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -149,28 +141,8 @@ export const ActiveTheoryHUD: React.FC<ActiveTheoryHUDProps> = ({
             </button>
           )}
 
-          <button
-            onClick={handleToggleSound}
-            onMouseEnter={() => soundEngine.playHover()}
-            className={`px-3 py-1.5 rounded-full border text-[10px] font-mono tracking-[0.18em] flex items-center gap-2 transition-all cursor-pointer backdrop-blur-md ${
-              soundOn
-                ? 'border-cyan-400/60 bg-cyan-400/15 text-cyan-300 shadow-[0_0_15px_rgba(0,240,255,0.25)]'
-                : 'border-white/15 bg-black/60 text-white/60 hover:text-white hover:border-white/35'
-            }`}
-            title="Toggle Procedural Audio Synth"
-          >
-            {soundOn ? <Volume2 size={12} className="text-cyan-400" /> : <VolumeX size={12} />}
-            <AudioOscilloscope active={soundOn} width={42} height={12} className="hidden sm:inline-block" />
-            <div className="flex items-end gap-0.5 h-2.5">
-              {[0.5, 1.0, 0.6, 0.9].map((h, i) => (
-                <span
-                  key={i}
-                  className={`w-0.5 bg-current ${soundOn ? 'animate-pulse' : 'opacity-35'}`}
-                  style={{ height: soundOn ? `${h * 100}%` : '30%' }}
-                />
-              ))}
-            </div>
-          </button>
+          {/* Audio Visualizer HUD */}
+          <AudioVisualizerHUD />
 
           <a
             href="/SHIVANSH_DIMRI_CV.pdf"
@@ -186,10 +158,12 @@ export const ActiveTheoryHUD: React.FC<ActiveTheoryHUDProps> = ({
           <button
             onClick={() => {
               soundEngine.playClick(640);
-              onOpenTerminal();
+              if (onOpenTerminal) onOpenTerminal();
+              window.dispatchEvent(new CustomEvent('open-terminal'));
             }}
             onMouseEnter={() => soundEngine.playHover()}
             className="px-3 py-1.5 rounded-full border border-fuchsia-500/40 bg-fuchsia-500/10 hover:bg-fuchsia-500/25 text-[10px] font-mono tracking-[0.18em] text-fuchsia-300 transition-all flex items-center gap-1.5 cursor-pointer backdrop-blur-md"
+            title="Open Quake CLI Terminal [ ` ]"
           >
             <TerminalSquare size={12} />
             <span className="hidden sm:inline">CLI</span>

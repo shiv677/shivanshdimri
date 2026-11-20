@@ -24,7 +24,6 @@ import ActiveTheoryCanvas, { ZONE_Z_POSITIONS } from './ActiveTheoryCanvas';
 import ActiveTheoryHUD, { ZONE_LABELS } from './ActiveTheoryHUD';
 import ScrambleText from './ScrambleText';
 import { soundEngine } from './SoundEngine';
-import TerminalPortfolio from '@/components/terminal/TerminalPortfolio';
 import TelemetryTicker from './TelemetryTicker';
 
 interface FlagshipSystem {
@@ -400,6 +399,18 @@ export const ActiveTheoryExperience: React.FC = () => {
     });
   };
 
+  // Sync showTerminal with global terminal events
+  useEffect(() => {
+    const onOpen = () => setShowTerminal(true);
+    const onClose = () => setShowTerminal(false);
+    window.addEventListener('open-terminal', onOpen);
+    window.addEventListener('close-terminal', onClose);
+    return () => {
+      window.removeEventListener('open-terminal', onOpen);
+      window.removeEventListener('close-terminal', onClose);
+    };
+  }, []);
+
   const flyToZone = useCallback((zoneIdx: number) => {
     const clamped = Math.max(0, Math.min(ZONE_Z_POSITIONS.length - 1, zoneIdx));
     setActiveZone(clamped);
@@ -534,7 +545,7 @@ export const ActiveTheoryExperience: React.FC = () => {
         mousePos={mousePos}
         onSelectZone={flyToZone}
         onOpenIndexDrawer={() => setShowIndexDrawer(true)}
-        onOpenTerminal={() => setShowTerminal(true)}
+        onOpenTerminal={() => window.dispatchEvent(new CustomEvent('open-terminal'))}
         onAIQuery={handleAIQuery}
         aiMessage={aiMessage}
         onClearAIMessage={() => setAiMessage(null)}
@@ -1111,27 +1122,7 @@ export const ActiveTheoryExperience: React.FC = () => {
         )}
       </AnimatePresence>
 
-      {/* ==================== CLI TERMINAL OVERLAY MODAL ==================== */}
-      <AnimatePresence>
-        {showTerminal && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-black/85 backdrop-blur-xl select-text"
-          >
-            <div className="relative w-full max-w-4xl h-[640px] max-h-[88vh]">
-              <button
-                onClick={() => setShowTerminal(false)}
-                className="absolute -top-3 -right-3 z-50 p-2 rounded-full bg-black border border-cyan-400 text-cyan-400 hover:bg-cyan-400 hover:text-black transition-colors cursor-pointer"
-              >
-                <X size={16} />
-              </button>
-              <TerminalPortfolio onSwitchToGui={() => setShowTerminal(false)} />
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+
       {/* Hardware Telemetry HUD Ticker */}
       <TelemetryTicker />
     </div>
