@@ -29,12 +29,12 @@ const MANIFESTO_PILLARS = [
   {
     code: '02',
     title: 'Deterministic Anchors for Stochastic AI',
-    desc: 'Generative models are probabilistic by nature; the engineering harness surrounding them must be completely deterministic. Enforce strict Pydantic v2 schemas, automated regression rubric scoring, and cryptographic verification.',
+    desc: 'Generative models are probabilistic by nature; the engineering harness surrounding them must be rigorously deterministic. Enforce strict Pydantic v2 schemas, automated regression rubric scoring, and cryptographic verification.',
   },
   {
     code: '03',
-    title: 'Crash-Proof & Resumable by Default',
-    desc: 'Every data pipeline must anticipate unannounced SIGKILL, network disconnects, or power failure at any millisecond. Writing with atomic file replacements, WAL journaling, and byte-offset checkpoints ensures zero corruption and instant resume.',
+    title: 'Crash-Resilient & Resumable by Default',
+    desc: 'Every data pipeline must anticipate unannounced SIGKILL, network disconnects, or power failure at any millisecond. Writing with atomic file replacements, WAL journaling, and byte-offset checkpoints ensures verifiable data integrity and reliable checkpoint resume.',
   },
   {
     code: '04',
@@ -109,7 +109,7 @@ const About = () => {
               BIOGRAPHICAL OVERVIEW // ABOUT ME
             </div>
             <h2 className="text-2xl sm:text-3xl font-display font-black uppercase text-white">
-              ENGINEERING SYSTEMS THAT DO NOT BREAK.
+              ENGINEERING TESTED, HIGH-RELIABILITY SYSTEMS.
             </h2>
             <p className="text-xs sm:text-sm font-mono text-white/80 leading-relaxed">
               I am an Associate AI Engineer at InfoBay AI Limited, focused on building Python-based engineering systems, AI evaluation workflows, and scalable data-processing infrastructure.

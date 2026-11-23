@@ -97,8 +97,8 @@ const Contact = () => {
       }
 
       toast({
-        title: 'Transmission Dispatched',
-        description: 'Thank you. Shivansh Dimri will respond via secure channel shortly.',
+        title: 'Message Dispatched',
+        description: 'Thank you. Shivansh Dimri will respond via email shortly.',
       });
 
       setFormData({ name: '', email: '', message: '' });
@@ -127,7 +127,7 @@ const Contact = () => {
       <section className="mb-16">
         <div className="flex items-center gap-2 text-cyan-400 font-mono text-[10px] tracking-[0.3em] uppercase mb-3">
           <span className="w-2 h-2 rounded-full bg-cyan-400 shadow-[0_0_8px_#00f0ff]" />
-          <span>PORTAL // 04 // SECURE TRANSMISSION INTERFACE</span>
+          <span>PORTAL // 04 // DIRECT CONTACT INTERFACE</span>
         </div>
 
         <h1 className="text-4xl sm:text-6xl font-display font-black uppercase tracking-tight text-white mb-6">
@@ -149,8 +149,8 @@ const Contact = () => {
             <div className="text-xl sm:text-2xl font-mono font-bold text-cyan-300">OPEN TO OFFERS</div>
           </div>
           <div className="p-4 rounded-2xl border border-white/10 bg-white/[0.02] backdrop-blur-md">
-            <div className="text-[10px] font-mono text-white/40 tracking-[0.2em] mb-1">RESPONSE SLA</div>
-            <div className="text-xl sm:text-2xl font-mono font-bold text-fuchsia-300">&lt; 12 HOURS</div>
+            <div className="text-[10px] font-mono text-white/40 tracking-[0.2em] mb-1">TYPICAL RESPONSE</div>
+            <div className="text-xl sm:text-2xl font-mono font-bold text-fuchsia-300">24–48 HOURS</div>
           </div>
           <div className="p-4 rounded-2xl border border-white/10 bg-white/[0.02] backdrop-blur-md">
             <div className="text-[10px] font-mono text-white/40 tracking-[0.2em] mb-1">REGION</div>
@@ -167,7 +167,7 @@ const Contact = () => {
             <div className="flex items-center gap-2">
               <span className="w-2.5 h-2.5 rounded-full bg-cyan-400" />
               <span className="font-mono text-xs text-white font-bold tracking-wider">
-                TRANSMIT SECURE MESSAGE
+                SEND DIRECT INQUIRY
               </span>
             </div>
             <span className="text-[10px] font-mono text-white/40">TLS 1.3 // POSTGRES RLS</span>

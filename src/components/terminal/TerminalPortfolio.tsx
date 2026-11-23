@@ -568,7 +568,7 @@ export const TerminalPortfolio: React.FC<TerminalPortfolioProps> = ({ onSwitchTo
                   </div>
                   <div>
                     <code className={`${t.prompt} font-semibold inline-block w-48 sm:w-64`}>run wal-streamer [--records &lt;n&gt;]</code>
-                    <span className="text-muted-foreground">SQLite WAL streaming worker with emulated SIGKILL &amp; zero-loss resume</span>
+                    <span className="text-muted-foreground">SQLite WAL streaming worker with emulated SIGKILL &amp; checkpoint-based recovery</span>
                   </div>
                   <div>
                     <code className={`${t.prompt} font-semibold inline-block w-48 sm:w-64`}>audit dirty-data</code>
@@ -900,7 +900,7 @@ export const TerminalPortfolio: React.FC<TerminalPortfolioProps> = ({ onSwitchTo
             <div className="space-y-3 font-mono text-xs sm:text-sm">
               <p className={`${t.highlight} font-bold`}>=== Autonomous AI & Multimodal VLM Evaluation Harness ===</p>
               <p className="text-foreground/90">
-                Distributed benchmarking framework distributing multimodal vision-language model and agentic evaluations with 100% Pydantic schema validation.
+                Distributed benchmarking framework distributing multimodal vision-language model and agentic evaluations with verified Pydantic schema validation.
               </p>
               <div className="bg-card/50 p-3 rounded font-mono text-xs space-y-1">
                 <div>&bull; Multi-agent consensus debate scoring eliminating evaluator bias</div>

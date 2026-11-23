@@ -58,7 +58,7 @@ const SKILL_CATEGORIES: SkillCategory[] = [
       {
         name: 'Structured Schema Enforcement',
         implementation: 'Pydantic v2 Schema Guard',
-        desc: 'Guaranteeing 100% deterministic JSON outputs and strict model compliance using Pydantic v2 schemas and native function calling.',
+        desc: 'Enforcing deterministic JSON outputs and strict model compliance using Pydantic v2 schemas and native function calling.',
         tags: ['Pydantic v2', 'JSON Schema', 'Tool Calling', 'Grammar Constrained'],
       },
       {
@@ -193,7 +193,7 @@ const CAREER_TIMELINE = [
       'Designing dataset validation, deduplication, and quality-control pipelines across large-scale question corpora.',
       'Working with multimodal models (VLMs) and structured evaluation outputs with spatial bounding-box verification.',
       'Automating research and discovery workflows for specialised question datasets and source classification.',
-      'Developing reliable processing systems with checkpointing, concurrency, and zero-loss crash-recovery mechanisms.',
+      'Developing reliable processing systems with checkpointing, concurrency, and fault-tolerant crash-recovery mechanisms.',
     ],
     tech: ['Python 3.12', 'Multiprocessing', 'LangGraph', 'VLMs', 'Pydantic v2', 'SQLite WAL', 'Docker'],
   },

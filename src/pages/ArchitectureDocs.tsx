@@ -144,7 +144,7 @@ def spawn_saturated_pipeline(file_paths: list[str]) -> list:
   {
     id: 'crash-proof-state-machines',
     code: 'DOC-02',
-    title: 'Designing Crash-Proof State Machines with SQLite WAL & Atomic Writes',
+    title: 'Designing Crash-Resilient State Machines with SQLite WAL & Atomic Writes',
     shortTitle: 'SQLITE WAL // ATOMIC STATE',
     category: 'DATA INTEGRITY & STORAGE',
     readingTime: '5 MIN READ',
@@ -228,7 +228,7 @@ def atomic_persist_state(target_file: str, state_payload: dict) -> None:
         metric: 'Data Corruption Probability',
         baseline: '1.4% per 100 power cuts',
         optimized: '0.00% (Strict Atomic Swap)',
-        gain: 'ZERO CORRUPTION',
+        gain: 'DATA INTEGRITY',
       },
     ],
     productionAxiom:
@@ -262,7 +262,7 @@ def atomic_persist_state(target_file: str, state_payload: dict) -> None:
         description:
           'All model responses must validate against strict Pydantic v2 models. Parallel evaluation workers are regulated via distributed token-bucket rate limiters to prevent API quota exhaustion.',
         keyPoints: [
-          'Enforces 100% type safety and rejects malformed JSON before evaluation scoring.',
+          'Enforces strict type safety and rejects malformed JSON before evaluation scoring.',
           'Token buckets prevent cost spikes during massive multi-thousand prompt regression runs.',
           'Automatic exponential backoff with jitter handles upstream provider 429 rate limits gracefully.',
         ],
@@ -318,7 +318,7 @@ class MultimodalVerdict(BaseModel):
         metric: 'JSON Schema Validation Failure Rate',
         baseline: '8.4% (Unstructured parsing)',
         optimized: '0.00% (Strict Pydantic v2)',
-        gain: '100% CONFORMANT',
+        gain: 'VERIFIED CONFORMANT',
       },
     ],
     productionAxiom:
@@ -353,7 +353,7 @@ export const ArchitectureDocs: React.FC = () => {
         </h1>
 
         <p className="max-w-3xl text-sm sm:text-base font-mono text-white/70 leading-relaxed">
-          In-depth architectural breakdowns of systems I have built and optimized in production: high-throughput Python concurrency, crash-proof database state machines, and multimodal VLM evaluation suites.
+          In-depth architectural breakdowns of systems I have built and optimized in production: high-throughput Python concurrency, crash-resilient database state machines, and multimodal VLM evaluation suites.
         </p>
       </div>
 
@@ -418,7 +418,7 @@ export const ArchitectureDocs: React.FC = () => {
             </div>
             <div className="flex justify-between text-white/70">
               <span>SCHEMA PARITY:</span>
-              <span className="text-fuchsia-400 font-bold">100% PYDANTIC</span>
+              <span className="text-fuchsia-400 font-bold">STRICT PYDANTIC</span>
             </div>
           </div>
         </aside>

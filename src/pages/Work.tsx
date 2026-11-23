@@ -36,7 +36,7 @@ const SKILL_PILLARS = [
     icon: Shield,
     title: 'Fault-Tolerance & State Checkpointing',
     description:
-      'Designing mission-critical systems that can be killed at any millisecond with SIGKILL and resume with zero data corruption or duplication using atomic WAL journaling.',
+      'Designing robust systems that can be halted at any point and resume with verified state integrity and deduplication using atomic WAL journaling.',
     highlights: ['SQLite WAL', 'Atomic File Moves', 'Resumable State Machines', 'Signal Trapping', 'CRC32 / SHA-256'],
   },
   {
@@ -80,7 +80,7 @@ const Work = () => {
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
           <div className="p-4 rounded-2xl border border-white/10 bg-white/[0.02] backdrop-blur-md">
             <div className="text-[10px] font-mono text-white/40 tracking-[0.2em] mb-1">TOTAL ARCHITECTURES</div>
-            <div className="text-xl sm:text-2xl font-mono font-bold text-cyan-300">{SYSTEMS.length} PRODUCTION</div>
+            <div className="text-xl sm:text-2xl font-mono font-bold text-cyan-300">{SYSTEMS.length} SYSTEMS</div>
           </div>
           <div className="p-4 rounded-2xl border border-white/10 bg-white/[0.02] backdrop-blur-md">
             <div className="text-[10px] font-mono text-white/40 tracking-[0.2em] mb-1">DATA INTEGRITY</div>
@@ -242,7 +242,7 @@ const Work = () => {
               </div>
               <div className="flex items-center gap-2">
                 <Code2 size={13} />
-                <span>PYTHON 3.12 PRODUCTION RUNTIME</span>
+                <span>ARCHITECTURE EXCERPT // PYTHON 3.12</span>
               </div>
             </div>
             <pre className="p-6 text-xs font-mono text-white/85 overflow-x-auto leading-relaxed bg-[#020204]">
