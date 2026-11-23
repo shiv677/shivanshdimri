@@ -1,0 +1,79 @@
+{
+  "records": [
+    {
+      "id": "rec_chest_xray_001",
+      "prompt": "Analyze frontal chest X-ray for pulmonary infiltrates and cardiomegaly",
+      "vector": [0.35, 0.42, -0.15, 0.08, 0.52, -0.21, 0.11, 0.33, -0.05, 0.18, 0.29, -0.12, 0.04, 0.31, -0.19, 0.22],
+      "response": "Cardiothoracic ratio is normal (< 0.50). Mild patchy consolidation noted in the right lower lobe consistent with early bronchopneumonia.",
+      "token_count": 480,
+      "cost": 0.0096,
+      "metadata": {"modality": "multimodal_xray", "image_id": "img_xray_4918.dcm", "resolution": [1024, 1024]}
+    },
+    {
+      "id": "rec_autonomous_drive_002",
+      "prompt": "Dashcam view: identify vulnerable road users in night crosswalk",
+      "vector": [-0.25, 0.55, 0.38, -0.12, -0.05, 0.41, 0.22, -0.31, 0.18, -0.09, 0.33, 0.15, -0.21, 0.08, 0.19, -0.14],
+      "response": "Detected two pedestrians entering the zebra crossing from left curb at 14 meters. Recommended action: decelerate immediately.",
+      "token_count": 320,
+      "cost": 0.0064,
+      "metadata": {"modality": "lidar_camera", "camera_id": "cam_front_wide", "light_condition": "night"}
+    },
+    {
+      "id": "rec_code_async_003",
+      "prompt": "Explain Python async generator syntax and backpressure handling",
+      "vector": [0.12, -0.21, 0.62, 0.35, -0.18, 0.04, -0.29, 0.11, 0.45, -0.22, -0.15, 0.28, 0.19, -0.08, 0.06, 0.14],
+      "response": "An async generator in Python is defined using `async def` with `yield`. Backpressure can be managed using `asyncio.Queue` with a bounded maxsize.",
+      "token_count": 650,
+      "cost": 0.0130,
+      "metadata": {"modality": "code_text", "language": "python", "topic": "concurrency"}
+    },
+    {
+      "id": "rec_satellite_earth_004",
+      "prompt": "Multi-spectral Sentinel-2 analysis of Amazon forest canopy loss",
+      "vector": [0.48, -0.11, -0.32, 0.29, -0.42, 0.15, 0.38, -0.19, -0.05, 0.37, -0.18, 0.21, 0.27, -0.14, 0.12, 0.25],
+      "response": "NDVI drop of 0.34 observed across sector B7 indicating 12 hectares of recent canopy clearance over 14 days.",
+      "token_count": 520,
+      "cost": 0.0104,
+      "metadata": {"modality": "multispectral_geo", "satellite": "Sentinel-2B", "band_combo": "B8_B4_B3"}
+    },
+    {
+      "id": "rec_retail_product_005",
+      "prompt": "Product catalog image: red noise-cancelling over-ear headphones",
+      "vector": [-0.38, -0.41, 0.15, -0.32, 0.19, -0.28, 0.09, 0.44, -0.25, 0.12, -0.31, -0.17, 0.33, 0.22, -0.11, -0.08],
+      "response": "AudioPro ANC-700 Matte Ruby wireless Bluetooth headphones, active noise cancellation up to 35dB, 40h battery.",
+      "token_count": 280,
+      "cost": 0.0056,
+      "metadata": {"modality": "catalog_image", "category": "electronics", "sku": "AP-ANC-RED"}
+    }
+  ],
+  "benchmark_queries": [
+    {
+      "name": "exact_match_chest_xray",
+      "prompt": "Analyze frontal chest X-ray for pulmonary infiltrates and cardiomegaly",
+      "vector": [0.35, 0.42, -0.15, 0.08, 0.52, -0.21, 0.11, 0.33, -0.05, 0.18, 0.29, -0.12, 0.04, 0.31, -0.19, 0.22],
+      "expected_hit": true,
+      "expected_type": "EXACT"
+    },
+    {
+      "name": "semantic_near_duplicate_xray",
+      "prompt": "Frontal chest radiograph check for pulmonary infiltration and heart enlargement",
+      "vector": [0.36, 0.41, -0.14, 0.07, 0.51, -0.20, 0.12, 0.32, -0.06, 0.19, 0.28, -0.11, 0.03, 0.30, -0.20, 0.23],
+      "expected_hit": true,
+      "expected_type": "SEMANTIC"
+    },
+    {
+      "name": "semantic_near_duplicate_dashcam",
+      "prompt": "Night dashcam frame: detect pedestrian crossing street",
+      "vector": [-0.24, 0.54, 0.37, -0.11, -0.06, 0.40, 0.21, -0.30, 0.19, -0.08, 0.32, 0.16, -0.20, 0.09, 0.18, -0.13],
+      "expected_hit": true,
+      "expected_type": "SEMANTIC"
+    },
+    {
+      "name": "novel_cache_miss_quantum",
+      "prompt": "Simulate quantum annealing schedule on transverse field Ising model",
+      "vector": [0.05, -0.58, -0.22, -0.48, 0.12, 0.35, -0.33, -0.15, -0.31, -0.25, 0.11, -0.32, -0.12, 0.18, 0.21, -0.05],
+      "expected_hit": false,
+      "expected_type": "MISS"
+    }
+  ]
+}

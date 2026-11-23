@@ -1,0 +1,153 @@
+{
+  "entities": [
+    {
+      "id": "ent_raft",
+      "name": "Raft Consensus",
+      "entity_type": "Protocol",
+      "description": "Leader-based distributed consensus protocol guaranteeing state machine replication",
+      "properties": {"formalized_year": 2014, "consensus_family": "Paxos"}
+    },
+    {
+      "id": "ent_paxos",
+      "name": "Paxos Protocol",
+      "entity_type": "Protocol",
+      "description": "Foundational consensus algorithm for asynchronous networks",
+      "properties": {"author": "Leslie Lamport"}
+    },
+    {
+      "id": "ent_etcd",
+      "name": "etcd",
+      "entity_type": "Datastore",
+      "description": "Distributed key-value store using Raft for cluster coordination",
+      "properties": {"primary_language": "Go", "storage_engine": "bbolt"}
+    },
+    {
+      "id": "ent_k8s",
+      "name": "Kubernetes",
+      "entity_type": "Platform",
+      "description": "Container orchestration engine that persists cluster state in etcd",
+      "properties": {"component": "kube-apiserver"}
+    },
+    {
+      "id": "ent_cockroach",
+      "name": "CockroachDB",
+      "entity_type": "Database",
+      "description": "Distributed SQL database using Multi-Raft for range partition consensus",
+      "properties": {"sql_compatibility": "PostgreSQL"}
+    },
+    {
+      "id": "ent_redis",
+      "name": "Redis",
+      "entity_type": "Cache",
+      "description": "In-memory cache and key-value datastore with replication and pub/sub",
+      "properties": {"persistence": ["RDB", "AOF"]}
+    },
+    {
+      "id": "ent_kafka",
+      "name": "Apache Kafka",
+      "entity_type": "EventLog",
+      "description": "Distributed append-only commit log for high-throughput streaming",
+      "properties": {"partitioning": "hash_keyed"}
+    },
+    {
+      "id": "ent_zookeeper",
+      "name": "ZooKeeper",
+      "entity_type": "Coordinator",
+      "description": "Hierarchical coordination service historically used by Kafka",
+      "properties": {"protocol": "Zab"}
+    },
+    {
+      "id": "ent_kraft",
+      "name": "KRaft",
+      "entity_type": "Protocol",
+      "description": "Kafka Raft metadata mode replacing ZooKeeper dependency",
+      "properties": {"status": "Production-ready"}
+    },
+    {
+      "id": "ent_wal",
+      "name": "Write-Ahead Log (WAL)",
+      "entity_type": "ArchitecturePattern",
+      "description": "Durability mechanism ensuring atomicity by logging changes prior to writing to pages",
+      "properties": {"guarantee": "ACID"}
+    },
+    {
+      "id": "ent_sqlite",
+      "name": "SQLite",
+      "entity_type": "Database",
+      "description": "Embedded relational database engine supporting WAL journaling mode",
+      "properties": {"journal_mode": "WAL"}
+    }
+  ],
+  "triples": [
+    {
+      "subject": "ent_etcd",
+      "predicate": "implements_consensus",
+      "object": "ent_raft",
+      "weight": 1.0,
+      "metadata": {"criticality": "high"}
+    },
+    {
+      "subject": "ent_k8s",
+      "predicate": "persists_state_in",
+      "object": "ent_etcd",
+      "weight": 0.95,
+      "metadata": {"interface": "gRPC"}
+    },
+    {
+      "subject": "ent_cockroach",
+      "predicate": "implements_consensus",
+      "object": "ent_raft",
+      "weight": 0.9,
+      "metadata": {"variant": "multi-raft"}
+    },
+    {
+      "subject": "ent_raft",
+      "predicate": "derived_from",
+      "object": "ent_paxos",
+      "weight": 0.8,
+      "metadata": {"motivation": "understandability"}
+    },
+    {
+      "subject": "ent_kafka",
+      "predicate": "adopts_metadata_protocol",
+      "object": "ent_kraft",
+      "weight": 0.95,
+      "metadata": {"replacement_target": "ZooKeeper"}
+    },
+    {
+      "subject": "ent_kraft",
+      "predicate": "based_on",
+      "object": "ent_raft",
+      "weight": 0.9,
+      "metadata": {"consensus_engine": "Raft"}
+    },
+    {
+      "subject": "ent_kafka",
+      "predicate": "formerly_coordinated_by",
+      "object": "ent_zookeeper",
+      "weight": 0.7,
+      "metadata": {"deprecated": true}
+    },
+    {
+      "subject": "ent_sqlite",
+      "predicate": "uses_durability_mechanism",
+      "object": "ent_wal",
+      "weight": 0.9,
+      "metadata": {"journaling": "wal"}
+    },
+    {
+      "subject": "ent_etcd",
+      "predicate": "uses_durability_mechanism",
+      "object": "ent_wal",
+      "weight": 0.85,
+      "metadata": {"wal_dir": "data.etcd/wal"}
+    },
+    {
+      "subject": "ent_cockroach",
+      "predicate": "uses_durability_mechanism",
+      "object": "ent_wal",
+      "weight": 0.85,
+      "metadata": {"storage_layer": "Pebble"}
+    }
+  ]
+}

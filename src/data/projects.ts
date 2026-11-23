@@ -663,4 +663,222 @@ def init_wal_checkpoint_db(db_path: str) -> sqlite3.Connection:
     """)
     return conn`,
   },
+  {
+    id: 'agentic-tool-eval',
+    index: '08',
+    code: '08',
+    title: 'Autonomous Agent Tool-Call Evaluator & Verifier',
+    shortTitle: 'AGENT.EVAL',
+    category: 'AGENTIC AI SYSTEMS // STEP VERIFICATION',
+    accent: '#38bdf8',
+    status: 'PRODUCTION ACTIVE',
+    tagline: 'Trajectory DAG parser with argument hallucination checks and goal scoring.',
+    description:
+      'Rigorous offline and streaming evaluation harness for multi-step agentic trajectories. Parses execution DAGs, matches fuzzy tool signatures against OpenAPI specs, and verifies parameter grounding to catch hallucinated arguments.',
+    problem:
+      'Autonomous agent swarms executing multi-turn tool calling frequently hallucinated tool parameters, made redundant API calls, and drifted from user intents without systematic measurement.',
+    solution:
+      'Architected a Pydantic v2-backed trajectory evaluation engine. Computes precision/recall for tool dispatch, cross-references argument values against step context to catch hallucinations, and tracks latency and token costs across the trajectory.',
+    github: 'https://github.com/shiv677/agentic-tool-eval-harness',
+    pipeline: [
+      { step: '01', name: 'TRAJECTORY INGEST', spec: 'Multi-turn JSONL step log parsing' },
+      { step: '02', name: 'SIGNATURE MATCH', spec: 'Exact & fuzzy tool name resolution' },
+      { step: '03', name: 'GROUNDING CHECK', spec: 'Argument hallucination verification' },
+      { step: '04', name: 'COST ACCOUNTING', spec: 'Per-step token and latency tracking' },
+      { step: '05', name: 'RUBRIC SCORING', spec: 'Composite goal completion assessment' },
+    ],
+    telemetry: [
+      { label: 'SCHEMA VALIDATOR', value: 'PYDANTIC V2', sub: 'Strict trajectory model' },
+      { label: 'EVALUATION ENGINE', value: 'DAG PARSER', sub: 'Multi-step state graph' },
+      { label: 'HALLUCINATION TEST', value: 'CONTEXT CHECK', sub: 'Argument provenance audit' },
+      { label: 'TOKEN TRACKER', value: 'PER-STEP', sub: 'Exact cost breakdown' },
+    ],
+    metrics: [
+      { label: 'Schema Engine', value: 'Pydantic v2 Validation' },
+      { label: 'Trajectory Analysis', value: 'Multi-Turn DAG Evaluation' },
+      { label: 'Hallucination Check', value: 'Grounding Verification' },
+      { label: 'Telemetry', value: 'Token & Latency Accounting' },
+    ],
+    technologies: [
+      'Python 3.12',
+      'Pydantic v2',
+      'Agentic Systems',
+      'Tool Calling',
+      'Pytest',
+      'Trajectory DAGs',
+    ],
+    stack: ['Python 3.12', 'Pydantic v2', 'Agentic AI', 'Tool Validation'],
+    architecturePoints: [
+      'Strict Pydantic v2 schemas defining ToolSignature, ToolCallRecord, and TrajectoryStep',
+      'Fuzzy tool signature matching handling naming deviations while enforcing strict parameter typing',
+      'Entity grounding verification ensuring passed arguments exist within the conversation context',
+      'Automated composite scoring combining tool precision, parameter recall, and goal completion',
+    ],
+    codeSnippet: `from pydantic import BaseModel
+from typing import List, Dict, Any
+
+class ToolCallRecord(BaseModel):
+    tool_name: str
+    arguments: Dict[str, Any]
+    output: Any
+    latency_ms: float
+    token_cost: int = 0
+
+def verify_argument_grounding(step_context: str, args: dict) -> bool:
+    """Verifies that tool call arguments were derived from context and not hallucinated."""
+    context_lower = step_context.lower()
+    for val in args.values():
+        if isinstance(val, str) and len(val) > 3 and val.lower() not in context_lower:
+            return False
+    return True`,
+  },
+  {
+    id: 'graph-rag-retriever',
+    index: '09',
+    code: '09',
+    title: 'Graph RAG Subgraph Retriever & Triples Engine',
+    shortTitle: 'GRAPH.RAG',
+    category: 'KNOWLEDGE GRAPHS // CONTEXT SYNTHESIS',
+    accent: '#f43f5e',
+    status: 'PRODUCTION ACTIVE',
+    tagline: 'In-memory entity-relation graph with bidirectional k-hop BFS expansion.',
+    description:
+      'High-performance knowledge graph retrieval engine for Retrieval-Augmented Generation. Builds an inverted entity index, performs fuzzy alias resolution, and expands k-hop subgraphs into token-optimized markdown triples for LLM context injection.',
+    problem:
+      'Standard vector RAG misses multi-hop relational dependencies between entities, resulting in shallow retrieval and fragmented answers across interconnected technical domains.',
+    solution:
+      'Developed an in-memory triple store with fast inverted indexing, bidirectional k-hop BFS traversal, and weighted edge ranking. Formats subgraphs directly into token-efficient markdown tables and evidence chains.',
+    github: 'https://github.com/shiv677/graph-rag-subgraph-retriever',
+    pipeline: [
+      { step: '01', name: 'GRAPH INGEST', spec: 'Subject-Predicate-Object triple parsing' },
+      { step: '02', name: 'INVERTED INDEX', spec: 'Fast entity alias & token indexing' },
+      { step: '03', name: 'ENTITY RESOLVE', spec: 'Levenshtein & token similarity matching' },
+      { step: '04', name: 'K-HOP EXPANSION', spec: 'Bidirectional BFS with edge weights' },
+      { step: '05', name: 'CONTEXT PACK', spec: 'Markdown triples & evidence formatting' },
+    ],
+    telemetry: [
+      { label: 'GRAPH TOPOLOGY', value: 'IN-MEMORY', sub: 'Adjacency list triple store' },
+      { label: 'SEARCH METHOD', value: 'K-HOP BFS', sub: 'Bidirectional path expansion' },
+      { label: 'ENTITY MATCHER', value: 'TOKEN FUZZY', sub: 'Alias & synonym resolution' },
+      { label: 'SYNTHESIS FORMAT', value: 'MARKDOWN', sub: 'Token-dense LLM context' },
+    ],
+    metrics: [
+      { label: 'Storage Engine', value: 'In-Memory Adjacency Store' },
+      { label: 'Traversal Algorithm', value: 'Bidirectional k-Hop BFS' },
+      { label: 'Entity Resolution', value: 'Fuzzy Token Matching' },
+      { label: 'Context Format', value: 'Synthesized Markdown Triples' },
+    ],
+    technologies: [
+      'Python 3.12',
+      'Knowledge Graphs',
+      'Graph RAG',
+      'Pydantic v2',
+      'BFS Traversal',
+      'Information Extraction',
+    ],
+    stack: ['Python 3.12', 'Graph RAG', 'Knowledge Graphs', 'Pydantic v2'],
+    architecturePoints: [
+      'In-memory entity-relation graph storing subject-predicate-object triples with bidirectional adjacency lists',
+      'Fuzzy entity resolution supporting typos, synonyms, and multi-word token overlap',
+      'Bounded k-hop expansion preventing combinatorial graph explosion while preserving relational depth',
+      'Direct markdown table synthesis optimized for modern LLM context window efficiency',
+    ],
+    codeSnippet: `from collections import defaultdict, deque
+from typing import Set, List
+
+class GraphStore:
+    def __init__(self):
+        self.outgoing = defaultdict(list)
+        self.incoming = defaultdict(list)
+
+    def k_hop_subgraph(self, start_entity: str, max_hops: int = 2) -> List[tuple]:
+        """Expands a k-hop relational subgraph using breadth-first traversal."""
+        visited: Set[str] = {start_entity}
+        queue = deque([(start_entity, 0)])
+        triples = []
+        while queue:
+            curr, depth = queue.popleft()
+            if depth >= max_hops:
+                continue
+            for edge in self.outgoing[curr]:
+                triples.append((curr, edge.pred, edge.obj))
+                if edge.obj not in visited:
+                    visited.add(edge.obj)
+                    queue.append((edge.obj, depth + 1))
+        return triples`,
+  },
+  {
+    id: 'distributed-token-limiter',
+    index: '10',
+    code: '10',
+    title: 'Multi-Tenant Token Bucket & Rate Limiter',
+    shortTitle: 'RATE.LIMITER',
+    category: 'DISTRIBUTED SYSTEMS // LLM INGESTION QUOTAS',
+    accent: '#eab308',
+    status: 'PRODUCTION ACTIVE',
+    tagline: 'Concurrency-safe sliding window & token bucket scheduler with priority queuing.',
+    description:
+      'High-throughput rate-limiting engine engineered for multi-model LLM benchmarking pipelines. Combines token buckets for TPM with sliding windows for RPM, supporting tier quotas, priority reservations, and jittered exponential backoff.',
+    problem:
+      'Concurrent multi-agent evaluation suites hitting provider endpoints (OpenAI, Anthropic, Gemini) triggered 429 HTTP rate-limit spikes and thread contention, slowing benchmark execution.',
+    solution:
+      'Built a thread-safe and async-compatible token reservation manager. Features dual sliding-window and token-bucket mechanics, atomic reservations, and a priority queue prioritizing real-time queries ahead of background evaluations.',
+    github: 'https://github.com/shiv677/distributed-token-bucket-limiter',
+    pipeline: [
+      { step: '01', name: 'PROVIDER CONFIG', spec: 'TPM, RPM, and RPD quota schemas' },
+      { step: '02', name: 'ATOMIC CHECK', spec: 'Concurrency-safe token bucket poll' },
+      { step: '03', name: 'PRIORITY QUEUE', spec: 'P0 critical vs P2 batch dispatch' },
+      { step: '04', name: 'SLIDING WINDOW', spec: 'Millisecond-precision request timestamps' },
+      { step: '05', name: 'JITTER BACKOFF', spec: 'Exponential retry delay mitigation' },
+    ],
+    telemetry: [
+      { label: 'RATE ALGORITHM', value: 'DUAL-TIER', sub: 'Token bucket + sliding window' },
+      { label: 'CONCURRENCY', value: 'ASYNC SAFE', sub: 'Non-blocking atomic reservations' },
+      { label: 'PRIORITY TIERS', value: '3 LEVELS', sub: 'P0 Critical, P1 Eval, P2 Batch' },
+      { label: 'PROVIDER SUPPORT', value: 'MULTI-TENANT', sub: 'OpenAI, Anthropic, Gemini' },
+    ],
+    metrics: [
+      { label: 'Rate-Limit Model', value: 'Token Bucket (TPM) + Window (RPM)' },
+      { label: 'Thread Safety', value: 'Asyncio Non-Blocking Locks' },
+      { label: 'Priority Support', value: 'Strict P0 / P1 / P2 Tiers' },
+      { label: 'Fault Handling', value: 'Jittered Exponential Backoff' },
+    ],
+    technologies: [
+      'Python 3.12',
+      'AsyncIO',
+      'Token Bucket',
+      'Sliding Window',
+      'Rate Limiting',
+      'Pydantic v2',
+    ],
+    stack: ['Python 3.12', 'AsyncIO', 'Rate Limiting', 'Concurrency'],
+    architecturePoints: [
+      'Dual-tier rate limiting tracking requests-per-minute (RPM) alongside continuous tokens-per-minute (TPM)',
+      'Async-compatible token reservation with atomic time-stepping avoiding deadlocks',
+      'Priority scheduling ensuring latency-sensitive evaluations bypass queued batch tasks',
+      'Simulated jittered exponential backoff preventing thundering-herd issues on provider recovery',
+    ],
+    codeSnippet: `import time
+import asyncio
+
+class TokenBucketLimiter:
+    def __init__(self, tpm: int, rpm: int):
+        self.tpm = tpm
+        self.rpm = rpm
+        self.tokens = float(tpm)
+        self.last_update = time.monotonic()
+        self.window = []
+
+    async def acquire(self, estimated_tokens: int, timeout: float = 10.0) -> bool:
+        """Acquires permission to emit an inference request within quota limits."""
+        now = time.monotonic()
+        elapsed = now - self.last_update
+        self.tokens = min(float(self.tpm), self.tokens + elapsed * (self.tpm / 60.0))
+        self.last_update = now
+        if self.tokens >= estimated_tokens and len(self.window) < self.rpm:
+            self.tokens -= estimated_tokens
+            self.window.append(now)
+            return True
+        return False`,
+  },
 ];
