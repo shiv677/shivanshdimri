@@ -85,15 +85,32 @@ const Contact = () => {
     try {
       const validatedData = contactSchema.parse(formData);
 
-      const { error } = await supabase.from('contact_submissions').insert({
-        name: validatedData.name,
-        email: validatedData.email,
-        message: validatedData.message,
-      });
+      const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
+      const isPlaceholder = !supabaseUrl || supabaseUrl.includes('placeholder.supabase.co');
 
-      if (error) {
-        console.error('Error saving submission:', error);
-        throw new Error('Failed to send transmission');
+      let saved = false;
+      if (!isPlaceholder) {
+        try {
+          const { error } = await supabase.from('contact_submissions').insert({
+            name: validatedData.name,
+            email: validatedData.email,
+            message: validatedData.message,
+          });
+          if (!error) {
+            saved = true;
+          }
+        } catch {
+          // Fall through to mailto dispatch
+        }
+      }
+
+      if (!saved) {
+        const mailto = `mailto:dimrishiv933@gmail.com?subject=${encodeURIComponent(
+          `Portfolio Contact from ${validatedData.name}`
+        )}&body=${encodeURIComponent(
+          `Name: ${validatedData.name}\nEmail: ${validatedData.email}\n\nMessage:\n${validatedData.message}`
+        )}`;
+        window.open(mailto, '_blank');
       }
 
       toast({

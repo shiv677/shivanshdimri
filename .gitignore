@@ -34,3 +34,8 @@ __pycache__/
 *.db-wal
 *.db-shm
 
+# Generated dataset quality sentinel ledgers
+projects/dataset_quality_sentinel/audit_report.csv
+projects/dataset_quality_sentinel/clean_ledger.csv
+projects/dataset_quality_sentinel/quarantine_ledger.csv
+

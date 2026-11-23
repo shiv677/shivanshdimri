@@ -51,20 +51,20 @@ export const ALL_PROJECTS: Project[] = [
     problem:
       'Massive audio datasets ingested from heterogeneous third-party sources contained internal file duplicates and collisions against existing catalog records, risking database bloat and skewed model evaluation sets.',
     solution:
-      'Engineered a dual-phase batch pipeline that extracts Chromaprint acoustic fingerprints for perceptual duplicate detection and SHA-256 hashes for bitwise identical files. Incorporates multiprocessing worker pools, transactional SQLite Write-Ahead Logging (WAL), and persistent offset checkpointing for crash-resilient batch execution.',
+      'Engineered a dual-phase batch pipeline that extracts Chromaprint acoustic fingerprints via fpcalc for perceptual duplicate detection and SHA-256 hashes for bitwise identical files. Incorporates ProcessPoolExecutor worker pools and streaming CSV ledgers for resilient batch execution.',
     github: 'https://github.com/shiv677/Audio-Internal-External-Duplicacy-Checker',
     pipeline: [
       { step: '01', name: 'STREAM INGEST', spec: '1MB bounded binary chunk stream' },
       { step: '02', name: 'WORKER POOL', spec: 'Dynamic multiprocessing core dispatch' },
       { step: '03', name: 'DUAL FINGERPRINT', spec: 'Chromaprint acoustic + SHA-256 digest' },
       { step: '04', name: 'COLLISION MATRIX', spec: 'Internal batch & external catalog diff' },
-      { step: '05', name: 'ATOMIC COMMIT', spec: 'SQLite WAL state journal with fsync' },
+      { step: '05', name: 'ATOMIC COMMIT', spec: 'Streaming CSV audit ledger' },
     ],
     telemetry: [
       { label: 'INGESTION ENGINE', value: 'MULTI-CORE', sub: 'Process pool worker dispatch' },
       { label: 'DETECTION METHOD', value: 'DUAL-PHASE', sub: 'Exact-hash duplicate detection' },
       { label: 'MEMORY PROFILE', value: 'O(1) BOUNDED', sub: '1MB generator stream per worker' },
-      { label: 'STATE RECOVERY', value: 'SQLITE WAL', sub: 'Checkpoint-based recovery' },
+      { label: 'STATE RECOVERY', value: 'STREAMING CSV', sub: 'Streaming CSV batch records' },
     ],
     metrics: [
       { label: 'Ingestion Engine', value: 'Multi-Core Batch Stream' },
@@ -74,19 +74,17 @@ export const ALL_PROJECTS: Project[] = [
     ],
     technologies: [
       'Python 3.12',
-      'Multiprocessing',
-      'Chromaprint',
-      'PyTorch / Torchaudio',
-      'SQLite WAL',
-      'PostgreSQL',
+      'ProcessPoolExecutor',
+      'Chromaprint (fpcalc)',
+      'Streaming CSV',
       'SHA-256',
     ],
-    stack: ['Python 3.12', 'Chromaprint', 'Multiprocessing', 'SQLite WAL', 'SHA-256'],
+    stack: ['Python 3.12', 'ProcessPoolExecutor', 'Chromaprint (fpcalc)', 'Streaming CSV', 'SHA-256'],
     architecturePoints: [
-      'CPU-core auto-balancing worker pool avoiding Global Interpreter Lock bottlenecks',
-      'Dual-layer verification: fast acoustic perceptual hashing followed by byte-level cryptographic validation',
-      'Atomic SQLite WAL state store ensuring exact-hash duplicate detection during concurrent batch executions',
-      'Graceful SIGINT/SIGTERM handlers persisting processed offsets for checkpoint-based recovery',
+      'ProcessPoolExecutor worker pool avoiding Global Interpreter Lock bottlenecks',
+      'Dual-layer verification: fast acoustic perceptual hashing via fpcalc followed by byte-level cryptographic validation',
+      'Streaming CSV output ledgers ensuring exact-hash duplicate detection during batch executions',
+      'Checkpoint-based recovery and resilient batch directory scanning',
     ],
     codeSnippet: `import os
 import hashlib
@@ -129,41 +127,39 @@ def process_batch(paths: list[Path], db):
     status: 'VERIFIED & TESTED',
     tagline: 'CPU-aware parallel migration engine with atomic checkpoint recovery.',
     description:
-      'High-throughput network storage transfer engine built for parallel NAS transfer architecture. Dynamically allocates worker processes to (CPU_COUNT - 1) to prevent host starvation, validates every chunk via SHA-256 checksums, and persists atomic state checkpoints for checkpoint-based recovery on network drop.',
+      'High-throughput network storage transfer engine built for parallel NAS transfer architecture. Dynamically allocates worker threads via ThreadPoolExecutor, validates every chunk via SHA-256 checksums, and persists atomic JSON state checkpoints for checkpoint-based recovery on network drop.',
     problem:
       'Migrating multi-terabyte datasets across network-attached storage suffered from single-thread bandwidth bottlenecks, unrecoverable failures midway through large transfers, and runaway RAM usage when traversing millions of deep directories.',
     solution:
-      'Built a custom parallelized transfer engine utilizing dynamic worker allocation (CPU count − 1 strategy), chunk-level transfer streams, SHA-256 block verification, and persistent JSON/SQLite checkpoint state tracking that allows interrupted transfers to resume reliably without re-reading completed files.',
+      'Built a custom parallelized transfer engine utilizing ThreadPoolExecutor worker allocation, chunk-level transfer streams, SHA-256 block verification, and persistent atomic JSON checkpoint state tracking that allows interrupted transfers to resume reliably without re-reading completed files.',
     github: 'https://github.com/shiv677/T2NAS',
     pipeline: [
       { step: '01', name: 'NAS MOUNT SCAN', spec: 'Recursive manifest directory indexing' },
-      { step: '02', name: 'CORE ALLOCATION', spec: 'Dynamic (CPU - 1) worker process pool' },
+      { step: '02', name: 'CORE ALLOCATION', spec: 'Dynamic ThreadPoolExecutor worker pool' },
       { step: '03', name: 'CHUNK STREAM', spec: 'Parallel 4MB socket throughput' },
       { step: '04', name: 'SHA-256 VERIFY', spec: 'Block-level byte parity confirmation' },
-      { step: '05', name: 'STATE LEDGER', spec: 'Atomic fsync checkpoint journal' },
+      { step: '05', name: 'STATE LEDGER', spec: 'Atomic JSON checkpoint journal' },
     ],
     telemetry: [
-      { label: 'WORKER SCALING', value: 'CPU - 1', sub: 'Hardware-aware process pool' },
-      { label: 'FAULT RECOVERY', value: 'ATOMIC WAL', sub: 'Checkpoint-based recovery' },
+      { label: 'WORKER SCALING', value: 'THREAD POOL', sub: 'ThreadPoolExecutor worker allocation' },
+      { label: 'FAULT RECOVERY', value: 'ATOMIC JSON', sub: 'Checkpoint-based recovery' },
       { label: 'VERIFICATION', value: 'SHA-256', sub: 'Chunk parity confirmation' },
       { label: 'THROUGHPUT', value: 'PARALLEL', sub: 'Parallel NAS transfer architecture' },
     ],
     metrics: [
-      { label: 'Worker Allocation', value: 'Dynamic (CPU - 1 Cores)' },
+      { label: 'Worker Allocation', value: 'Dynamic ThreadPoolExecutor' },
       { label: 'Throughput', value: 'Parallel NAS transfer architecture' },
       { label: 'Verification', value: 'Chunked SHA-256 Parity' },
       { label: 'Fault Recovery', value: 'Atomic State Checkpoint' },
     ],
     technologies: [
       'Python 3.12',
-      'Multiprocessing',
+      'ThreadPoolExecutor',
       'Streaming I/O',
       'SHA-256 Verification',
-      'SQLite WAL',
-      'State Machines',
-      'Linux POSIX',
+      'Atomic JSON State',
     ],
-    stack: ['Python 3.12', 'Multiprocessing', 'SHA-256 Parity', 'SQLite WAL', 'POSIX'],
+    stack: ['Python 3.12', 'ThreadPoolExecutor', 'SHA-256 Parity', 'Atomic JSON State'],
     architecturePoints: [
       'Chunked stream buffers preventing system OOM crashes on multi-gigabyte file transfers',
       'Resumable state machine tracking byte offsets and verification checksums per file',
