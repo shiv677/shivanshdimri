@@ -142,7 +142,7 @@ const Contact = () => {
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
           <div className="p-4 rounded-2xl border border-white/10 bg-white/[0.02] backdrop-blur-md">
             <div className="text-[10px] font-mono text-white/40 tracking-[0.2em] mb-1">UPLINK STATUS</div>
-            <div className="text-xl sm:text-2xl font-mono font-bold text-emerald-400">ENCRYPTED</div>
+            <div className="text-xl sm:text-2xl font-mono font-bold text-emerald-400">ACTIVE</div>
           </div>
           <div className="p-4 rounded-2xl border border-white/10 bg-white/[0.02] backdrop-blur-md">
             <div className="text-[10px] font-mono text-white/40 tracking-[0.2em] mb-1">AVAILABILITY</div>
@@ -170,7 +170,7 @@ const Contact = () => {
                 SEND DIRECT INQUIRY
               </span>
             </div>
-            <span className="text-[10px] font-mono text-white/40">TLS 1.3 // POSTGRES RLS</span>
+            <span className="text-[10px] font-mono text-white/40">HTTPS // POSTGRES RLS</span>
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-4">

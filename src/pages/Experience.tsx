@@ -123,7 +123,7 @@ const SKILL_CATEGORIES: SkillCategory[] = [
         name: 'State Checkpointing & Resumability',
         implementation: 'T2NAS State Ledger',
         desc: 'Zero-data-loss state machines persisting byte offsets and processed entity IDs to survive unannounced power loss or process kill.',
-        tags: ['Atomic Checkpointing', 'Resumable State', 'Zero Duplication', 'Crash Proof'],
+        tags: ['Atomic Checkpointing', 'Resumable State', 'Zero Duplication', 'Crash-Resilient'],
       },
       {
         name: 'Acoustic & Hash Deduplication',
@@ -259,7 +259,7 @@ const Experience = () => {
           <div className="p-4 rounded-2xl border border-white/10 bg-white/[0.02] backdrop-blur-md">
             <div className="text-[10px] font-mono text-white/40 tracking-[0.2em] mb-1">SYSTEMS VERIFIED</div>
             <div className="text-xl sm:text-2xl font-mono font-bold text-cyan-300">
-              ZERO FAILURE
+              FAULT-RESILIENT
             </div>
           </div>
         </div>
