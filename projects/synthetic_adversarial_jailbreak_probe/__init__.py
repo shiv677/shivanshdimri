@@ -1,18 +1,24 @@
-"""Synthetic Adversarial Jailbreak Probe & Red-Teaming Safety Evaluator.
-
-Generates adversarial perturbations (Base64, ROT13 cipher, prefix injection,
-hypothetical framing, leetspeak) to audit LLM guardrail robustness, refusal
-accuracy, false positive refusal rates, and system prompt leak resistance.
-"""
-
-from .models import MutationStrategy, ProbeItem, ProbeResult, RefusalMetrics, SafetyVerdict
-from .probe import (
-    SimulatedGuardrailModel,
-    apply_mutation,
-    detect_refusal,
-    detect_system_leak,
-    run_adversarial_audit,
-)
+"""Synthetic Adversarial Jailbreak Probe & Red-Teaming Safety Evaluator."""
+try:
+    from .models import MutationStrategy, ProbeItem, ProbeResult, RefusalMetrics, SafetyVerdict
+    from .probe import (
+        SimulatedGuardrailModel,
+        apply_mutation,
+        detect_refusal,
+        detect_system_leak,
+        evaluate_probe,
+        run_adversarial_audit,
+    )
+except (ImportError, ValueError):
+    from models import MutationStrategy, ProbeItem, ProbeResult, RefusalMetrics, SafetyVerdict
+    from probe import (
+        SimulatedGuardrailModel,
+        apply_mutation,
+        detect_refusal,
+        detect_system_leak,
+        evaluate_probe,
+        run_adversarial_audit,
+    )
 
 __all__ = [
     "MutationStrategy",
@@ -24,5 +30,6 @@ __all__ = [
     "apply_mutation",
     "detect_refusal",
     "detect_system_leak",
+    "evaluate_probe",
     "run_adversarial_audit",
 ]

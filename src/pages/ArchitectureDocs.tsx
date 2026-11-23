@@ -61,7 +61,7 @@ const WHITEPAPERS: WhitepaperDoc[] = [
     readingTime: '6 MIN READ',
     version: 'v2.4.0_STABLE',
     abstract:
-      "CPython's Global Interpreter Lock (GIL) limits pure Python threads to a single physical core, transforming multi-threaded CPU-heavy hashing, cryptographic deduplication, and byte slicing into severe latency bottlenecks. This paper details our architecture for achieving deterministic 100% linear core utilization using dynamic worker pool scaling (os.cpu_count() - 1), bounded chunk generators, and zero-starvation IPC queue topologies while strictly bounding resident memory to O(1).",
+      "CPython's Global Interpreter Lock (GIL) limits pure Python threads to a single physical core, transforming multi-threaded CPU-heavy hashing, cryptographic deduplication, and byte slicing into severe latency bottlenecks. This paper details our architecture for achieving high linear core utilization using dynamic worker pool scaling (os.cpu_count() - 1), bounded chunk generators, and balanced IPC queue topologies while strictly bounding resident memory to O(1).",
     problemStatement:
       'In high-volume audio ingestion pipelines processing thousands of multi-megabyte binary payloads, threading models in Python suffer catastrophic lock contention. CPU thread switching overhead under the GIL causes 70% CPU idle time despite 100% thread occupancy. Furthermore, naive batch loading into memory triggers unpredictable Out-Of-Memory (OOM) kernel terminations.',
     architectureSolution: [
@@ -70,7 +70,7 @@ const WHITEPAPERS: WhitepaperDoc[] = [
         description:
           'Rather than static worker instantiation, the pool dynamically computes available physical hardware cores reserving exactly one dedicated core for OS interrupt handling and IPC broker routing: max(1, os.cpu_count() - 1).',
         keyPoints: [
-          'Guarantees the host OS never throttles the orchestrator daemon during 100% batch saturation.',
+          'Protects the host OS scheduler from orchestrator daemon starvation during high batch saturation.',
           'Decouples worker process memory spaces, completely eliminating GIL synchronization overhead.',
           'Each worker runs an isolated CPython runtime with dedicated signal handlers for SIGTERM.',
         ],
@@ -82,7 +82,7 @@ const WHITEPAPERS: WhitepaperDoc[] = [
         keyPoints: [
           'Resident memory remains bounded at ~62MB per worker regardless of whether the source file is 10MB or 50GB.',
           'Backpressure is enforced through bounded IPC queues (maxsize = workers * 2), preventing queue inflation.',
-          'Achieves deterministic zero-alloc throughput across multi-terabyte batches.',
+          'Achieves predictable streaming throughput with bounded buffer allocations across multi-terabyte batches.',
         ],
       },
     ],
@@ -97,13 +97,13 @@ from typing import Generator, Tuple
 CHUNK_SIZE = 1024 * 1024  # 1MB Bounded Buffer
 
 def stream_chunk_generator(filepath: str) -> Generator[bytes, None, None]:
-    """Streams file in bounded 1MB chunks to guarantee O(1) resident RAM."""
+    """Streams file in bounded 1MB chunks to maintain O(1) resident RAM."""
     with open(filepath, 'rb') as f:
         while chunk := f.read(CHUNK_SIZE):
             yield chunk
 
 def compute_deterministic_fingerprint(filepath: str) -> Tuple[str, str, int]:
-    """Isolated worker process kernel: Bypasses GIL with zero IPC lock contention."""
+    """Isolated worker process kernel: Bypasses GIL with minimized IPC lock contention."""
     sha = hashlib.sha256()
     total_bytes = 0
     for chunk in stream_chunk_generator(filepath):
@@ -150,7 +150,7 @@ def spawn_saturated_pipeline(file_paths: list[str]) -> list:
     readingTime: '5 MIN READ',
     version: 'v3.1.2_ENTERPRISE',
     abstract:
-      'Enterprise file transfer engines and long-running batch ingestion pipelines will inevitably suffer catastrophic interrupts: kernel panics, abrupt SIGKILL signals, power cuts, or network partition timeouts. Traditional database architectures corrupt mid-transaction or trigger full rollback re-transfers. This paper presents our atomic state machine architecture utilizing SQLite Write-Ahead Logging (WAL), atomic filesystem renames, and idempotency keys to guarantee sub-65ms cold recovery with zero data duplication.',
+      'Enterprise file transfer engines and long-running batch ingestion pipelines will inevitably suffer catastrophic interrupts: kernel panics, abrupt SIGKILL signals, power cuts, or network partition timeouts. Traditional database architectures corrupt mid-transaction or trigger full rollback re-transfers. This paper presents our atomic state machine architecture utilizing SQLite Write-Ahead Logging (WAL), atomic filesystem renames, and idempotency keys to enable verified sub-65ms cold recovery with deduplicated state integrity.',
     problemStatement:
       'When copying or deduplicating 20,000 corporate records across enterprise storage servers, a mid-flight process termination leaves partial writes on disk and inconsistent catalog state. Re-running the pipeline from scratch wastes hours of bandwidth and compute, while naive resuming risks silent catalog corruption and data drift.',
     architectureSolution: [
@@ -161,7 +161,7 @@ def spawn_saturated_pipeline(file_paths: list[str]) -> list:
         keyPoints: [
           'Multiple worker processes can query the catalog concurrently while the writer executes atomic batch commits.',
           'Checkpoints are triggered automatically or lazily in the background without blocking I/O.',
-          'Eliminates "database is locked" operational exceptions entirely.',
+          'Minimizes "database is locked" operational exceptions under concurrent load.',
         ],
       },
       {
@@ -169,7 +169,7 @@ def spawn_saturated_pipeline(file_paths: list[str]) -> list:
         description:
           'State persistence never writes directly to active files. Output files are written to a temporary uuid staging path, flushed to physical disk with os.fsync, and atomically promoted using POSIX/NT atomic rename (os.replace).',
         keyPoints: [
-          'guarantees that file reads are all-or-nothing: the system never observes a half-written file.',
+          'Ensures that file operations are atomic: the system avoids partial or half-written files.',
           'If power is cut mid-transfer, only orphaned temp files remain, cleaned up idempotently on boot.',
           'Resumption state reads the exact byte offset from the last checkpoint in < 65ms.',
         ],
@@ -294,7 +294,7 @@ class MultimodalVerdict(BaseModel):
     consensus_decision: Literal['VERIFIED_ACCEPT', 'FLAG_REJECT', 'HUMAN_AUDIT_REQUIRED']
 
     def is_production_grade(self) -> bool:
-        """Automated CI/CD Quality Gate: Zero tolerance for hallucinations."""
+        """Automated CI/CD Quality Gate: High-precision filtering against hallucinations."""
         return (
             self.factuality_score >= 0.95 and
             not self.hallucination_flag and

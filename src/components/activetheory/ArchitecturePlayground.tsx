@@ -1555,7 +1555,7 @@ export const ArchitecturePlayground: React.FC = () => {
                   <div className="text-[9px] text-red-400/70">ISOLATED BY AUDIT</div>
                 </div>
                 <div className="p-3 rounded-xl bg-black/60 border border-white/10">
-                  <div className="text-[9px] text-cyan-400 uppercase">HASH GUARANTEE</div>
+                  <div className="text-[9px] text-cyan-400 uppercase">HASH VERIFICATION</div>
                   <div className="text-base font-bold text-cyan-300">64-BIT SIMHASH</div>
                   <div className="text-[9px] text-white/50">&le; 3 BIT HAMMING DIST</div>
                 </div>

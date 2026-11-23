@@ -330,7 +330,7 @@ def stream_embedded_rsync(job) -> Iterator[dict]:
     architecturePoints: [
       'Multi-agent debate & consensus architecture mitigating single-judge evaluation bias',
       'Token-bucket asynchronous rate limiter dynamically throttling across multiple API provider quotas',
-      'Pydantic runtime data validators guaranteeing structural integrity of model outputs',
+      'Pydantic runtime data validators enforcing structural integrity of model outputs',
       'Multimodal regression suite verifying bounding-box alignment and OCR accuracy for VLMs',
     ],
     codeSnippet: `import asyncio
@@ -415,7 +415,7 @@ async def evaluate_sample_with_consensus(sample: dict, client, semaphore) -> Rub
       'Multi-stage normalization converting varied raw dumps into standardized canonical question representations',
       'Dual-pass deduplication filtering identical text hashes and fuzzy semantic near-duplicates',
       'Automated corruption detection flagging truncated inputs, encoding anomalies, and invalid schemas',
-      'Transactional SQLite WAL database guarantees with persistent checkpointing for crash resilience',
+      'Transactional SQLite WAL persistence with checkpointing for crash resilience',
     ],
     codeSnippet: `from pydantic import BaseModel, Field, field_validator
 import unicodedata

@@ -347,7 +347,7 @@ export const TerminalPortfolio: React.FC<TerminalPortfolioProps> = ({ onSwitchTo
               </div>
               <p className="text-[11px] text-cyan-200/90 leading-relaxed">
                 &bull; Inspecting WAL header frame indices &rarr; Confirmed committed Watermark at Record #342.<br />
-                &bull; Replaying WAL frame logs up to confirmed watermark. Zero corrupted page fragments.<br />
+                &bull; Replaying WAL frame logs up to confirmed watermark. Verified page integrity.<br />
                 &bull; Re-arming ingestion queue from record #343...
               </p>
             </div>
@@ -362,9 +362,9 @@ export const TerminalPortfolio: React.FC<TerminalPortfolioProps> = ({ onSwitchTo
             </div>
 
             <div className="p-2 rounded bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 flex flex-wrap items-center justify-between gap-2 font-bold text-xs">
-              <span>STATUS: ZERO DATA LOSS // ZERO DUPLICATES</span>
+              <span>STATUS: VERIFIED RECOVERY // DEDUPLICATED STATE</span>
               <span className="text-[11px] font-mono font-normal">
-                {recordCount}/{recordCount} records saved (ACID Parity: 100%)
+                {recordCount}/{recordCount} records saved (ACID Parity: Verified)
               </span>
             </div>
           </div>
@@ -447,7 +447,7 @@ export const TerminalPortfolio: React.FC<TerminalPortfolioProps> = ({ onSwitchTo
 
             <div className="p-2 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 text-xs font-bold flex items-center justify-between">
               <span>AUDIT VERDICT: [PASS]</span>
-              <span className="text-[11px] font-normal">Zero poisoned records admitted to training corpus.</span>
+              <span className="text-[11px] font-normal">Quarantine policy enforced: malformed records isolated from training corpus.</span>
             </div>
           </div>
         </div>
@@ -693,7 +693,7 @@ export const TerminalPortfolio: React.FC<TerminalPortfolioProps> = ({ onSwitchTo
                   <span className={`${t.accent} text-xs`}>2024 – 2026 (Remote)</span>
                 </div>
                 <ul className="list-disc list-inside text-muted-foreground text-xs mt-1.5 space-y-1">
-                  <li>Authored T2NAS, a CPU-aware resumable parallel transfer engine for 10Gbps NAS network environments.</li>
+                  <li>Authored T2NAS, a CPU-aware resumable parallel transfer engine for high-throughput NAS network environments.</li>
                   <li>Developed Audio Internal & External Duplicacy Checker combining acoustic hashing with atomic SQLite WAL checkpointing.</li>
                   <li>Constructed Enterprise Rsync Transfer Platform with embedded runtimes and live stdout regex telemetry.</li>
                 </ul>
@@ -903,9 +903,9 @@ export const TerminalPortfolio: React.FC<TerminalPortfolioProps> = ({ onSwitchTo
                 Distributed benchmarking framework distributing multimodal vision-language model and agentic evaluations with verified Pydantic schema validation.
               </p>
               <div className="bg-card/50 p-3 rounded font-mono text-xs space-y-1">
-                <div>&bull; Multi-agent consensus debate scoring eliminating evaluator bias</div>
-                <div>&bull; Asynchronous token-bucket rate limiter with zero dropped 429 requests</div>
-                <div>&bull; Pydantic v2 runtime schema enforcement for guaranteed structured output</div>
+                <div>&bull; Multi-agent consensus debate scoring mitigating evaluator bias</div>
+                <div>&bull; Asynchronous token-bucket rate limiter mitigating upstream 429 rate limits</div>
+                <div>&bull; Pydantic v2 runtime schema enforcement for validated structured output</div>
                 <div>&bull; Multimodal bounding-box, OCR, and reasoning regression verification</div>
               </div>
               <a href="https://github.com/shiv677" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 text-xs text-primary hover:underline">

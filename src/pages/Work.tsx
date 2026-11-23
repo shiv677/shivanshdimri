@@ -204,7 +204,7 @@ const Work = () => {
             {/* Architectural Pillars */}
             <div className="p-6 rounded-3xl border border-white/10 bg-[#04050a]/70 backdrop-blur-md space-y-3">
               <div className="text-xs font-mono tracking-[0.2em] text-emerald-400 flex items-center gap-2 mb-3">
-                <span>[ 03 // RELIABILITY GUARANTEES ]</span>
+                <span>[ 03 // RELIABILITY ARCHITECTURE ]</span>
               </div>
               <ul className="space-y-3">
                 {activeSystem.architecturePoints.map((point, idx) => (

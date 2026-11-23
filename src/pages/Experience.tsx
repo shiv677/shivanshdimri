@@ -122,8 +122,8 @@ const SKILL_CATEGORIES: SkillCategory[] = [
       {
         name: 'State Checkpointing & Resumability',
         implementation: 'T2NAS State Ledger',
-        desc: 'Zero-data-loss state machines persisting byte offsets and processed entity IDs to survive unannounced power loss or process kill.',
-        tags: ['Atomic Checkpointing', 'Resumable State', 'Zero Duplication', 'Crash-Resilient'],
+        desc: 'Fault-tolerant state machines persisting byte offsets and processed entity IDs to survive unannounced power loss or process kill.',
+        tags: ['Atomic Checkpointing', 'Resumable State', 'Deterministic Deduplication', 'Crash-Resilient'],
       },
       {
         name: 'Acoustic & Hash Deduplication',
@@ -140,7 +140,7 @@ const SKILL_CATEGORIES: SkillCategory[] = [
       {
         name: 'High-Volume ETL & Data Validation',
         implementation: 'Large-Scale Dataset QA',
-        desc: 'Batch processing 100k+ vendor datasets with schema validation, malformed file quarantine, and structured CSV/Parquet reporting.',
+        desc: 'Batch processing 100k+ record vendor datasets with schema validation, malformed file quarantine, and structured CSV/Parquet reporting.',
         tags: ['ETL Pipelines', 'Schema Validation', 'Batch Processing', 'Quarantine Logic'],
       },
     ],
@@ -205,7 +205,7 @@ const CAREER_TIMELINE = [
     status: 'CONTINUOUS (2+ YEARS TOTAL)',
     isCurrent: false,
     highlights: [
-      'Authored T2NAS, a CPU-aware resumable parallel transfer engine for 10Gbps NAS network environments.',
+      'Authored T2NAS, a CPU-aware resumable parallel transfer engine for high-throughput NAS network environments.',
       'Developed Audio Internal & External Duplicacy Checker combining acoustic fingerprinting with atomic checkpointing.',
       'Constructed Enterprise Rsync Transfer Platform with embedded runtimes and subprocess telemetry extraction.',
       'Engineered production web applications, automation pipelines, and custom API integrations with strict data integrity.',
