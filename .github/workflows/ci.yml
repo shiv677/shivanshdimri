@@ -37,7 +37,7 @@ jobs:
       - name: Install Python dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install pytest pydantic pytest-asyncio
+          pip install pytest pydantic pytest-asyncio torch numpy scipy --extra-index-url https://download.pytorch.org/whl/cpu
 
       - name: Run Python unit tests
         run: pytest projects/ -v
