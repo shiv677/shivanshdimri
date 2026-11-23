@@ -1,0 +1,77 @@
+{
+  "device": "cpu",
+  "param_count": 213248,
+  "eval_metrics": {
+    "total_samples": 8,
+    "correct_count": 2,
+    "accuracy": 0.25,
+    "avg_latency_ms": 11.522049986524507,
+    "predictions": [
+      {
+        "id": "sample_000",
+        "question": "What color is the center patch?",
+        "ground_truth": "red",
+        "predicted": "red",
+        "correct": true,
+        "latency_ms": 12.928300071507692
+      },
+      {
+        "id": "sample_001",
+        "question": "How many patches are present?",
+        "ground_truth": "two",
+        "predicted": "three",
+        "correct": false,
+        "latency_ms": 9.01689997408539
+      },
+      {
+        "id": "sample_002",
+        "question": "What color is the center patch?",
+        "ground_truth": "blue",
+        "predicted": "red",
+        "correct": false,
+        "latency_ms": 12.10159994661808
+      },
+      {
+        "id": "sample_003",
+        "question": "How many patches are present?",
+        "ground_truth": "two",
+        "predicted": "three",
+        "correct": false,
+        "latency_ms": 9.800100000575185
+      },
+      {
+        "id": "sample_004",
+        "question": "What color is the center patch?",
+        "ground_truth": "red",
+        "predicted": "red",
+        "correct": true,
+        "latency_ms": 14.901599963195622
+      },
+      {
+        "id": "sample_005",
+        "question": "How many patches are present?",
+        "ground_truth": "two",
+        "predicted": "three",
+        "correct": false,
+        "latency_ms": 10.327099938876927
+      },
+      {
+        "id": "sample_006",
+        "question": "What color is the center patch?",
+        "ground_truth": "blue",
+        "predicted": "red",
+        "correct": false,
+        "latency_ms": 13.3670000359416
+      },
+      {
+        "id": "sample_007",
+        "question": "How many patches are present?",
+        "ground_truth": "two",
+        "predicted": "three",
+        "correct": false,
+        "latency_ms": 9.733799961395562
+      }
+    ]
+  },
+  "throughput_fps": 378.02
+}

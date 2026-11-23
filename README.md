@@ -3,7 +3,7 @@
 [![Portfolio CI/CD](https://github.com/shiv677/shivanshdimri/actions/workflows/ci.yml/badge.svg)](https://github.com/shiv677/shivanshdimri/actions)
 [![Python 3.12](https://img.shields.io/badge/Python-3.12-blue.svg)](https://www.python.org/)
 [![Vite 5](https://img.shields.io/badge/Vite-5.4-purple.svg)](https://vitejs.dev/)
-[![Tests Passing](https://img.shields.io/badge/Pytest-66%20Passed-brightgreen.svg)](projects/)
+[![Tests Passing](https://img.shields.io/badge/Pytest-159%20Passed-brightgreen.svg)](projects/)
 
 Personal portfolio and systems engineering showcase for **Shivansh Dimri**, Associate AI Engineer. Demonstrates production-grade AI systems, autonomous agent trajectory evaluation harnesses, high-concurrency distributed data pipelines, semantic caching architectures, adversarial red-teaming probes, and a modern React 18 / TypeScript frontend.
 
@@ -42,7 +42,7 @@ Continuous Integration is orchestrated via GitHub Actions ([`.github/workflows/c
 - **Python Pipeline**:
   - Sets up Python 3.12.
   - Installs testing dependencies: `pip install pytest pydantic`.
-  - Executes the full test suite across all 10 systems: `pytest projects/ -v` (66 unit & integration tests passing).
+  - Executes the full test suite across all systems: `pytest projects/ -v` (159 unit & integration tests passing).
 
 ---
 
