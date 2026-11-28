@@ -36,10 +36,100 @@ export interface Project {
 
 export const ALL_PROJECTS: Project[] = [
   {
-    id: 'audio-dedup',
+    id: 'code-security-auditor',
     index: '01',
     code: '01',
     zoneIndex: 1,
+    title: 'Code Security Auditor: Multilingual CVE/CWE Vulnerability Engine',
+    shortTitle: 'CODE.AUDIT.AI',
+    category: 'AUTONOMOUS AI SECURITY & APPLIED LLM FINE-TUNING',
+    accent: '#10b981',
+    status: 'VERIFIED & LIVE ON HF',
+    tagline: 'Fine-tuned Qwen2.5-Coder-1.5B LoRA engine for multilingual CVE/CWE detection, exploit analysis & auto-patching.',
+    description:
+      'Autonomous vulnerability research and code auditing engine fine-tuned on Qwen2.5-Coder-1.5B-Instruct using LoRA / PEFT in native bfloat16 on an NVIDIA GeForce RTX 5070 (PyTorch 2.11+cu128). Trained on 4,568+ curated 3-turn ChatML CVE/CWE security traces across Rust, Java, Ruby, PHP, Python, C/C++, Go, JS/TS, and Solidity to perform MITRE CWE mapping, CVSS v3.1 scoring, exploit vector breakdown, and production-ready secure code remediation.',
+    problem:
+      'Static application security testing (SAST) tools suffer from high false-positive rates, fail to reason about cross-language semantic vulnerabilities (such as Rust unsafe raw pointer arithmetic, Java JNDI injection, or Ruby/PHP deserialization gadget chains), and lack automated context-aware patch synthesis.',
+    solution:
+      'Engineered an end-to-end multilingual security dataset generator (4,568 ChatML training traces + 240 stratified holdout evaluations across 20+ vulnerability families and negative secure controls) and fine-tuned all 7 linear attention/MLP projections via Low-Rank Adaptation (r=16, alpha=32), achieving 0.04948 final convergence loss and publishing verified weights to Hugging Face Hub.',
+    github: 'https://github.com/shiv677/code-security-auditor',
+    pipeline: [
+      { step: '01', name: 'AST & DIFF INGEST', spec: 'Raw source file or git diff stream' },
+      { step: '02', name: 'CHATML TOKENIZER', spec: '3-turn system/user/assistant prompt template' },
+      { step: '03', name: 'LORA BFLOAT16 KERNEL', spec: 'Qwen2.5-Coder-1.5B + r=16 PEFT adapter on RTX 5070' },
+      { step: '04', name: 'CVE / CWE MAPPING', spec: 'MITRE CWE taxonomy, CVSS score & exploit vector' },
+      { step: '05', name: 'REMEDIATION PATCH', spec: 'Drop-in memory-safe & parameterized code fix' },
+    ],
+    telemetry: [
+      { label: 'BASE ARCHITECTURE', value: 'QWEN2.5-1.5B', sub: 'LoRA r=16, alpha=32 (7 linear modules)' },
+      { label: 'TRAINING CORPUS', value: '4,568 TRACES', sub: 'Rust, Java, Ruby, PHP, Python, C, Go, Solidity' },
+      { label: 'CONVERGENCE LOSS', value: '0.04948', sub: 'bfloat16 on NVIDIA RTX 5070 (cu128)' },
+      { label: 'HF HUB DEPLOYMENT', value: 'LIVE ADAPTER', sub: 'shivanshDIMRI/code-security-auditor-qwen' },
+    ],
+    metrics: [
+      { label: 'Base Model & Adapter', value: 'Qwen2.5-Coder-1.5B + LoRA (r=16)' },
+      { label: 'Multilingual Corpus', value: '4,568 Train + 240 Holdout Traces' },
+      { label: 'Final Training Loss', value: '0.04948 (RTX 5070 bfloat16)' },
+      { label: 'Hugging Face Hub', value: 'shivanshDIMRI/code-security-auditor-qwen' },
+    ],
+    technologies: [
+      'Qwen2.5-Coder-1.5B',
+      'LoRA / PEFT',
+      'PyTorch 2.11+cu128',
+      'NVIDIA RTX 5070',
+      'Hugging Face Hub',
+      'ChatML',
+      'Python 3.12',
+      'Rust / Java / Ruby / PHP',
+    ],
+    stack: [
+      'Qwen2.5-Coder-1.5B',
+      'LoRA / PEFT',
+      'PyTorch 2.11+cu128',
+      'NVIDIA RTX 5070',
+      'Hugging Face Hub',
+      'ChatML',
+    ],
+    architecturePoints: [
+      'Full linear projection LoRA coverage (q_proj, k_proj, v_proj, o_proj, gate_proj, up_proj, down_proj) trained in native bfloat16 on NVIDIA RTX 5070',
+      '4,568+ multilingual 3-turn ChatML CVE/CWE training traces and 240 holdout evaluations spanning Rust unsafe FFI, Java JNDI/Log4Shell, Ruby YAML RCE, PHP POP chains, and Python/C/Go/Solidity',
+      'False-positive mitigation trained via hardened negative control families to distinguish vulnerable patterns from properly parameterized and bounds-checked code',
+      'Published LoRA safetensors adapter and automated CLI security auditing engine live at huggingface.co/shivanshDIMRI/code-security-auditor-qwen',
+    ],
+    codeSnippet: `import torch
+from transformers import AutoModelForCausalLM, AutoTokenizer
+from peft import PeftModel
+
+BASE_MODEL = "Qwen/Qwen2.5-Coder-1.5B-Instruct"
+LORA_HUB_ID = "shivanshDIMRI/code-security-auditor-qwen"
+
+# Vulnerable Rust FFI target: CWE-787 Out-of-Bounds Pointer Write
+RUST_TARGET = """
+pub unsafe fn write_packet(buf: *mut u8, cap: usize, offset: usize, src: &[u8]) {
+    let dst = buf.add(offset); // Unchecked pointer arithmetic -> heap corruption
+    std::ptr::copy_nonoverlapping(src.as_ptr(), dst, src.len());
+}
+"""
+
+def run_security_audit(code: str, lang: str = "rust") -> str:
+    tokenizer = AutoTokenizer.from_pretrained(BASE_MODEL)
+    base = AutoModelForCausalLM.from_pretrained(BASE_MODEL, torch_dtype=torch.bfloat16, device_map="auto")
+    model = PeftModel.from_pretrained(base, LORA_HUB_ID)
+    messages = [
+        {"role": "system", "content": "You are an expert Application Security Auditor. Identify CWE IDs, CVSS severity, exploit vectors, and provide a remediated patch."},
+        {"role": "user", "content": f"Audit this {lang} snippet for security vulnerabilities:\\n\`\`\`{lang}\\n{code}\\n\`\`\`"}
+    ]
+    prompt = tokenizer.apply_chat_template(messages, tokenize=False, add_generation_prompt=True)
+    inputs = tokenizer(prompt, return_tensors="pt").to(model.device)
+    with torch.inference_mode():
+        out = model.generate(**inputs, max_new_tokens=512, temperature=0.1, do_sample=False)
+    return tokenizer.decode(out[0][inputs.input_ids.shape[1]:], skip_special_tokens=True)`,
+  },
+  {
+    id: 'audio-dedup',
+    index: '02',
+    code: '02',
+    zoneIndex: 2,
     title: 'Audio Internal & External Duplicacy Checker',
     shortTitle: 'AUDIO.DEDUP',
     category: 'ACOUSTIC FINGERPRINTING & HIGH-VOLUME DATA ENGINEERING',
@@ -117,9 +207,9 @@ def process_batch(paths: list[Path], db):
   },
   {
     id: 't2nas',
-    index: '02',
-    code: '02',
-    zoneIndex: 2,
+    index: '03',
+    code: '03',
+    zoneIndex: 3,
     title: 'T2NAS – Parallel NAS Data Transfer Engine',
     shortTitle: 'T2NAS.VORTEX',
     category: 'DISTRIBUTED STORAGE // CPU-AWARE CONCURRENCY',
@@ -197,9 +287,9 @@ def transfer_chunked_file(src: str, dst: str, state: CheckpointTracker):
   },
   {
     id: 'enterprise-rsync',
-    index: '03',
-    code: '03',
-    zoneIndex: 3,
+    index: '04',
+    code: '04',
+    zoneIndex: 4,
     title: 'Enterprise Rsync Transfer Platform',
     shortTitle: 'RSYNC.RBAC',
     category: 'EMBEDDED RUNTIMES // HARDENED ORCHESTRATION',
@@ -277,9 +367,8 @@ def stream_embedded_rsync(job) -> Iterator[dict]:
   },
   {
     id: 'ai-eval-harness',
-    index: '04',
-    code: '04',
-    zoneIndex: 4,
+    index: '05',
+    code: '05',
     title: 'Autonomous AI & Multimodal VLM Evaluation Harness',
     shortTitle: 'AI.HARNESS',
     category: 'DISTRIBUTED AI BENCHMARKING & MULTI-AGENT SWARMS',
@@ -362,8 +451,8 @@ async def evaluate_sample_with_consensus(sample: dict, client, semaphore) -> Rub
   },
   {
     id: 'dataset-quality-engineering',
-    index: '05',
-    code: '05',
+    index: '06',
+    code: '06',
     title: 'Large-Scale Dataset Quality & Integrity Engineering',
     shortTitle: 'DATASET.QA',
     category: 'DATA PIPELINE INTEGRITY, NORMALIZATION & DEDUPLICATION',
@@ -438,8 +527,8 @@ def compute_record_fingerprint(record: QuestionRecord) -> str:
   },
   {
     id: 'research-discovery-pipeline',
-    index: '06',
-    code: '06',
+    index: '07',
+    code: '07',
     title: 'Distributed MapReduce Async Crawler & Discovery Engine',
     shortTitle: 'MAPREDUCE.CRAWL',
     category: 'ASYNC WEB SCRAPING // DISTRIBUTED MAPREDUCE',
@@ -513,8 +602,8 @@ async def extract_qa_candidates(session: aiohttp.ClientSession, url: str) -> Lis
   },
   {
     id: 'vlm-grounding-evaluator',
-    index: '07',
-    code: '07',
+    index: '08',
+    code: '08',
     title: 'VLM Spatial Grounding & IoU Evaluator',
     shortTitle: 'VLM.GROUNDING',
     category: 'MULTIMODAL AI EVALUATION & SPATIAL LOCALIZATION',
@@ -587,8 +676,8 @@ def calculate_iou(b1: BoundingBox2D, b2: BoundingBox2D) -> float:
   },
   {
     id: 'wal-checkpoint-streamer',
-    index: '08',
-    code: '08',
+    index: '09',
+    code: '09',
     title: 'High-Throughput SQLite WAL Checkpoint Streamer',
     shortTitle: 'WAL.STREAMER',
     category: 'DISTRIBUTED DATA ENGINEERING // CRASH RESILIENCE',
@@ -657,8 +746,8 @@ def init_wal_checkpoint_db(db_path: str) -> sqlite3.Connection:
   },
   {
     id: 'agentic-tool-eval',
-    index: '09',
-    code: '09',
+    index: '10',
+    code: '10',
     title: 'Autonomous Agent Tool-Call Evaluator & Verifier',
     shortTitle: 'AGENT.EVAL',
     category: 'AGENTIC AI SYSTEMS // STEP VERIFICATION',
@@ -726,8 +815,8 @@ def verify_argument_grounding(step_context: str, args: dict) -> bool:
   },
   {
     id: 'graph-rag-retriever',
-    index: '10',
-    code: '10',
+    index: '11',
+    code: '11',
     title: 'Graph RAG Subgraph Retriever & Triples Engine',
     shortTitle: 'GRAPH.RAG',
     category: 'KNOWLEDGE GRAPHS // CONTEXT SYNTHESIS',
@@ -801,8 +890,8 @@ class GraphStore:
   },
   {
     id: 'distributed-token-limiter',
-    index: '11',
-    code: '11',
+    index: '12',
+    code: '12',
     title: 'Multi-Tenant Token Bucket & Rate Limiter',
     shortTitle: 'RATE.LIMITER',
     category: 'DISTRIBUTED SYSTEMS // LLM INGESTION QUOTAS',
@@ -875,8 +964,8 @@ class TokenBucketLimiter:
   },
   {
     id: 'multimodal-feature-store-cache',
-    index: '12',
-    code: '12',
+    index: '13',
+    code: '13',
     title: 'Multimodal Feature Store & Semantic Vector Cache',
     shortTitle: 'VECTOR.CACHE',
     category: 'SEMANTIC CACHING // MULTIMODAL INFERENCE OPTIMIZATION',
@@ -951,8 +1040,8 @@ def hash_vector(vector: List[float], hyperplanes: List[List[float]]) -> int:
   },
   {
     id: 'synthetic-adversarial-jailbreak-probe',
-    index: '13',
-    code: '13',
+    index: '14',
+    code: '14',
     title: 'Synthetic Adversarial Jailbreak Probe & Red-Teaming Engine',
     shortTitle: 'JAILBREAK.PROBE',
     category: 'ADVERSARIAL AI // SAFETY & GUARDRAIL RED-TEAMING',

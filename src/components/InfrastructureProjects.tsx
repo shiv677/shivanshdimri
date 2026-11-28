@@ -21,6 +21,39 @@ interface InfraProject {
 
 const projects: InfraProject[] = [
   {
+    title: 'Code Security Auditor: Multilingual CVE/CWE Vulnerability Engine',
+    positioning: 'Fine-tuned Qwen2.5-Coder-1.5B-Instruct LoRA vulnerability detection, exploit analysis, and automated patching engine live on Hugging Face Hub.',
+    overview: 'An autonomous multilingual security auditing model and CLI pipeline fine-tuned via Low-Rank Adaptation (LoRA r=16, alpha=32 across all 7 linear projections) in native bfloat16 on an NVIDIA RTX 5070 (PyTorch 2.11+cu128). Trained on 4,568 curated 3-turn ChatML CVE/CWE traces and evaluated on 240 stratified holdout records across Rust, Java, Ruby, PHP, Python, C/C++, Go, JavaScript, and Solidity. Accurately maps MITRE CWE identifiers, scores CVSS severity, explains exploit vectors, and synthesizes remediated patches.',
+    github: 'https://github.com/shiv677/code-security-auditor',
+    folderStructure: `code-security-auditor/
+├── dataset/
+│   ├── build_multilingual_dataset.py
+│   ├── train_dataset_multilingual.jsonl
+│   └── eval_dataset_multilingual.jsonl
+├── scripts/
+│   ├── train_lora.py
+│   ├── audit.py
+│   └── push_to_hub.py
+├── tests/
+│   └── test_auditor.py
+└── README.md`,
+    coreConcepts: [
+      'Qwen2.5-Coder-1.5B LoRA / PEFT (r=16, alpha=32)',
+      '4,568+ Multilingual ChatML CVE/CWE Traces',
+      'PyTorch 2.11+cu128 bfloat16 RTX 5070 Training',
+      'MITRE CWE Mapping & Exploit Vector Analysis',
+      'Automated Secure Patch Synthesis',
+      'Hugging Face Hub Model Deployment',
+    ],
+    validation: [
+      { label: 'Dataset scale verified', value: '4,568 ChatML training traces + 240 holdout evaluation traces' },
+      { label: 'Training convergence', value: '0.04948 final loss in native bfloat16 on NVIDIA RTX 5070' },
+      { label: 'Multilingual audit accuracy', value: 'Verified across Rust unsafe FFI, Java JNDI, Ruby YAML, PHP POP, Python/C/Go/Solidity' },
+      { label: 'Hugging Face Hub release', value: 'huggingface.co/shivanshDIMRI/code-security-auditor-qwen (4/4 test suite passing)' },
+    ],
+    icon: Shield,
+  },
+  {
     title: 'Audio Internal & External Duplicacy Checker',
     positioning: 'Deterministic fingerprint-based audio deduplication system preventing redundant database insertion across vendor batches.',
     overview: 'A batch-processing pipeline that generates hash-based audio fingerprints, performs internal duplicate detection (within batch), cross-batch validation (against historical datasets), and ensures database-safe insertion. Designed with multiprocessing execution, structured CSV outputs, and deterministic validation logic to preserve metric integrity.',

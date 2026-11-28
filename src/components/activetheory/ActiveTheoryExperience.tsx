@@ -172,25 +172,25 @@ export const ActiveTheoryExperience: React.FC = () => {
   // Active Theory AI Navigator Query Handler
   const handleAIQuery = (query: string) => {
     const q = query.toLowerCase();
-    if (q.includes('t2nas') || q.includes('nas') || q.includes('scale') || q.includes('concurrency')) {
-      flyToZone(2);
-      setAiMessage(
-        'NAVIGATED TO PORTAL 02 [Z = -44m] // T2NAS scales parallel workers dynamically to (CPU_COUNT - 1) with SHA-256 chunk verification and atomic crash-resume checkpoints.'
-      );
-    } else if (q.includes('audio') || q.includes('duplicacy') || q.includes('hash') || q.includes('dedup')) {
+    if (q.includes('security') || q.includes('audit') || q.includes('cve') || q.includes('cwe') || q.includes('lora') || q.includes('qwen')) {
       flyToZone(1);
       setAiMessage(
-        'NAVIGATED TO PORTAL 01 [Z = -22m] // Audio Duplicacy Checker computes deterministic SHA-256 fingerprints across multiprocessing worker pools with O(1) bounded memory.'
+        'NAVIGATED TO PORTAL 01 [Z = -22m] // Code Security Auditor fine-tunes Qwen2.5-Coder-1.5B with LoRA (r=16) on 4,568+ multilingual CVE/CWE traces across Rust, Java, Ruby, PHP & Python.'
       );
-    } else if (q.includes('rsync') || q.includes('ssh') || q.includes('sync') || q.includes('rbac')) {
+    } else if (q.includes('audio') || q.includes('duplicacy') || q.includes('hash') || q.includes('dedup')) {
+      flyToZone(2);
+      setAiMessage(
+        'NAVIGATED TO PORTAL 02 [Z = -44m] // Audio Duplicacy Checker computes deterministic SHA-256 fingerprints across multiprocessing worker pools with O(1) bounded memory.'
+      );
+    } else if (q.includes('t2nas') || q.includes('nas') || q.includes('scale') || q.includes('concurrency')) {
       flyToZone(3);
       setAiMessage(
-        'NAVIGATED TO PORTAL 03 [Z = -66m] // Enterprise Rsync Platform bundles embedded OpenSSH & rsync inside a standalone Windows binary with RBAC auth and <5ms stdout telemetry.'
+        'NAVIGATED TO PORTAL 03 [Z = -66m] // T2NAS scales parallel workers dynamically to (CPU_COUNT - 1) with SHA-256 chunk verification and atomic crash-resume checkpoints.'
       );
-    } else if (q.includes('ai') || q.includes('vlm') || q.includes('harness') || q.includes('agent') || q.includes('benchmark')) {
+    } else if (q.includes('rsync') || q.includes('ssh') || q.includes('sync') || q.includes('rbac') || q.includes('ai') || q.includes('vlm') || q.includes('harness') || q.includes('agent') || q.includes('benchmark')) {
       flyToZone(4);
       setAiMessage(
-        'NAVIGATED TO PORTAL 04 [Z = -88m] // Autonomous AI & VLM Evaluation Harness distributes multi-agent benchmarking prompts with verified Pydantic v2 schema conformance.'
+        'NAVIGATED TO PORTAL 04 [Z = -88m] // Enterprise Rsync Platform & Autonomous AI Evaluation Engines deliver hardened runtime orchestration and Pydantic v2 schema verification.'
       );
     } else if (q.includes('infobay') || q.includes('experience') || q.includes('role') || q.includes('skill') || q.includes('matrix')) {
       flyToZone(5);
@@ -205,7 +205,7 @@ export const ActiveTheoryExperience: React.FC = () => {
     } else {
       flyToZone(1);
       setAiMessage(
-        'NAVIGATED TO FLAGSHIP SYSTEMS [Z = -22m] // Explore 01 Audio Duplicacy Checker, 02 T2NAS Parallel Transfer, 03 Enterprise Rsync, and 04 AI Evaluation Harness.'
+        'NAVIGATED TO FLAGSHIP SYSTEMS [Z = -22m] // Explore 01 Code Security Auditor, 02 Audio Duplicacy Checker, 03 T2NAS Parallel Transfer, and 04 Enterprise Rsync.'
       );
     }
   };

@@ -29,10 +29,10 @@ interface ActiveTheoryHUDProps {
 
 export const ZONE_LABELS = [
   { index: 0, code: '00', short: 'GATEWAY', full: 'CREATIVE AI & SYSTEMS STUDIO' },
-  { index: 1, code: '01', short: 'AUDIO.DEDUP', full: 'AUDIO DUPLICACY CHECKER' },
-  { index: 2, code: '02', short: 'T2NAS', full: 'T2NAS PARALLEL TRANSFER ENGINE' },
-  { index: 3, code: '03', short: 'RSYNC', full: 'ENTERPRISE RSYNC PLATFORM' },
-  { index: 4, code: '04', short: 'AI.HARNESS', full: 'AI & VLM EVALUATION HARNESS' },
+  { index: 1, code: '01', short: 'CODE.AUDIT.AI', full: 'CODE SECURITY AUDITOR (QWEN2.5 LORA)' },
+  { index: 2, code: '02', short: 'AUDIO.DEDUP', full: 'AUDIO DUPLICACY CHECKER' },
+  { index: 3, code: '03', short: 'T2NAS', full: 'T2NAS PARALLEL TRANSFER ENGINE' },
+  { index: 4, code: '04', short: 'RSYNC.RBAC', full: 'ENTERPRISE RSYNC PLATFORM' },
   { index: 5, code: '05', short: 'SKILLS & EXP', full: 'CAPABILITIES & INFOBAY AI' },
   { index: 6, code: '06', short: 'CONTACT', full: 'START A PROJECT // TRANSMIT' },
 ];
